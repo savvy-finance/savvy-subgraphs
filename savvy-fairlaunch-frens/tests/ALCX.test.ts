@@ -36,20 +36,8 @@ describe("Describe entity assertions", () => {
     assert.fieldEquals(
       "User",
       to.toHexString(),
-      "owner",
-      "0x0000000000000000000000000000000000000001"
-    )
-    assert.fieldEquals(
-      "Approval",
-      "0xa16081f360e3847006db660bae1c6d1b2e17ec2a-1",
-      "spender",
-      "0x0000000000000000000000000000000000000001"
-    )
-    assert.fieldEquals(
-      "Approval",
-      "0xa16081f360e3847006db660bae1c6d1b2e17ec2a-1",
-      "value",
-      "234"
+      "everHeldALCX",
+      "true"
     )
   })
 })

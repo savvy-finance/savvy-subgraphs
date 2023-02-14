@@ -1,0 +1,6 @@
+type User @entity {
+  id: ID!
+  everHeldALCX: Boolean!
+  everHeldAlUSD: Boolean!
+  everHeldAlETH: Boolean!
+}

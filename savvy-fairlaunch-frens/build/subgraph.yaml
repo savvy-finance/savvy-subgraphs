@@ -1,0 +1,68 @@
+specVersion: 0.0.5
+schema:
+  file: schema.graphql
+dataSources:
+  - kind: ethereum
+    name: ALCX
+    network: mainnet
+    source:
+      address: "0xdBdb4d16EdA451D0503b854CF79D55697F90c8DF"
+      abi: AlchemixToken
+      startBlock: 11937199
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Approval
+        - RoleAdminChanged
+        - RoleGranted
+        - RoleRevoked
+        - Transfer
+      abis:
+        - name: AlchemixToken
+          file: ALCX\abis\AlchemixToken.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransferALCX
+      file: ALCX\ALCX.wasm
+  - kind: ethereum
+    name: alUSD
+    network: mainnet
+    source:
+      address: "0xbc6da0fe9ad5f3b0d58160288917aa56653660e9"
+      abi: AlToken
+      startBlock: 11937214
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+      abis:
+        - name: AlToken
+          file: alUSD\abis\AlToken.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransferAlUSD
+      file: ALCX\ALCX.wasm
+  - kind: ethereum
+    name: alETH
+    network: mainnet
+    source:
+      address: "0x0100546F2cD4C9D97f798fFC9755E47865FF7Ee6"
+      abi: AlEth
+      startBlock: 12613774
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+      abis:
+        - name: AlEth
+          file: alETH\abis\AlEth.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransferAlETH
+      file: ALCX\ALCX.wasm

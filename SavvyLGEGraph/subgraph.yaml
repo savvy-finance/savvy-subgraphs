@@ -1,0 +1,25 @@
+# subgraph.yaml
+
+specVersion: 0.0.6
+schema:
+  file: ./schema.graphql
+
+dataSources:
+  - kind: ethereum/contract
+    name: SavvyLGE
+    network: avalanche-testnet
+    source:
+      address: "0x423B8bF2701efE7C496855FCD9c07fa75355bA11"
+      abi: SavvyLGE
+      startBlock: 11937199
+    mapping:
+      entities:
+        - SavvyLGE
+      abis:
+        - name: SavvyLGE
+          file: ./abis/SavvyLGE.json 
+      file: ./src/mappings/SavvyLGE-mapping.ts 
+      language: typescript
+      apiVersion: 0.0.6
+      blockHandlers:
+        - handler: handleTotalProtocolToken

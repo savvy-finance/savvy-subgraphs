@@ -1,0 +1,9 @@
+# schema.graphql
+
+type SavvyLGE @entity {
+  id: ID!
+  totalProtocolToken: BigInt!
+  totalDeposited: BigInt!
+  pricePerSvy: BigInt!
+  timestamp: BigInt!
+}

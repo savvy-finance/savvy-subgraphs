@@ -6,7 +6,7 @@ import { ethereum } from '@graphprotocol/graph-ts';
 const DECIMALS_PT = BigInt.fromI32(18)
 const DECIMALS_DT = BigInt.fromI32(6)
 
-export function handleBlock(block: ethereum.Block): void {
+export function handleTotalProtocolToken(block: ethereum.Block): void {
   let contract = SavvyLGEContract.bind(Address.fromString('0x423B8bF2701efE7C496855FCD9c07fa75355bA11'))
   let totalProtocolToken = contract.totalProtocolToken()
   let totalDeposited = contract.totalDeposited()

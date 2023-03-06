@@ -5,4 +5,5 @@ type SavvyLGE @entity {
   totalProtocolToken: BigInt!
   totalDeposited: BigInt!
   pricePerSvy: BigInt!
+  timestamp: BigInt!
 }

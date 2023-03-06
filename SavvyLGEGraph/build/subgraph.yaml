@@ -19,4 +19,4 @@ dataSources:
       language: typescript
       apiVersion: 0.0.6
       blockHandlers:
-        - handler: handleTotalProtocolToken
+        - handler: handleCalculateSVYPrice

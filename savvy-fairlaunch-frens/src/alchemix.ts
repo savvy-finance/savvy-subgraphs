@@ -26,7 +26,7 @@ export function handleTransferAlUSD(event: TransferEventAlUSD): void {
   user.save();
 }
 
-export function handleTransferAlEth(event: TransferEventAlEth): void {
+export function handleTransferAlETH(event: TransferEventAlEth): void {
   const user = getUser(event.params.to.toHexString());
   user.everHeldAlETH = true;
   user.save();

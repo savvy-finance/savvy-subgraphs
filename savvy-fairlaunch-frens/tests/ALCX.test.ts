@@ -7,8 +7,6 @@ import {
   afterAll
 } from "matchstick-as/assembly/index"
 import { Address, BigInt } from "@graphprotocol/graph-ts"
-import { User } from "../generated/schema"
-import { Approval as ApprovalEvent } from "../generated/AlchemixToken/AlchemixToken"
 import { handleTransferALCX } from "../src/alchemix"
 import { createTransferEvent } from "./alchemix-token-utils"
 

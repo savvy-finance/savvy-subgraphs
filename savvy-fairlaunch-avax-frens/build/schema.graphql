@@ -9,4 +9,6 @@ type User @entity {
   everHeldUSDCAave: Boolean!
   everHeldUSDTAave: Boolean!
   everHeldUSDTUSDTeTJ: Boolean!
+
+  everHeldYAK: Boolean!
 }

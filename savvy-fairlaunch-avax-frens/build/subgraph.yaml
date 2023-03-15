@@ -17,11 +17,11 @@ dataSources:
         - Transfer
       abis:
         - name: BIFIToken
-          file: BIFI\abis\ERC20.json
+          file: BIFI/abis/ERC20.json
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransferBIFI
-      file: BIFI\BIFI.wasm
+      file: BIFI/BIFI.wasm
   - kind: ethereum/contract
     name: DAIUSDCUSDTCurve
     network: avalanche
@@ -37,11 +37,11 @@ dataSources:
         - Transfer
       abis:
         - name: DAIUSDCUSDTCurveToken
-          file: DAIUSDCUSDTCurve\abis\ERC20.json
+          file: DAIUSDCUSDTCurve/abis/ERC20.json
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransferDAIUSDCUSDT
-      file: BIFI\BIFI.wasm
+      file: BIFI/BIFI.wasm
   - kind: ethereum/contract
     name: USDCUSDCeTJ
     network: avalanche
@@ -57,11 +57,11 @@ dataSources:
         - Transfer
       abis:
         - name: USDCUSDCeTJToken
-          file: USDCUSDCeTJ\abis\ERC20.json
+          file: USDCUSDCeTJ/abis/ERC20.json
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransferUSDCUSDCeTJ
-      file: BIFI\BIFI.wasm
+      file: BIFI/BIFI.wasm
   - kind: ethereum/contract
     name: AVAXAave
     network: avalanche
@@ -77,11 +77,11 @@ dataSources:
         - Transfer
       abis:
         - name: AVAXAaveToken
-          file: AVAXAave\abis\ERC20.json
+          file: AVAXAave/abis/ERC20.json
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransferAVAXAave
-      file: BIFI\BIFI.wasm
+      file: BIFI/BIFI.wasm
   - kind: ethereum/contract
     name: USDCUSDCePangolin
     network: avalanche
@@ -97,11 +97,11 @@ dataSources:
         - Transfer
       abis:
         - name: USDCUSDCePangolinToken
-          file: USDCUSDCePangolin\abis\ERC20.json
+          file: USDCUSDCePangolin/abis/ERC20.json
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransferUSDCUSDCePangolin
-      file: BIFI\BIFI.wasm
+      file: BIFI/BIFI.wasm
   - kind: ethereum/contract
     name: AvaxBlizz
     network: avalanche
@@ -117,11 +117,11 @@ dataSources:
         - Transfer
       abis:
         - name: AvaxBlizzToken
-          file: AvaxBlizz\abis\ERC20.json
+          file: AvaxBlizz/abis/ERC20.json
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransferAvaxBlizz
-      file: BIFI\BIFI.wasm
+      file: BIFI/BIFI.wasm
   - kind: ethereum/contract
     name: USDCAave
     network: avalanche
@@ -137,11 +137,11 @@ dataSources:
         - Transfer
       abis:
         - name: USDCAaveToken
-          file: USDCAave\abis\ERC20.json
+          file: USDCAave/abis/ERC20.json
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransferUSDCAave
-      file: BIFI\BIFI.wasm
+      file: BIFI/BIFI.wasm
   - kind: ethereum/contract
     name: USDTAave
     network: avalanche
@@ -157,11 +157,11 @@ dataSources:
         - Transfer
       abis:
         - name: USDTAaveToken
-          file: USDTAave\abis\ERC20.json
+          file: USDTAave/abis/ERC20.json
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransferUSDTAave
-      file: BIFI\BIFI.wasm
+      file: BIFI/BIFI.wasm
   - kind: ethereum/contract
     name: USDTUSDTeTJ
     network: avalanche
@@ -177,8 +177,28 @@ dataSources:
         - Transfer
       abis:
         - name: USDTUSDTeTJToken
-          file: USDTUSDTeTJ\abis\ERC20.json
+          file: USDTUSDTeTJ/abis/ERC20.json
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransferUSDTUSDTeTJ
-      file: BIFI\BIFI.wasm
+      file: BIFI/BIFI.wasm
+  - kind: ethereum/contract
+    name: YAK
+    network: avalanche
+    source:
+      address: "0x59414b3089ce2af0010e7523dea7e2b35d776ec7"
+      abi: YAKToken
+      startBlock: 2920530
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+      abis:
+        - name: YAKToken
+          file: YAK/abis/ERC20.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransferYAK
+      file: BIFI/BIFI.wasm

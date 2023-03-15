@@ -122,4 +122,13 @@ export class User extends Entity {
   set everHeldUSDTUSDTeTJ(value: boolean) {
     this.set("everHeldUSDTUSDTeTJ", Value.fromBoolean(value));
   }
+
+  get everHeldYAK(): boolean {
+    let value = this.get("everHeldYAK");
+    return value!.toBoolean();
+  }
+
+  set everHeldYAK(value: boolean) {
+    this.set("everHeldYAK", Value.fromBoolean(value));
+  }
 }

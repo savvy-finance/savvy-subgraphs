@@ -7,6 +7,7 @@ import { Transfer as TransferEventAvaxBlizz } from "../generated/AvaxBlizz/AvaxB
 import { Transfer as TransferEventUSDCAave } from "../generated/USDCAave/USDCAaveToken";
 import { Transfer as TransferEventUSDTAave } from "../generated/USDTAave/USDTAaveToken";
 import { Transfer as TransferEventUSDTUSDTeTJ } from "../generated/USDTUSDTeTJ/USDTUSDTeTJToken";
+import { Transfer as TransferEventYAK } from "../generated/YAK/YAKToken";
 import { User } from "../generated/schema";
 
 function getUser(address: string): User {
@@ -22,6 +23,8 @@ function getUser(address: string): User {
     user.everHeldUSDCAave = false;
     user.everHeldUSDTAave = false;
     user.everHeldUSDTUSDTeTJ = false;
+
+    user.everHeldYAK = false;
   }
   return user;
 }
@@ -77,5 +80,11 @@ export function handleTransferUSDTAave(event: TransferEventUSDTAave): void {
 export function handleTransferUSDTUSDTeTJ(event: TransferEventUSDTUSDTeTJ): void {
   const user = getUser(event.params.to.toHexString());
   user.everHeldUSDTUSDTeTJ = true;
+  user.save();
+}
+
+export function handleTransferYAK(event: TransferEventYAK): void {
+  const user = getUser(event.params.to.toHexString());
+  user.everHeldYAK = true;
   user.save();
 }

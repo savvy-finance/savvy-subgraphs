@@ -42,6 +42,15 @@ export class User extends Entity {
     this.set("id", Value.fromString(value));
   }
 
+  get everHeldAnyBeefy(): boolean {
+    let value = this.get("everHeldAnyBeefy");
+    return value!.toBoolean();
+  }
+
+  set everHeldAnyBeefy(value: boolean) {
+    this.set("everHeldAnyBeefy", Value.fromBoolean(value));
+  }
+
   get everHeldBIFI(): boolean {
     let value = this.get("everHeldBIFI");
     return value!.toBoolean();
@@ -123,6 +132,15 @@ export class User extends Entity {
     this.set("everHeldUSDTUSDTeTJ", Value.fromBoolean(value));
   }
 
+  get everHeldAnyYieldYak(): boolean {
+    let value = this.get("everHeldAnyYieldYak");
+    return value!.toBoolean();
+  }
+
+  set everHeldAnyYieldYak(value: boolean) {
+    this.set("everHeldAnyYieldYak", Value.fromBoolean(value));
+  }
+
   get everHeldYAK(): boolean {
     let value = this.get("everHeldYAK");
     return value!.toBoolean();
@@ -130,5 +148,95 @@ export class User extends Entity {
 
   set everHeldYAK(value: boolean) {
     this.set("everHeldYAK", Value.fromBoolean(value));
+  }
+
+  get everHeldAaveYYAVAX(): boolean {
+    let value = this.get("everHeldAaveYYAVAX");
+    return value!.toBoolean();
+  }
+
+  set everHeldAaveYYAVAX(value: boolean) {
+    this.set("everHeldAaveYYAVAX", Value.fromBoolean(value));
+  }
+
+  get everHeldAaveYYUSDT(): boolean {
+    let value = this.get("everHeldAaveYYUSDT");
+    return value!.toBoolean();
+  }
+
+  set everHeldAaveYYUSDT(value: boolean) {
+    this.set("everHeldAaveYYUSDT", Value.fromBoolean(value));
+  }
+
+  get everHeldAaveYYUSDC(): boolean {
+    let value = this.get("everHeldAaveYYUSDC");
+    return value!.toBoolean();
+  }
+
+  set everHeldAaveYYUSDC(value: boolean) {
+    this.set("everHeldAaveYYUSDC", Value.fromBoolean(value));
+  }
+
+  get everHeldAaveYYBTCb(): boolean {
+    let value = this.get("everHeldAaveYYBTCb");
+    return value!.toBoolean();
+  }
+
+  set everHeldAaveYYBTCb(value: boolean) {
+    this.set("everHeldAaveYYBTCb", Value.fromBoolean(value));
+  }
+
+  get everHeldBenqiYYDAIe(): boolean {
+    let value = this.get("everHeldBenqiYYDAIe");
+    return value!.toBoolean();
+  }
+
+  set everHeldBenqiYYDAIe(value: boolean) {
+    this.set("everHeldBenqiYYDAIe", Value.fromBoolean(value));
+  }
+
+  get everHeldBenqiYYUSDT(): boolean {
+    let value = this.get("everHeldBenqiYYUSDT");
+    return value!.toBoolean();
+  }
+
+  set everHeldBenqiYYUSDT(value: boolean) {
+    this.set("everHeldBenqiYYUSDT", Value.fromBoolean(value));
+  }
+
+  get everHeldBenqiYYAVAX(): boolean {
+    let value = this.get("everHeldBenqiYYAVAX");
+    return value!.toBoolean();
+  }
+
+  set everHeldBenqiYYAVAX(value: boolean) {
+    this.set("everHeldBenqiYYAVAX", Value.fromBoolean(value));
+  }
+
+  get everHeldBenqiYYBTCb(): boolean {
+    let value = this.get("everHeldBenqiYYBTCb");
+    return value!.toBoolean();
+  }
+
+  set everHeldBenqiYYBTCb(value: boolean) {
+    this.set("everHeldBenqiYYBTCb", Value.fromBoolean(value));
+  }
+
+  get everHeldBenqiYYUSDC(): boolean {
+    let value = this.get("everHeldBenqiYYUSDC");
+    return value!.toBoolean();
+  }
+
+  set everHeldBenqiYYUSDC(value: boolean) {
+    this.set("everHeldBenqiYYUSDC", Value.fromBoolean(value));
+  }
+
+  get everHeldPlatypusYYBTCb(): boolean {
+    let value = this.get("everHeldPlatypusYYBTCb");
+    return value!.toBoolean();
+  }
+
+  set everHeldPlatypusYYBTCb(value: boolean) {
+    this.set("everHeldPlatypusYYBTCb", Value.fromBoolean(value));
   }
 }

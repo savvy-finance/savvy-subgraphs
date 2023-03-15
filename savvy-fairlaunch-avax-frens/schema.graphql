@@ -1,5 +1,6 @@
 type User @entity {
   id: ID!
+  everHeldAnyBeefy: Boolean!
   everHeldBIFI: Boolean!
   everHeldDAIUSDCUSDTCurve: Boolean!
   everHeldUSDCUSDCeTJ: Boolean!
@@ -10,5 +11,16 @@ type User @entity {
   everHeldUSDTAave: Boolean!
   everHeldUSDTUSDTeTJ: Boolean!
 
+  everHeldAnyYieldYak: Boolean!
   everHeldYAK: Boolean!
+  everHeldAaveYYAVAX: Boolean!
+  everHeldAaveYYUSDT: Boolean!
+  everHeldAaveYYUSDC: Boolean!
+  everHeldAaveYYBTCb: Boolean!
+  everHeldBenqiYYDAIe: Boolean!
+  everHeldBenqiYYUSDT: Boolean!
+  everHeldBenqiYYAVAX: Boolean!
+  everHeldBenqiYYBTCb: Boolean!
+  everHeldBenqiYYUSDC: Boolean!
+  everHeldPlatypusYYBTCb: Boolean!
 }

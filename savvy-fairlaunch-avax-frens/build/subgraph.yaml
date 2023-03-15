@@ -201,4 +201,204 @@ dataSources:
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransferYAK
-      file: BIFI/BIFI.wasm
+      file: YAK/YAK.wasm
+  - kind: ethereum/contract
+    name: AaveYYAVAX
+    network: avalanche
+    source:
+      address: "0xaAc0F2d0630d1D09ab2B5A400412a4840B866d95"
+      abi: AaveYYAVAXToken
+      startBlock: 13754056
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+      abis:
+        - name: AaveYYAVAXToken
+          file: AaveYYAVAX/abis/ERC20.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransferAaveYYAVAX
+      file: YAK/YAK.wasm
+  - kind: ethereum/contract
+    name: AaveYYUSDT
+    network: avalanche
+    source:
+      address: "0xE005883f6c7Db66265d0B8eEaA7009645e0A9f76"
+      abi: AaveYYUSDTToken
+      startBlock: 13724329
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+      abis:
+        - name: AaveYYUSDTToken
+          file: AaveYYUSDT/abis/ERC20.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransferAaveYYUSDT
+      file: YAK/YAK.wasm
+  - kind: ethereum/contract
+    name: AaveYYUSDC
+    network: avalanche
+    source:
+      address: "0x3e5e33b714193f88FcBdbc3dCbf31f453d26e3A6"
+      abi: AaveYYUSDCToken
+      startBlock: 13723895
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+      abis:
+        - name: AaveYYUSDCToken
+          file: AaveYYUSDC/abis/ERC20.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransferAaveYYUSDC
+      file: YAK/YAK.wasm
+  - kind: ethereum/contract
+    name: AaveYYBTCb
+    network: avalanche
+    source:
+      address: "0x67165052d842662EFD917874c1878512d6B0b4Fe"
+      abi: AaveYYBTCbToken
+      startBlock: 20434876
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+      abis:
+        - name: AaveYYBTCbToken
+          file: AaveYYBTCb/abis/ERC20.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransferAaveYYBTCb
+      file: YAK/YAK.wasm
+  - kind: ethereum/contract
+    name: BenqiYYDAIe
+    network: avalanche
+    source:
+      address: "0xFA17fb53da4c837594127b73fFd09fdb15f42C49"
+      abi: BenqiYYDAIeToken
+      startBlock: 14509603
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+      abis:
+        - name: BenqiYYDAIeToken
+          file: BenqiYYDAIe/abis/ERC20.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransferBenqiYYDAIe
+      file: YAK/YAK.wasm
+  - kind: ethereum/contract
+    name: BenqiYYUSDT
+    network: avalanche
+    source:
+      address: "0xa45B0A446B91eBDBbB041f491e7244AAeB7f557A"
+      abi: BenqiYYUSDTToken
+      startBlock: 14506107
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+      abis:
+        - name: BenqiYYUSDTToken
+          file: BenqiYYUSDT/abis/ERC20.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransferBenqiYYUSDT
+      file: YAK/YAK.wasm
+  - kind: ethereum/contract
+    name: BenqiYYAVAX
+    network: avalanche
+    source:
+      address: "0x8B414448de8B609e96bd63Dcf2A8aDbd5ddf7fdd"
+      abi: BenqiYYAVAXToken
+      startBlock: 3574217
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+      abis:
+        - name: BenqiYYAVAXToken
+          file: BenqiYYAVAX/abis/ERC20.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransferBenqiYYAVAX
+      file: YAK/YAK.wasm
+  - kind: ethereum/contract
+    name: BenqiYYBTCb
+    network: avalanche
+    source:
+      address: "0x8889Da43CeE581068C695A2c256Ba2D514608F4A"
+      abi: BenqiYYBTCbToken
+      startBlock: 16661291
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+      abis:
+        - name: BenqiYYBTCbToken
+          file: BenqiYYBTCb/abis/ERC20.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransferBenqiYYBTCb
+      file: YAK/YAK.wasm
+  - kind: ethereum/contract
+    name: BenqiYYUSDC
+    network: avalanche
+    source:
+      address: "0xFB692D03BBEA21D8665035779dd3082c2B1622d0"
+      abi: BenqiYYUSDCToken
+      startBlock: 14509076
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+      abis:
+        - name: BenqiYYUSDCToken
+          file: BenqiYYUSDC/abis/ERC20.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransferBenqiYYUSDC
+      file: YAK/YAK.wasm
+  - kind: ethereum/contract
+    name: PlatypusYYBTCb
+    network: avalanche
+    source:
+      address: "0xf9cD4Db17a3FB8bc9ec0CbB34780C91cE13ce767"
+      abi: PlatypusYYBTCbToken
+      startBlock: 17089210
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+      abis:
+        - name: PlatypusYYBTCbToken
+          file: PlatypusYYBTCb/abis/ERC20.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransferPlatypusYYBTCb
+      file: YAK/YAK.wasm

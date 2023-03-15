@@ -6,6 +6,7 @@ export function getUser(address: string): User {
   let user = User.load(address);
   if (!user) {
     user = new User(address);
+    user.everHeldAnyBeefy = false;
     user.everHeldBIFI = false;
     user.everHeldDAIUSDCUSDTCurve = false;
     user.everHeldUSDCUSDCeTJ = false;
@@ -16,7 +17,18 @@ export function getUser(address: string): User {
     user.everHeldUSDTAave = false;
     user.everHeldUSDTUSDTeTJ = false;
 
+    user.everHeldAnyYieldYak = false;
     user.everHeldYAK = false;
+    user.everHeldAaveYYAVAX = false;
+    user.everHeldAaveYYUSDT = false;
+    user.everHeldAaveYYUSDC = false;
+    user.everHeldAaveYYBTCb = false;
+    user.everHeldBenqiYYDAIe = false;
+    user.everHeldBenqiYYUSDT = false;
+    user.everHeldBenqiYYAVAX = false;
+    user.everHeldBenqiYYBTCb = false;
+    user.everHeldBenqiYYUSDC = false;
+    user.everHeldPlatypusYYBTCb = false;
   }
   return user;
 }

@@ -1,5 +1,5 @@
 import { Transfer as TransferEventBIFI } from "../generated/BIFI/BIFIToken";
-import { Transfer as TransferEventDAIUSDCUSDT } from "../generated/DAIUSDCUSDTCurve/DAIUSDCUSDTCurveToken";
+import { Transfer as TransferEventDAIUSDCUSDTCurve } from "../generated/DAIUSDCUSDTCurve/DAIUSDCUSDTCurveToken";
 import { Transfer as TransferEventUSDCUSDCeTJ } from "../generated/USDCUSDCeTJ/USDCUSDCeTJToken";
 import { Transfer as TransferEventAVAXAave } from "../generated/AVAXAave/AVAXAaveToken";
 import { Transfer as TransferEventUSDCUSDCePangolin } from "../generated/USDCUSDCePangolin/USDCUSDCePangolinToken";
@@ -32,7 +32,7 @@ export function handleTransferBIFI(event: TransferEventBIFI): void {
   user.save();
 }
 
-export function handleTransferDAIUSDCUSDT(event: TransferEventDAIUSDCUSDT): void {
+export function handleTransferDAIUSDCUSDTCurve(event: TransferEventDAIUSDCUSDTCurve): void {
   const user = getUser(event.params.to.toHexString());
   user.everHeldDAIUSDCUSDTCurve = true;
   user.save();

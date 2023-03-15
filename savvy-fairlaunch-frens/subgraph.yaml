@@ -26,7 +26,7 @@ dataSources:
     name: alUSD
     network: mainnet
     source:
-      address: "0xbc6da0fe9ad5f3b0d58160288917aa56653660e9"
+      address: "0xBC6DA0FE9aD5f3b0d58160288917AA56653660E9"
       abi: AlToken
       startBlock: 11937214
     mapping:

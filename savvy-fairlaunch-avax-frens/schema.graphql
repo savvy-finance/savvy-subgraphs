@@ -1,0 +1,12 @@
+type User @entity {
+  id: ID!
+  everHeldBIFI: Boolean!
+  everHeldDAIUSDCUSDTCurve: Boolean!
+  everHeldUSDCUSDCeTJ: Boolean!
+  everHeldAVAXAave: Boolean!
+  everHeldUSDCUSDCePangolin: Boolean!
+  everHeldAvaxBlizz: Boolean!
+  everHeldUSDCAave: Boolean!
+  everHeldUSDTAave: Boolean!
+  everHeldUSDTUSDTeTJ: Boolean!
+}

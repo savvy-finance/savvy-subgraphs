@@ -29,6 +29,13 @@ export function getUser(address: string): User {
     user.everHeldBenqiYYBTCb = false;
     user.everHeldBenqiYYUSDC = false;
     user.everHeldPlatypusYYBTCb = false;
+
+    user.everHeldAnyVesper = false;
+    user.everHeldVAAVAX = false;
+    user.everHeldVADAIe = false;
+    user.everHeldVAUSDCe = false;
+    user.everHeldVAUSDCn = false;
+    user.everHeldVAWBTC = false;
   }
   return user;
 }

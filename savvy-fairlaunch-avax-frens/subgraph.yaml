@@ -402,3 +402,103 @@ dataSources:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransferPlatypusYYBTCb
       file: ./src/YieldYak.ts
+  - kind: ethereum/contract
+    name: vaAVAX
+    network: avalanche
+    source:
+      address: "0xEa94eBB08E9604AFD225f2c61fa61401F1ed1047"
+      abi: vaAVAXToken
+      startBlock: 13026570
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+      abis:
+        - name: vaAVAXToken
+          file: ./abis/ERC20.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransferVAAVAX
+      file: ./src/Vesper.ts
+  - kind: ethereum/contract
+    name: vaDAIe
+    network: avalanche
+    source:
+      address: "0x5323F445A8665239222b117aE095423a238F5706"
+      abi: vaDAIeToken
+      startBlock: 9452892
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+      abis:
+        - name: vaDAIeToken
+          file: ./abis/ERC20.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransferVADAIe
+      file: ./src/Vesper.ts
+  - kind: ethereum/contract
+    name: vaUSDCe
+    network: avalanche
+    source:
+      address: "0x13AECC59A88A65F02E053eEce29d743a952D6f1e"
+      abi: vaUSDCeToken
+      startBlock: 10174004
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+      abis:
+        - name: vaUSDCeToken
+          file: ./abis/ERC20.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransferVAUSDCe
+      file: ./src/Vesper.ts
+  - kind: ethereum/contract
+    name: vaUSDCn
+    network: avalanche
+    source:
+      address: "0x4378041dceF18713CE30E36A6b9c8aA41C0dB631"
+      abi: vaUSDCnToken
+      startBlock: 15053421
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+      abis:
+        - name: vaUSDCnToken
+          file: ./abis/ERC20.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransferVAUSDCn
+      file: ./src/Vesper.ts
+  - kind: ethereum/contract
+    name: vaWBTC
+    network: avalanche
+    source:
+      address: "0xba3Fb2277c7b33D1C3E1b558cf8060bc7443b13d"
+      abi: vaWBTCToken
+      startBlock: 10171078
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+      abis:
+        - name: vaWBTCToken
+          file: ./abis/ERC20.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransferVAWBTC
+      file: ./src/Vesper.ts

@@ -21,6 +21,4 @@ dataSources:
       eventHandlers:
         - event: AllotmentsBought(indexed address,uint256,uint256)
           handler: handleAllotmentsBought
-      # blockHandlers:
-      #   - handler: handleCalculateSVYPrice
       file: ./src/savvy-lge.ts

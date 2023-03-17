@@ -4,11 +4,6 @@ import { AllotmentsBought, SavvyLGE as SavvyLGEContract } from '../generated/Sav
 import { ethereum } from '@graphprotocol/graph-ts';
 import { contractAddress } from './contract';
 
-// TOOD(2023-03-15, ramsey) Delete this function if handle allotments works
-export function handleCalculateSVYPrice(block: ethereum.Block): void {
-  saveSVYPriceData(block);
-}
-
 export function handleAllotmentsBought(event: AllotmentsBought): void {
   saveSVYPriceData(event.block);
   syncUserPosition(event);

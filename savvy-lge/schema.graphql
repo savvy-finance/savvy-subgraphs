@@ -1,0 +1,23 @@
+type SavvyLGEPriceData @entity {
+  id: ID!
+  totalProtocolToken: BigInt!
+  totalDeposited: BigInt!
+  pricePerSvy: BigInt!
+  timestamp: BigInt!
+}
+
+type UserPosition @entity {
+  id: ID!
+  totalDeposited: BigInt!
+  totalAllotments: BigInt!
+  purchases: [AllotmentsPurchasedReceipt!]! @derivedFrom(field: "user")
+}
+
+type AllotmentsPurchasedReceipt @entity {
+  id: ID!
+  user: UserPosition!
+  address: String!
+  deposited: BigInt!
+  allotments: BigInt!
+  timestamp: BigInt!
+}

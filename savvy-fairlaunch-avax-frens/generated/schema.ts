@@ -239,4 +239,58 @@ export class User extends Entity {
   set everHeldPlatypusYYBTCb(value: boolean) {
     this.set("everHeldPlatypusYYBTCb", Value.fromBoolean(value));
   }
+
+  get everHeldAnyVesper(): boolean {
+    let value = this.get("everHeldAnyVesper");
+    return value!.toBoolean();
+  }
+
+  set everHeldAnyVesper(value: boolean) {
+    this.set("everHeldAnyVesper", Value.fromBoolean(value));
+  }
+
+  get everHeldVAAVAX(): boolean {
+    let value = this.get("everHeldVAAVAX");
+    return value!.toBoolean();
+  }
+
+  set everHeldVAAVAX(value: boolean) {
+    this.set("everHeldVAAVAX", Value.fromBoolean(value));
+  }
+
+  get everHeldVADAIe(): boolean {
+    let value = this.get("everHeldVADAIe");
+    return value!.toBoolean();
+  }
+
+  set everHeldVADAIe(value: boolean) {
+    this.set("everHeldVADAIe", Value.fromBoolean(value));
+  }
+
+  get everHeldVAUSDCe(): boolean {
+    let value = this.get("everHeldVAUSDCe");
+    return value!.toBoolean();
+  }
+
+  set everHeldVAUSDCe(value: boolean) {
+    this.set("everHeldVAUSDCe", Value.fromBoolean(value));
+  }
+
+  get everHeldVAUSDCn(): boolean {
+    let value = this.get("everHeldVAUSDCn");
+    return value!.toBoolean();
+  }
+
+  set everHeldVAUSDCn(value: boolean) {
+    this.set("everHeldVAUSDCn", Value.fromBoolean(value));
+  }
+
+  get everHeldVAWBTC(): boolean {
+    let value = this.get("everHeldVAWBTC");
+    return value!.toBoolean();
+  }
+
+  set everHeldVAWBTC(value: boolean) {
+    this.set("everHeldVAWBTC", Value.fromBoolean(value));
+  }
 }

@@ -522,3 +522,83 @@ dataSources:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransferVAWBTC
       file: ./src/Vesper.ts
+  - kind: ethereum/contract
+    name: JOE
+    network: avalanche
+    source:
+      address: "0x6e84a6216eA6dACC71eE8E6b0a5B7322EEbC0fDd"
+      abi: JOEToken
+      startBlock: 19965482
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+      abis:
+        - name: JOEToken
+          file: ./abis/ERC20.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransferJOE
+      file: ./src/TraderJoe.ts
+  - kind: ethereum/contract
+    name: TJAVAXUSDC
+    network: avalanche
+    source:
+      address: "0xB5352A39C11a81FE6748993D586EC448A01f08b5"
+      abi: TJAVAXUSDCToken
+      startBlock: 23037963
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+      abis:
+        - name: TJAVAXUSDCToken
+          file: ./abis/ERC20.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransferTJAVAXUSDC
+      file: ./src/TraderJoe.ts
+  - kind: ethereum/contract
+    name: TJBTCbAVAX
+    network: avalanche
+    source:
+      address: "0xcCa0cfFBF97fB10B08c1703f1DDdcF7b48c69d69"
+      abi: TJBTCbAVAXToken
+      startBlock: 23934206
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+      abis:
+        - name: TJBTCbAVAXToken
+          file: ./abis/ERC20.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransferTJBTCbAVAX
+      file: ./src/TraderJoe.ts
+  - kind: ethereum/contract
+    name: TJJOEAVAX
+    network: avalanche
+    source:
+      address: "0xc01961EdE437Bf0cC41D064B1a3F6F0ea6aa2a40"
+      abi: TJJOEAVAXToken
+      startBlock: 23923817
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+      abis:
+        - name: TJJOEAVAXToken
+          file: ./abis/ERC20.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransferTJJOEAVAX
+      file: ./src/TraderJoe.ts

@@ -31,20 +31,26 @@ export function getUser(address: string): User {
     user.everHeldPlatypusYYBTCb = false;
 
     user.everHeldAnyVesper = false;
+    user.everHeldVSP = false;
     user.everHeldVAAVAX = false;
     user.everHeldVADAIe = false;
     user.everHeldVAUSDCe = false;
     user.everHeldVAUSDCn = false;
     user.everHeldVAWBTC = false;
+
+    user.everHeldAnyTraderJoe = false;
+    user.everHeldJOE = false;
+    user.everHeldTJAVAXUSDC = false;
+    user.everHeldTJBTCbAVAX = false;
+    user.everHeldTJJOEAVAX = false;
+    user.everHeldTJWBTCeBTCb = false;
+    user.everHeldTJAVAXUSDT = false;
+    user.everHeldTJUSDTUSDC = false;
+    user.everHeldTJUSDCeUSDC = false;
+    user.everHeldTJUSDTeUSDT = false;
+    user.everHeldTJBTCbUSDC = false;
+    user.everHeldTJDAIeUSDC = false;
+    user.everHeldTJsAVAXAVAX = false;
   }
   return user;
 }
-
-// export const TOKEN_ADDRESSES = {
-//    BIFI: "0xd6070ae98b8069de6B494332d1A1a81B6179D960",
-//    DAIUSDCUSDTCurve: "0x79A44dc13e5863Cf4AB36ab13e038A5F16861Abc",
-//    USDCUSDCeTJ: "0x42ab5A790E99dF1b5d46f1C5C3e61d0Cd63D1f6E",
-//    AVAXAave: "0x1B156C5c75E9dF4CAAb2a5cc5999aC58ff4F9090",
-//    USDCUSDCePangolin: "0x99C719c26C64A371be84bAF0821fA89a1FEd459a",
-//    AvaxBlizz: "0x99EeB92A4896a9F45E9390e2A05ceE5647BA0f95"
-//  };

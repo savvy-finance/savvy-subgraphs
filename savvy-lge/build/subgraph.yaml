@@ -6,9 +6,9 @@ dataSources:
     name: SavvyLGE
     network: fuji
     source:
-      address: "0x3132D55e8399E44D57d02e493f7e4fF022234b79"
+      address: "0x5e257853E04db4BC8Bf05D23d62dEe78a577aBD3"
       abi: SavvyLGE
-      startBlock: 19893680
+      startBlock: 20056319
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7

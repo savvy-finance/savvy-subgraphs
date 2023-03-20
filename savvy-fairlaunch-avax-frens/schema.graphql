@@ -37,4 +37,12 @@ type User @entity {
   everHeldTJAVAXUSDC: Boolean!
   everHeldTJBTCbAVAX: Boolean!
   everHeldTJJOEAVAX: Boolean!
+  everHeldTJWBTCeBTCb: Boolean!
+  everHeldTJAVAXUSDT: Boolean!
+  everHeldTJUSDTUSDC: Boolean!
+  everHeldTJUSDCeUSDC: Boolean!
+  everHeldTJUSDTeUSDT: Boolean!
+  everHeldTJBTCbUSDC: Boolean!
+  everHeldTJDAIeUSDC: Boolean!
+  everHeldTJsAVAXAVAX: Boolean!
 }

@@ -403,6 +403,26 @@ dataSources:
           handler: handleTransferPlatypusYYBTCb
       file: YAK/YAK.wasm
   - kind: ethereum/contract
+    name: VSP
+    network: avalanche
+    source:
+      address: "0xE70EFb1ff1C0b63FDF84B5EA319693cf804914A8"
+      abi: VSPToken
+      startBlock: 13357057
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+      abis:
+        - name: VSPToken
+          file: VSP/abis/ERC20.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransferVSP
+      file: VSP/VSP.wasm
+  - kind: ethereum/contract
     name: vaAVAX
     network: avalanche
     source:
@@ -421,7 +441,7 @@ dataSources:
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransferVAAVAX
-      file: vaAVAX/vaAVAX.wasm
+      file: VSP/VSP.wasm
   - kind: ethereum/contract
     name: vaDAIe
     network: avalanche
@@ -441,7 +461,7 @@ dataSources:
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransferVADAIe
-      file: vaAVAX/vaAVAX.wasm
+      file: VSP/VSP.wasm
   - kind: ethereum/contract
     name: vaUSDCe
     network: avalanche
@@ -461,7 +481,7 @@ dataSources:
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransferVAUSDCe
-      file: vaAVAX/vaAVAX.wasm
+      file: VSP/VSP.wasm
   - kind: ethereum/contract
     name: vaUSDCn
     network: avalanche
@@ -481,7 +501,7 @@ dataSources:
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransferVAUSDCn
-      file: vaAVAX/vaAVAX.wasm
+      file: VSP/VSP.wasm
   - kind: ethereum/contract
     name: vaWBTC
     network: avalanche
@@ -501,4 +521,4 @@ dataSources:
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransferVAWBTC
-      file: vaAVAX/vaAVAX.wasm
+      file: VSP/VSP.wasm

@@ -249,6 +249,15 @@ export class User extends Entity {
     this.set("everHeldAnyVesper", Value.fromBoolean(value));
   }
 
+  get everHeldVSP(): boolean {
+    let value = this.get("everHeldVSP");
+    return value!.toBoolean();
+  }
+
+  set everHeldVSP(value: boolean) {
+    this.set("everHeldVSP", Value.fromBoolean(value));
+  }
+
   get everHeldVAAVAX(): boolean {
     let value = this.get("everHeldVAAVAX");
     return value!.toBoolean();

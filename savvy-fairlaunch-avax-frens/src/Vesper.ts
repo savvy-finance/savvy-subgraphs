@@ -1,9 +1,17 @@
+import { Transfer as TransferEventVSP } from "../generated/VSP/VSPToken";
 import { Transfer as TransferEventVAAVAX } from "../generated/vaAVAX/vaAVAXToken";
 import { Transfer as TransferEventVADAIe } from "../generated/vaDAIe/vaDAIeToken";
 import { Transfer as TransferEventVAUSDCe } from "../generated/vaUSDCe/vaUSDCeToken";
 import { Transfer as TransferEventVAUSDCn } from "../generated/vaUSDCn/vaUSDCnToken";
 import { Transfer as TransferEventVAWBTC } from "../generated/vaWBTC/vaWBTCToken";
 import { getUser } from "./utils";
+
+export function handleTransferVSP(event: TransferEventVSP): void {
+  const user = getUser(event.params.to.toHexString());
+  user.everHeldVSP = true;
+  user.everHeldAnyVesper = true;
+  user.save();
+}
 
 export function handleTransferVAAVAX(event: TransferEventVAAVAX): void {
   const user = getUser(event.params.to.toHexString());

@@ -25,6 +25,7 @@ type User @entity {
   everHeldPlatypusYYBTCb: Boolean!
 
   everHeldAnyVesper: Boolean!
+  everHeldVSP: Boolean!
   everHeldVAAVAX: Boolean!
   everHeldVADAIe: Boolean!
   everHeldVAUSDCe: Boolean!

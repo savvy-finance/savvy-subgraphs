@@ -8,7 +8,7 @@ dataSources:
     source:
       address: "0xd6070ae98b8069de6B494332d1A1a81B6179D960"
       abi: BIFIToken
-      startBlock: 1179721
+      startBlock: 12345678
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -28,7 +28,7 @@ dataSources:
     source:
       address: "0x79A44dc13e5863Cf4AB36ab13e038A5F16861Abc"
       abi: DAIUSDCUSDTCurveToken
-      startBlock: 1179721
+      startBlock: 12345678
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -48,7 +48,7 @@ dataSources:
     source:
       address: "0x42ab5A790E99dF1b5d46f1C5C3e61d0Cd63D1f6E"
       abi: USDCUSDCeTJToken
-      startBlock: 1179721
+      startBlock: 12345678
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -68,7 +68,7 @@ dataSources:
     source:
       address: "0x1B156C5c75E9dF4CAAb2a5cc5999aC58ff4F9090"
       abi: AVAXAaveToken
-      startBlock: 1179721
+      startBlock: 12345678
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -88,7 +88,7 @@ dataSources:
     source:
       address: "0x99C719c26C64A371be84bAF0821fA89a1FEd459a"
       abi: USDCUSDCePangolinToken
-      startBlock: 1179721
+      startBlock: 12345678
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -108,7 +108,7 @@ dataSources:
     source:
       address: "0x99EeB92A4896a9F45E9390e2A05ceE5647BA0f95"
       abi: AvaxBlizzToken
-      startBlock: 1179721
+      startBlock: 12345678
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -128,7 +128,7 @@ dataSources:
     source:
       address: "0x3C2131A02659343d68c211aAa686750bE37d88c4"
       abi: USDCAaveToken
-      startBlock: 1179721
+      startBlock: 12345678
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -148,7 +148,7 @@ dataSources:
     source:
       address: "0x813aB5B3FDc59B143C42284665864b24B794C324"
       abi: USDTAaveToken
-      startBlock: 1179721
+      startBlock: 12345678
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -168,7 +168,7 @@ dataSources:
     source:
       address: "0x258e9884c111E2e3e0273372521982bd57ef29Bd"
       abi: USDTUSDTeTJToken
-      startBlock: 1179721
+      startBlock: 12345678
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -188,7 +188,7 @@ dataSources:
     source:
       address: "0x59414b3089ce2af0010e7523dea7e2b35d776ec7"
       abi: YAKToken
-      startBlock: 2920530
+      startBlock: 12345678
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -328,7 +328,7 @@ dataSources:
     source:
       address: "0x8B414448de8B609e96bd63Dcf2A8aDbd5ddf7fdd"
       abi: BenqiYYAVAXToken
-      startBlock: 3574217
+      startBlock: 12345678
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -448,7 +448,7 @@ dataSources:
     source:
       address: "0x5323F445A8665239222b117aE095423a238F5706"
       abi: vaDAIeToken
-      startBlock: 9452892
+      startBlock: 12345678
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -468,7 +468,7 @@ dataSources:
     source:
       address: "0x13AECC59A88A65F02E053eEce29d743a952D6f1e"
       abi: vaUSDCeToken
-      startBlock: 10174004
+      startBlock: 12345678
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -508,7 +508,7 @@ dataSources:
     source:
       address: "0xba3Fb2277c7b33D1C3E1b558cf8060bc7443b13d"
       abi: vaWBTCToken
-      startBlock: 10171078
+      startBlock: 12345678
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7

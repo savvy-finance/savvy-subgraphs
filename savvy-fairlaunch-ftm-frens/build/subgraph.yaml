@@ -1,0 +1,24 @@
+specVersion: 0.0.5
+schema:
+  file: schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: OATH
+    network: fantom
+    source:
+      address: "0xd6070ae98b8069de6B494332d1A1a81B6179D960"
+      abi: OATHToken
+      startBlock: 12345678
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+      abis:
+        - name: OATHToken
+          file: OATH\abis\ERC20.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransferOATH
+      file: OATH\OATH.wasm

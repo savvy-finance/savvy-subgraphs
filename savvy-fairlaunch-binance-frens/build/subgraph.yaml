@@ -1,0 +1,24 @@
+specVersion: 0.0.5
+schema:
+  file: schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: Grizzly
+    network: binance
+    source:
+      address: "0xa045E37a0D1dd3A45fefb8803D22457abc0A728a"
+      abi: GrizzlyToken
+      startBlock: 55691973
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+      abis:
+        - name: GrizzlyToken
+          file: Grizzly\abis\ERC20.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransferGrizzly
+      file: Grizzly\Grizzly.wasm

@@ -742,12 +742,16 @@ dataSources:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransferTJDAIeUSDC
       file: ./src/TraderJoe.ts
+
+
+
+      
   - kind: ethereum/contract
-    name: TJsAVAXAVAX
+    name: WAVAX
     network: avalanche
     source:
-      address: "0xA7687BE7174721178CFD7AA1AE590209649FC0b8"
-      abi: TJsAVAXAVAXToken
+      address: "0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7"
+      abi: WAVAX
       startBlock: 19965482
     mapping:
       kind: ethereum/events
@@ -756,7 +760,7 @@ dataSources:
       entities:
         - Transfer
       abis:
-        - name: TJsAVAXAVAXToken
+        - name: WAVAX
           file: ./abis/ERC20.json
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)

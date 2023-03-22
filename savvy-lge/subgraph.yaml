@@ -4,11 +4,11 @@ schema:
 dataSources:
   - kind: ethereum
     name: SavvyLGE
-    network: fuji
+    network: avalanche
     source:
-      address: "0x5e257853E04db4BC8Bf05D23d62dEe78a577aBD3"
+      address: "0x869bd955b89f7b416943c2cc022bbbbfa5e18c04"
       abi: SavvyLGE
-      startBlock: 20056319
+      startBlock: 27729759
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7

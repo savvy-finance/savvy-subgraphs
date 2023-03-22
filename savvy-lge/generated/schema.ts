@@ -79,6 +79,15 @@ export class SavvyLGEPriceData extends Entity {
   set timestamp(value: BigInt) {
     this.set("timestamp", Value.fromBigInt(value));
   }
+
+  get totalAllotments(): BigInt {
+    let value = this.get("totalAllotments");
+    return value!.toBigInt();
+  }
+
+  set totalAllotments(value: BigInt) {
+    this.set("totalAllotments", Value.fromBigInt(value));
+  }
 }
 
 export class UserPosition extends Entity {

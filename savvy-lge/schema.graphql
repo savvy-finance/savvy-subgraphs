@@ -4,6 +4,7 @@ type SavvyLGEPriceData @entity {
   totalDeposited: BigInt!
   pricePerSvy: BigInt!
   timestamp: BigInt!
+  totalAllotments: BigInt!
 }
 
 type UserPosition @entity {

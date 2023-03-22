@@ -31,6 +31,7 @@ function saveSVYPriceData(block: ethereum.Block): void {
   savvyLGEPriceData.totalDeposited = totalDeposited;
   savvyLGEPriceData.pricePerSvy = pricePerSvy;
   savvyLGEPriceData.timestamp = block.timestamp;
+  savvyLGEPriceData.totalAllotments = contract.allotmentSupply().times(BigInt.fromI32(10).pow(12));
   savvyLGEPriceData.save();
 }
 
@@ -56,3 +57,5 @@ function syncUserPosition(event: AllotmentsBought): void {
   user.totalAllotments = user.totalAllotments.plus(event.params.allotments);
   user.save();
 }
+
+function 

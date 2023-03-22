@@ -20,6 +20,7 @@ function saveSVYPriceData(block: ethereum.Block): void {
     return;
   }
 
+  const totalAllotments = contract.allotmentSupply().times(BigInt.fromI32(10).pow(12));
   const totalProtocolToken = contract.totalProtocolToken();
   const totalDeposited = contract.totalDeposited();
   const totalDepositedInWei = totalDeposited.times(BigInt.fromI32(10).pow(12));
@@ -27,11 +28,11 @@ function saveSVYPriceData(block: ethereum.Block): void {
 
   // Create an entity to store the values of the variables
   const savvyLGEPriceData = new SavvyLGEPriceData(block.timestamp.toString());
+  savvyLGEPriceData.totalAllotments = totalAllotments;
   savvyLGEPriceData.totalProtocolToken = totalProtocolToken;
   savvyLGEPriceData.totalDeposited = totalDeposited;
   savvyLGEPriceData.pricePerSvy = pricePerSvy;
   savvyLGEPriceData.timestamp = block.timestamp;
-  savvyLGEPriceData.totalAllotments = contract.allotmentSupply().times(BigInt.fromI32(10).pow(12));
   savvyLGEPriceData.save();
 }
 

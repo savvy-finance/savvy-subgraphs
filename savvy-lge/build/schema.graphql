@@ -1,5 +1,6 @@
 type SavvyLGEPriceData @entity {
   id: ID!
+  totalAllotments: BigInt!
   totalProtocolToken: BigInt!
   totalDeposited: BigInt!
   pricePerSvy: BigInt!

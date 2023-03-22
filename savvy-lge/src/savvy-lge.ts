@@ -57,5 +57,3 @@ function syncUserPosition(event: AllotmentsBought): void {
   user.totalAllotments = user.totalAllotments.plus(event.params.allotments);
   user.save();
 }
-
-function 

@@ -1,0 +1,44 @@
+specVersion: 0.0.5
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: JOE
+    network: avalanche
+    source:
+      address: "0x6e84a6216eA6dACC71eE8E6b0a5B7322EEbC0fDd"
+      abi: JOEToken
+      startBlock: 19965482
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+      abis:
+        - name: JOEToken
+          file: ./abis/ERC20.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransferJOE
+      file: ./src/TraderJoe.ts  
+  - kind: ethereum/contract
+    name: AVAX
+    network: avalanche
+    source:
+      address: "0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7"
+      abi: AVAXToken
+      startBlock: 23934206
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+      abis:
+        - name: AVAXToken
+          file: ./abis/ERC20.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransferAVAX
+      file: ./src/TraderJoe.ts

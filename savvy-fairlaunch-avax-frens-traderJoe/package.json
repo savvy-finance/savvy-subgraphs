@@ -1,0 +1,21 @@
+{
+  "name": "savvy-fairlaunch-avax-frens-traderjoe",
+  "license": "UNLICENSED",
+  "scripts": {
+    "codegen": "graph codegen",
+    "build": "graph build",
+    "deploy": "graph deploy --node https://api.studio.thegraph.com/deploy/ savvy-fairlaunch-avax-frens-traderjoe",
+    "create-local": "graph create --node http://localhost:8020/ savvy-fairlaunch-avax-frens-traderjoe",
+    "remove-local": "graph remove --node http://localhost:8020/ savvy-fairlaunch-avax-frens-traderjoe",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 savvy-fairlaunch-avax-frens",
+    "test": "graph test"
+  },
+  "dependencies": {
+    "@graphprotocol/graph-cli": "0.39.0",
+    "@graphprotocol/graph-ts": "0.29.1",
+    "web3": "^1.8.2"
+  },
+  "devDependencies": {
+    "matchstick-as": "0.5.0"
+  }
+}

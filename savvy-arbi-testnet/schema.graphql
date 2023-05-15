@@ -1,0 +1,39 @@
+type Account @entity {
+  id: ID! # address
+  totalDepositedUSD: BigInt!
+  totalDebtUSD: BigInt!
+  accountBalances: [AccountBalance!]! @derivedFrom(field: "account")
+  transactionHistory: [AccountTransaction!]! @derivedFrom(field: "account")
+}
+
+type AccountTransaction @entity {
+  id: ID! # transaction id
+  contractAddress: String!
+  account: Account!
+  action: String!
+  amount: BigInt!
+  token: String!
+}
+
+type AccountBalance @entity {
+  id: ID! # {account address}/{synthetic type}
+  account: Account! 
+  syntheticType: String! # USD, ETH, BTC, etc
+  debt: BigInt!
+  debtUSD: BigInt!
+  totalDepositedUSD: BigInt!
+  strategies: [StrategyBalance!]! @derivedFrom(field: "accountBalance")
+}
+
+type StrategyBalance @entity {
+  id: ID! # {accountBalance id}/{strategy address}
+  accountBalance: AccountBalance!
+  strategy: Strategy!
+  amountDeposited: BigInt! 
+  amountDepositedUSD: BigInt! 
+}
+
+type Strategy @entity {
+  id: ID! # strategy address
+  baseTokenAddress: String
+}

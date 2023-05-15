@@ -1,0 +1,20 @@
+{
+  "arbitrum-goerli": {
+    "SavvyFrontendInfoAggregator": {
+      "address":"0x3056AA8a7E85bA9EB36b6Af8B98d3a28024b7D94",
+      "startBlock":15681170
+    },
+    "SavvyPositionManagerUSD": {
+      "address": "0xcC86516537b414b4b5f14ce15dC94C6aCb350E54",
+      "startBlock": 15681170
+    },
+    "SavvyPositionManagerETH": {
+      "address": "0x088cac9aadcad94a59a1cbe8953a133ff438dc49",
+      "startBlock": 15681170
+    },
+    "SavvyPositionManagerBTC": {
+      "address": "0x9e75782a9698cf5fb414d1e2865dfe6a9275ea4a",
+      "startBlock": 15681170
+    }
+  }
+}

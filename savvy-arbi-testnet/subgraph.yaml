@@ -1,0 +1,112 @@
+specVersion: 0.0.5
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: SavvyPositionManagerUSD
+    network: arbitrum-goerli
+    source:
+      address: "0xcC86516537b414b4b5f14ce15dC94C6aCb350E54"
+      abi: SavvyPositionManager
+      startBlock: 15681170
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Account
+        - AccountTransaction
+        - AccountBalance
+        - StrategyBalance
+        - Strategy
+      abis:
+        - name: SavvyPositionManager
+          file: ./abis/SavvyPositionManager.json
+        - name: SavvyFrontendInfoAggregator
+          file: ./abis/SavvyFrontendInfoAggregator.json
+      eventHandlers:
+        - event: DepositYieldToken(indexed address,indexed address,uint256,address)
+          handler: handleDepositYieldToken
+        - event: WithdrawYieldToken(indexed address,indexed address,uint256,address)
+          handler: handleWithdrawYieldToken
+        - event: Borrow(indexed address,uint256,address)
+          handler: handleBorrow
+        - event: RepayWithDebtToken(indexed address,uint256,address)
+          handler: handleRepayWithDebtToken
+        - event: RepayWithBaseToken(indexed address,indexed address,uint256,address,uint256)
+          handler: handleRepayWithBaseToken
+        - event: RepayWithCollateral(indexed address,indexed address,indexed address,uint256,uint256)
+          handler: handleRepayWithCollateral
+      file: ./src/handlers/savvyPositionManagerUSD.ts
+  - kind: ethereum
+    name: SavvyPositionManagerETH
+    network: arbitrum-goerli
+    source:
+      address: "0x088cac9aadcad94a59a1cbe8953a133ff438dc49"
+      abi: SavvyPositionManager
+      startBlock: 15681170
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Account
+        - AccountTransaction
+        - AccountBalance
+        - StrategyBalance
+        - Strategy
+      abis:
+        - name: SavvyPositionManager
+          file: ./abis/SavvyPositionManager.json
+        - name: SavvyFrontendInfoAggregator
+          file: ./abis/SavvyFrontendInfoAggregator.json
+      eventHandlers:
+        - event: DepositYieldToken(indexed address,indexed address,uint256,address)
+          handler: handleDepositYieldToken
+        - event: WithdrawYieldToken(indexed address,indexed address,uint256,address)
+          handler: handleWithdrawYieldToken
+        - event: Borrow(indexed address,uint256,address)
+          handler: handleBorrow
+        - event: RepayWithDebtToken(indexed address,uint256,address)
+          handler: handleRepayWithDebtToken
+        - event: RepayWithBaseToken(indexed address,indexed address,uint256,address,uint256)
+          handler: handleRepayWithBaseToken
+        - event: RepayWithCollateral(indexed address,indexed address,indexed address,uint256,uint256)
+          handler: handleRepayWithCollateral
+      file: ./src/handlers/savvyPositionManagerETH.ts
+  - kind: ethereum
+    name: SavvyPositionManagerBTC
+    network: arbitrum-goerli
+    source:
+      address: "0x9e75782a9698cf5fb414d1e2865dfe6a9275ea4a"
+      abi: SavvyPositionManager
+      startBlock: 15681170
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Account
+        - AccountTransaction
+        - AccountBalance
+        - StrategyBalance
+        - Strategy
+      abis:
+        - name: SavvyPositionManager
+          file: ./abis/SavvyPositionManager.json
+        - name: SavvyFrontendInfoAggregator
+          file: ./abis/SavvyFrontendInfoAggregator.json
+      eventHandlers:
+        - event: DepositYieldToken(indexed address,indexed address,uint256,address)
+          handler: handleDepositYieldToken
+        - event: WithdrawYieldToken(indexed address,indexed address,uint256,address)
+          handler: handleWithdrawYieldToken
+        - event: Borrow(indexed address,uint256,address)
+          handler: handleBorrow
+        - event: RepayWithDebtToken(indexed address,uint256,address)
+          handler: handleRepayWithDebtToken
+        - event: RepayWithBaseToken(indexed address,indexed address,uint256,address,uint256)
+          handler: handleRepayWithBaseToken
+        - event: RepayWithCollateral(indexed address,indexed address,indexed address,uint256,uint256)
+          handler: handleRepayWithCollateral
+      file: ./src/handlers/savvyPositionManagerBTC.ts

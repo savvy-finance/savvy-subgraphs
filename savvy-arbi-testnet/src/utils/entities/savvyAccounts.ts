@@ -1,5 +1,5 @@
-import { Address, BigInt, Entity } from '@graphprotocol/graph-ts';
-import { Account, AccountBalance, Strategy, StrategyBalance } from '../../generated/schema';
+import { Address, BigInt, Bytes, Entity } from '@graphprotocol/graph-ts';
+import { Account, AccountBalance, Strategy, StrategyBalance } from '../../../generated/schema';
 
 // export interface ActionState {
 //     account: Account;
@@ -32,6 +32,7 @@ export function getOrCreateAccount(address: string): Account {
         account = new Account(address);
         account.totalDepositedUSD = BigInt.zero();
         account.totalDebtUSD = BigInt.zero();
+        account.save();
     }
     return account;
 }
@@ -49,6 +50,7 @@ export function getOrCreateAccountBalance(account: Account, syntheticType: strin
         accountBalance.debt = BigInt.zero();
         accountBalance.debtUSD = BigInt.zero();
         accountBalance.totalDepositedUSD = BigInt.zero();
+        accountBalance.save();
     }
     return accountBalance;
 }
@@ -60,7 +62,8 @@ export function getOrCreateStrategy(strategyAddress: string, baseTokenAddress?: 
         if (!baseTokenAddress) {
             baseTokenAddress = "";
         }
-        strategy.baseTokenAddress = baseTokenAddress ;
+        strategy.baseTokenAddress = Bytes.fromHexString(baseTokenAddress);
+        strategy.save();
     }
     return strategy;
 }
@@ -77,6 +80,7 @@ export function getOrCreateStrategyBalance(accountBalance: AccountBalance, strat
         strategyBalance.strategy = strategy.id;
         strategyBalance.amountDeposited = BigInt.zero();
         strategyBalance.amountDepositedUSD = BigInt.zero();
+        strategyBalance.save();
     }
     return strategyBalance;
 }

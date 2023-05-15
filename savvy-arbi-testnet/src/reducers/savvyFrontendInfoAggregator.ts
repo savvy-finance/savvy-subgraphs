@@ -1,26 +1,26 @@
 import { Address, BigInt, log, TypedMap } from '@graphprotocol/graph-ts';
 import { SavvyFrontendInfoAggregator as SavvyFrontendInfoAggregatorContract } from '../../generated/SavvyFrontendInfoAggregator/SavvyFrontendInfoAggregator';
-import { AccountBalance } from '../../generated/schema';
+import { Account, AccountBalance } from '../../generated/schema';
 import { ADDRESS_TO_CONTRACTS_MAP } from '../constants/addressToContractMap';
-import { getOrCreateAccount, getOrCreateAccountBalance, getOrCreateStrategy, getOrCreateStrategyBalance } from '../utils/entities';
+import { getOrCreateAccount, getOrCreateAccountBalance, getOrCreateStrategy, getOrCreateStrategyBalance } from '../utils/entities/savvyAccounts';
 
-export function syncUserPosition(accountAddress: Address): void {
+export function syncUserPosition(accountAddress: Address): Account {
+    const account = getOrCreateAccount(accountAddress.toHexString());
     const savvyFrontendInfoAggregator = SavvyFrontendInfoAggregatorContract.bind(Address.fromString("0x3056AA8a7E85bA9EB36b6Af8B98d3a28024b7D94"));
     
     if (!savvyFrontendInfoAggregator) {
-        return;
+        return account;
     }
 
     const poolsPageInfoResult = savvyFrontendInfoAggregator.try_getPoolsPageInfo(accountAddress);
     if (poolsPageInfoResult.reverted) {
         log.warning("Failed to load pools page for account={}", [accountAddress.toHexString()]);
-        return;
+        return account;
     }
     const poolsPageInfo = poolsPageInfoResult.value;
 
     let totalDepositedUSD = BigInt.zero();
     let totalDebtUSD = BigInt.zero();
-    const account = getOrCreateAccount(accountAddress.toHexString());
     const syntheticTypeToAccountBalanceMap = new TypedMap<string, AccountBalance>();
     for (let i = 0; i < poolsPageInfo.pools.length; i++) {
         const pool = poolsPageInfo.pools[i];
@@ -79,4 +79,5 @@ export function syncUserPosition(accountAddress: Address): void {
     account.totalDebtUSD = totalDebtUSD;
     account.totalDepositedUSD = totalDepositedUSD;
     account.save();
+    return account;
 }

@@ -1,18 +1,50 @@
+#############################
+### BLOCKCHAIN PRIMITIVES ### 
+#############################
+
+type Block @entity {
+  id: ID!
+  number: BigInt!
+  hash: Bytes!
+  timestamp: BigInt!
+  events: [Event!]! @derivedFrom(field: "block")
+  transactions: [Transaction!]! @derivedFrom(field: "block")
+}
+
+type Transaction @entity {
+  id: ID!
+  hash: Bytes!
+  input: Bytes!
+  from: Bytes
+  to: Bytes
+  block: Block!
+  timestamp: BigInt!
+  events: [Event!]! @derivedFrom(field: "transaction")
+}
+
+interface Event {
+  id: ID!
+  block: Block!
+  index: BigInt!
+  timestamp: BigInt!
+  contract: Contract!
+  transaction: Transaction!
+}
+
+interface Contract {
+  id: ID!
+  events: [Event!]! @derivedFrom(field: "contract")
+}
+
+######################
+### SAVVY ACCOUNTS ### 
+######################
+
 type Account @entity {
   id: ID! # address
   totalDepositedUSD: BigInt!
   totalDebtUSD: BigInt!
   accountBalances: [AccountBalance!]! @derivedFrom(field: "account")
-  transactionHistory: [AccountTransaction!]! @derivedFrom(field: "account")
-}
-
-type AccountTransaction @entity {
-  id: ID! # transaction id
-  contractAddress: String!
-  account: Account!
-  action: String!
-  amount: BigInt!
-  token: String!
 }
 
 type AccountBalance @entity {
@@ -33,7 +65,90 @@ type StrategyBalance @entity {
   amountDepositedUSD: BigInt! 
 }
 
-type Strategy @entity {
+type Strategy implements Contract @entity {
   id: ID! # strategy address
-  baseTokenAddress: String
+  events: [Event!]! @derivedFrom(field: "contract")
+  baseTokenAddress: Bytes
 }
+
+####################
+### SAVVY EVENTS ### 
+####################
+
+type DepositYieldTokenEvent implements Event @entity {
+  id: ID!
+  block: Block!
+  index: BigInt!
+  timestamp: BigInt!
+  contract: Contract!
+  transaction: Transaction!
+  sender: Account!
+  yieldToken: Bytes!
+  amount: BigInt!
+  recipient: Account!
+} 
+
+type WithdrawYieldTokenEvent implements Event @entity {
+  id: ID!
+  block: Block!
+  index: BigInt!
+  timestamp: BigInt!
+  contract: Contract!
+  transaction: Transaction!
+  owner: Account!
+  yieldToken: Bytes!
+  shares: BigInt!
+  recipient: Account!
+} 
+
+type BorrowEvent implements Event @entity {
+  id: ID!
+  block: Block!
+  index: BigInt!
+  timestamp: BigInt!
+  contract: Contract!
+  transaction: Transaction!
+  owner: Account!
+  amount: BigInt!
+  recipient: Account!
+} 
+
+type RepayWithDebtTokenEvent implements Event @entity {
+  id: ID!
+  block: Block!
+  index: BigInt!
+  timestamp: BigInt!
+  contract: Contract!
+  transaction: Transaction!
+  sender: Account!
+  amount: BigInt!
+  recipient: Account!
+} 
+
+type RepayWithBaseTokenEvent implements Event @entity {
+  id: ID!
+  block: Block!
+  index: BigInt!
+  timestamp: BigInt!
+  contract: Contract!
+  transaction: Transaction!
+  sender: Account!
+  baseToken: Bytes!
+  amount: BigInt!
+  recipient: Account!
+  credit: BigInt!
+} 
+
+type RepayWithCollateralEvent implements Event @entity {
+  id: ID!
+  block: Block!
+  index: BigInt!
+  timestamp: BigInt!
+  contract: Contract!
+  transaction: Transaction!
+  owner: Account!
+  yieldToken: Bytes!
+  baseToken: Bytes!
+  shares: BigInt!
+  credit: BigInt!
+} 

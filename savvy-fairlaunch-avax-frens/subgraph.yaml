@@ -762,3 +762,23 @@ dataSources:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransferTJsAVAXAVAX
       file: ./src/TraderJoe.ts
+  - kind: ethereum/contract
+    name: WMEMO
+    network: avalanche
+    source:
+      address: "0x0da67235dD5787D67955420C84ca1cEcd4E5Bb3b"
+      abi: WMEMOToken
+      startBlock: 19965482
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+      abis:
+        - name: WMEMOToken
+          file: ./abis/ERC20.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransferWMEMO
+      file: ./src/Wonderland.ts

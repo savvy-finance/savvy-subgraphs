@@ -2,4 +2,11 @@ type User @entity {
   id: ID!
   everHeldJOE: Boolean!
   everHeldUSH: Boolean!
+  everHeldJONES: Boolean!
+  everHeldBIFI: Boolean!
+  everHeldSTG: Boolean!
+  everHeldWMEMO: Boolean!
+  everHeldRAM: Boolean!
+  everHeldGRAIL: Boolean!
+  everHeldGMD: Boolean!
 }

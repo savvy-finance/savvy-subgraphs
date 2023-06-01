@@ -42,3 +42,143 @@ dataSources:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransferUSH
       file: ./src/tokens.ts
+  - kind: ethereum
+    name: JONES
+    network: arbitrum-one
+    source:
+      address: "0x10393c20975cF177a3513071bC110f7962CD67da"
+      abi: JONES
+      startBlock: 60000000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+      abis:
+        - name: JONES
+          file: ./abis/ERC20.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransferJONES
+      file: ./src/tokens.ts
+  - kind: ethereum
+    name: BIFI
+    network: arbitrum-one
+    source:
+      address: "0x99C409E5f62E4bd2AC142f17caFb6810B8F0BAAE"
+      abi: BIFI
+      startBlock: 60000000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+      abis:
+        - name: BIFI
+          file: ./abis/ERC20.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransferBIFI
+      file: ./src/tokens.ts
+  - kind: ethereum
+    name: STG
+    network: arbitrum-one
+    source:
+      address: "0x6694340fc020c5E6B96567843da2df01b2CE1eb6"
+      abi: STG
+      startBlock: 60000000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+      abis:
+        - name: STG
+          file: ./abis/ERC20.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransferSTG
+      file: ./src/tokens.ts
+  - kind: ethereum
+    name: WMEMO
+    network: arbitrum-one
+    source:
+      address: "0xECf2ADafF1De8A512f6e8bfe67a2C836EDb25Da3"
+      abi: WMEMO
+      startBlock: 60000000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+      abis:
+        - name: WMEMO
+          file: ./abis/ERC20.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransferWMEMO
+      file: ./src/tokens.ts
+  - kind: ethereum
+    name: RAM
+    network: arbitrum-one
+    source:
+      address: "0xAAA6C1E32C55A7Bfa8066A6FAE9b42650F262418"
+      abi: RAM
+      startBlock: 60000000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+      abis:
+        - name: RAM
+          file: ./abis/ERC20.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransferRAM
+      file: ./src/tokens.ts
+  - kind: ethereum
+    name: GRAIL
+    network: arbitrum-one
+    source:
+      address: "0x3d9907F9a368ad0a51Be60f7Da3b97cf940982D8"
+      abi: GRAIL
+      startBlock: 60000000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+      abis:
+        - name: GRAIL
+          file: ./abis/ERC20.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransferGRAIL
+      file: ./src/tokens.ts
+  - kind: ethereum
+    name: GMD
+    network: arbitrum-one
+    source:
+      address: "0x4945970EfeEc98D393b4b979b9bE265A3aE28A8B"
+      abi: GMD
+      startBlock: 60000000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+      abis:
+        - name: GMD
+          file: ./abis/ERC20.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransferGMD
+      file: ./src/tokens.ts

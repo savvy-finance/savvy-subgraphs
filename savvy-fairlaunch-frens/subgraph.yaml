@@ -21,7 +21,7 @@ dataSources:
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransferALCX
-      file: ./src/alchemix.ts
+      file: ./src/tokens.ts
   - kind: ethereum
     name: alUSD
     network: mainnet
@@ -41,7 +41,7 @@ dataSources:
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransferAlUSD
-      file: ./src/alchemix.ts      
+      file: ./src/tokens.ts      
   - kind: ethereum
     name: alETH
     network: mainnet
@@ -61,4 +61,44 @@ dataSources:
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransferAlETH
-      file: ./src/alchemix.ts
+      file: ./src/tokens.ts
+  - kind: ethereum
+    name: USH
+    network: mainnet
+    source:
+      address: "0xe60779cc1b2c1d0580611c526a8df0e3f870ec48"
+      abi: USHToken
+      startBlock: 11937199
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+      abis:
+        - name: USHToken
+          file: ./abis/ERC20.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransferUSH
+      file: ./src/tokens.ts
+  - kind: ethereum
+    name: VSP
+    network: mainnet
+    source:
+      address: "0x1b40183EFB4Dd766f11bDa7A7c3AD8982e998421"
+      abi: VSPToken
+      startBlock: 11937199
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+      abis:
+        - name: VSPToken
+          file: ./abis/ERC20.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransferVSP
+      file: ./src/tokens.ts

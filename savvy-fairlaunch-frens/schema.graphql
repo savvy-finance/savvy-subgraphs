@@ -3,4 +3,7 @@ type User @entity {
   everHeldALCX: Boolean!
   everHeldAlUSD: Boolean!
   everHeldAlETH: Boolean!
+
+  everHeldVSP: Boolean!
+  everHeldUSH: Boolean!
 }

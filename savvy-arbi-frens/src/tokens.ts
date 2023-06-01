@@ -1,4 +1,5 @@
-import { Transfer as TransferEventJoe } from "../generated/JOE/JoeToken";
+import { Transfer as TransferEventJOE } from "../generated/JOE/JOE";
+import { Transfer as TransferEventUSH } from "../generated/USH/USH";
 import { User } from "../generated/schema";
 
 function getUser(address: string): User {
@@ -10,8 +11,14 @@ function getUser(address: string): User {
   return user;
 }
 
-export function handleTransferJoe(event: TransferEventJoe): void {
+export function handleTransferJOE(event: TransferEventJOE): void {
   const user = getUser(event.params.to.toHexString());
   user.everHeldJOE = true;
+  user.save();
+}
+
+export function handleTransferUSH(event: TransferEventUSH): void {
+  const user = getUser(event.params.to.toHexString());
+  user.everHeldUSH = true;
   user.save();
 }

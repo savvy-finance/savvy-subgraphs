@@ -1,0 +1,77 @@
+{
+    "network": "arbitrum-goerli",
+    "dataSources": [
+        {
+            "name": "SavvyPositionManagerUSD",
+            "abi": "SavvyPositionManager",
+            "address": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+            "startBlock": 15681170
+        },
+        {
+            "name": "SavvyPositionManagerETH",
+            "abi": "SavvyPositionManager",
+            "address": "0x088cac9aadcad94a59a1cbe8953a133ff438dc49",
+            "startBlock": 15681170
+        },
+        {
+            "name": "SavvyPositionManagerBTC",
+            "abi": "SavvyPositionManager",
+            "address": "0x9e75782a9698cf5fb414d1e2865dfe6a9275ea4a",
+            "startBlock": 15681170
+        },
+        {
+            "name": "SavvySwapBTC.b",
+            "abi": "SavvySwap",
+            "address": "0x99428d8F3DaA5031B97de95A0360470dBc10c014",
+            "startBlock": 15681170
+        },
+        {
+            "name": "SavvySwapDAI",
+            "abi": "SavvySwap",
+            "address": "0xa499D56B095675c2E3A010ACC806e898a42824Eb",
+            "startBlock": 15681170
+        },
+        {
+            "name": "SavvySwapUSDC",
+            "abi": "SavvySwap",
+            "address": "0x79063c0aEB1a72666d47F5233Da446CE9674c482",
+            "startBlock": 15681170
+        },
+        {
+            "name": "SavvySwapUSDT",
+            "abi": "SavvySwap",
+            "address": "0xb236236A7e6D231dC0A905B82A81A5F3b2399303",
+            "startBlock": 15681170
+        },
+        {
+            "name": "SavvySwapWBTC",
+            "abi": "SavvySwap",
+            "address": "0xBFc24059846967729fED32588bFFB54e0CEe2bf6",
+            "startBlock": 15681170
+        },
+        {
+            "name": "SavvySwapWETH",
+            "abi": "SavvySwap",
+            "address": "0x2d54b0345e6b374306BF1cea3160944eA33a9F73",
+            "startBlock": 15681170
+        },
+        {
+            "name": "SavvySageBTC",
+            "abi": "SavvySage",
+            "address": "0xFf818a4f179a1F75511A6e7813279622E4732032",
+            "startBlock": 15681170
+        },
+        {
+            "name": "SavvySageETH",
+            "abi": "SavvySage",
+            "address": "0xaCB422ae5C8b896BeA8182Ea29B2e2a1a5939c3B",
+            "startBlock": 15681170
+        },
+        {
+            "name": "SavvySageUSD",
+            "abi": "SavvySage",
+            "address": "0x460360fBD44D805a057287A2093f24C0cc9F8092",
+            "startBlock": 15681170
+        }
+    ]
+}

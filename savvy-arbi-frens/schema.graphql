@@ -9,4 +9,5 @@ type User @entity {
   everHeldRAM: Boolean!
   everHeldGRAIL: Boolean!
   everHeldGMD: Boolean!
+  everHeldARX: Boolean!
 }

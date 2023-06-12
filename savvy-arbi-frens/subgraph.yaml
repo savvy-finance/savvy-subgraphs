@@ -182,3 +182,23 @@ dataSources:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransferGMD
       file: ./src/tokens.ts
+  - kind: ethereum
+    name: ARX
+    network: arbitrum-one
+    source:
+      address: "0xD5954c3084a1cCd70B4dA011E67760B8e78aeE84"
+      abi: ARX
+      startBlock: 60000000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+      abis:
+        - name: ARX
+          file: ./abis/ERC20.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransferARX
+      file: ./src/tokens.ts

@@ -5,6 +5,7 @@
     "codegen": "graph codegen",
     "build": "graph build",
     "deploy": "graph deploy --node https://api.studio.thegraph.com/deploy/ savvy-arbi-frens",
+    "deploy-ifo": "graph deploy --node https://api.studio.thegraph.com/deploy/ savvy-ifo-arbi",
     "create-local": "graph create --node http://localhost:8020/ savvy-arbi-frens",
     "remove-local": "graph remove --node http://localhost:8020/ savvy-arbi-frens",
     "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 savvy-arbi-frens",

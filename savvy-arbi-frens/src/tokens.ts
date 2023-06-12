@@ -7,6 +7,7 @@ import { Transfer as TransferEventWMEMO } from "../generated/WMEMO/WMEMO";
 import { Transfer as TransferEventRAM } from "../generated/RAM/RAM";
 import { Transfer as TransferEventGRAIL } from "../generated/GRAIL/GRAIL";
 import { Transfer as TransferEventGMD } from "../generated/GMD/GMD";
+import { Transfer as TransferEventARX } from "../generated/ARX/ARX";
 import { User } from "../generated/schema";
 
 function getUser(address: string): User {
@@ -22,6 +23,7 @@ function getUser(address: string): User {
     user.everHeldRAM = false;
     user.everHeldGRAIL = false;
     user.everHeldGMD = false;
+    user.everHeldARX = false;
   }
   return user;
 }
@@ -77,5 +79,11 @@ export function handleTransferGRAIL(event: TransferEventGRAIL): void {
 export function handleTransferGMD(event: TransferEventGMD): void {
   const user = getUser(event.params.to.toHexString());
   user.everHeldGMD = true;
+  user.save();
+}
+
+export function handleTransferARX(event: TransferEventARX): void {
+  const user = getUser(event.params.to.toHexString());
+  user.everHeldARX = true;
   user.save();
 }

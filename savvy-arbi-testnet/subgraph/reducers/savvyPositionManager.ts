@@ -54,7 +54,7 @@ export function handleRepayWithBaseToken(repayWithBaseToken: RepayWithBaseToken)
     const recipient = SavvyFrontendInfoAggregatorReducer.syncUserPosition(repayWithBaseToken.params.recipient);
     const event = createEvent<RepayWithBaseTokenEvent>(repayWithBaseToken as ethereum.Event);
     event.sender = sender.id;
-    event.baseToken = Bytes.fromHexString(repayWithBaseToken.params.baseToken.toHexString());
+    event.baseToken = repayWithBaseToken.params.baseToken;
     event.amount = repayWithBaseToken.params.amount;
     event.recipient = recipient.id;
     event.credit = repayWithBaseToken.params.credit;

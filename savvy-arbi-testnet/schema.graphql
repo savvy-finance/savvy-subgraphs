@@ -71,11 +71,11 @@ type Strategy implements Contract @entity {
   baseTokenAddress: Bytes
 }
 
-####################
-### SAVVY EVENTS ### 
-####################
+##################
+### SPM EVENTS ### 
+##################
 
-type DepositYieldTokenEvent implements Event @entity {
+type SPMDepositYieldTokenEvent implements Event @entity {
   id: ID!
   block: Block!
   index: BigInt!
@@ -88,7 +88,7 @@ type DepositYieldTokenEvent implements Event @entity {
   recipient: Account!
 } 
 
-type WithdrawYieldTokenEvent implements Event @entity {
+type SPMWithdrawYieldTokenEvent implements Event @entity {
   id: ID!
   block: Block!
   index: BigInt!
@@ -101,7 +101,7 @@ type WithdrawYieldTokenEvent implements Event @entity {
   recipient: Account!
 } 
 
-type BorrowEvent implements Event @entity {
+type SPMBorrowEvent implements Event @entity {
   id: ID!
   block: Block!
   index: BigInt!
@@ -113,7 +113,7 @@ type BorrowEvent implements Event @entity {
   recipient: Account!
 } 
 
-type RepayWithDebtTokenEvent implements Event @entity {
+type SPMRepayWithDebtTokenEvent implements Event @entity {
   id: ID!
   block: Block!
   index: BigInt!
@@ -125,7 +125,7 @@ type RepayWithDebtTokenEvent implements Event @entity {
   recipient: Account!
 } 
 
-type RepayWithBaseTokenEvent implements Event @entity {
+type SPMRepayWithBaseTokenEvent implements Event @entity {
   id: ID!
   block: Block!
   index: BigInt!
@@ -139,7 +139,7 @@ type RepayWithBaseTokenEvent implements Event @entity {
   credit: BigInt!
 } 
 
-type RepayWithCollateralEvent implements Event @entity {
+type SPMRepayWithCollateralEvent implements Event @entity {
   id: ID!
   block: Block!
   index: BigInt!
@@ -152,3 +152,55 @@ type RepayWithCollateralEvent implements Event @entity {
   shares: BigInt!
   credit: BigInt!
 } 
+
+###################
+### SWAP EVENTS ### 
+###################
+
+type SwapDepositEvent implements Event @entity {
+  id: ID!
+  block: Block!
+  index: BigInt!
+  timestamp: BigInt!
+  contract: Contract!
+  transaction: Transaction!
+  sender: Account!
+  owner: Account!
+  amount: BigInt!
+}
+
+type SwapWithdrawEvent implements Event @entity {
+  id: ID!
+  block: Block!
+  index: BigInt!
+  timestamp: BigInt!
+  contract: Contract!
+  transaction: Transaction!
+  sender: Account!
+  recipient: Account!
+  amount: BigInt!
+}
+
+type SwapClaimEvent implements Event @entity {
+  id: ID!
+  block: Block!
+  index: BigInt!
+  timestamp: BigInt!
+  contract: Contract!
+  transaction: Transaction!
+  sender: Account!
+  recipient: Account!
+  amount: BigInt!
+}
+
+type SwapClaimEvent implements Event @entity {
+  id: ID!
+  block: Block!
+  index: BigInt!
+  timestamp: BigInt!
+  contract: Contract!
+  transaction: Transaction!
+  sender: Account!
+  recipient: Account!
+  amount: BigInt!
+}

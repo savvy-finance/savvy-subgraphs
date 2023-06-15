@@ -1,0 +1,3 @@
+export const TJ_LP_SVUSD = "0x3be852ff9f142783c71435524d63e2196e5f305a";
+export const TJ_LP_SVETH = "0x2e14e24ec3efbd3b8c8976405351f8233d59650e"; 
+export const TJ_LP_SVBTC = "0x830203b9a16920feb55d58d964ce83e1ba000269";

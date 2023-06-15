@@ -1,0 +1,73 @@
+specVersion: 0.0.5
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: TJ_LP_SVUSD
+    network: arbitrum-one
+    source:
+      address: "0x3BE852FF9F142783c71435524D63E2196E5f305A"
+      abi: LBPair
+      startBlock: 100525329
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities: []
+      abis:
+        - name: LBPair
+          file: ./abis/LBPair.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+      eventHandlers:
+        - event: DepositedToBins(indexed address,indexed address,uint256[],bytes32[])
+          handler: handleAddLiquidity
+        - event: WithdrawnFromBins(indexed address,indexed address,uint256[],bytes32[])
+          handler: handleRemoveLiquidity
+      file: ./src/lb-pair.ts
+  - kind: ethereum
+    name: TJ_LP_SVBTC
+    network: arbitrum-one
+    source:
+      address: "0x830203b9a16920feb55d58d964ce83e1ba000269"
+      abi: LBPair
+      startBlock: 100525329
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities: []
+      abis:
+        - name: LBPair
+          file: ./abis/LBPair.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+      eventHandlers:
+        - event: DepositedToBins(indexed address,indexed address,uint256[],bytes32[])
+          handler: handleAddLiquidity
+        - event: WithdrawnFromBins(indexed address,indexed address,uint256[],bytes32[])
+          handler: handleRemoveLiquidity
+      file: ./src/lb-pair.ts
+  - kind: ethereum
+    name: TJ_LP_SVETH
+    network: arbitrum-one
+    source:
+      address: "0x2e14e24ec3efbd3b8c8976405351f8233d59650e"
+      abi: LBPair
+      startBlock: 100525329
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities: []
+      abis:
+        - name: LBPair
+          file: ./abis/LBPair.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+      eventHandlers:
+        - event: DepositedToBins(indexed address,indexed address,uint256[],bytes32[])
+          handler: handleAddLiquidity
+        - event: WithdrawnFromBins(indexed address,indexed address,uint256[],bytes32[])
+          handler: handleRemoveLiquidity
+      file: ./src/lb-pair.ts

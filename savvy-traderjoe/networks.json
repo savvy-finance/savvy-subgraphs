@@ -1,0 +1,8 @@
+{
+  "arbitrum-one": {
+    "LBPair": {
+      "address": "0x3BE852FF9F142783c71435524D63E2196E5f305A",
+      "startBlock": 100525329
+    }
+  }
+}

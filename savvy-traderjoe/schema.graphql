@@ -1,0 +1,74 @@
+type Token @entity {
+  " The token address "
+  id: ID!
+
+  " The token name "
+  name: String!
+
+  " The token symbol "
+  symbol: String!
+
+  " The token decimals "
+  decimals: Int!
+}
+
+type Pair @entity {
+  " TraderJoe pair address "
+  id: ID!
+
+  " One side of the TJ pair "
+  token0: Token!
+
+  " One side of the TJ pair "
+  token1: Token!
+
+  " The deposit amount of token0 "
+  reserve0: BigInt!
+
+  " The deposit amount of token1 "
+  reserve1: BigInt!
+
+  " The deposit amount of token1 normalized to 18 decimals "
+  reserve1Normalized: BigInt!
+
+  " The total value fo the pair "
+  tvlUSD: BigInt!
+
+  " Last updated block number "
+  lastUpdatedBN: BigInt!
+}
+
+type PairHourlySnapshot @entity {
+  " @entity { The pair address }-{ The hour since epoch as a timestamp } "
+  id: ID!
+
+  " The pair "
+  pair: Pair!
+
+  " The timestamp of the snapshot "
+  timestamp: BigInt!
+
+  " The deposit amount of token0 "
+  reserve0: BigInt!
+
+  " The change in reserve0 since the last snapshot "
+  reserve0Delta: BigInt!
+
+  " The deposit amount of token1 "
+  reserve1: BigInt!
+
+  " The deposit amount of token1 normalized to 18 decimals "
+  reserve1Normalized: BigInt!
+
+  " The change in reserve0 since the last snapshot "
+  reserve1Delta: BigInt!
+
+  " The deposit amount of token1 normalized to 18 decimals "
+  reserve1DeltaNormalized: BigInt!
+
+  " The total value fo the pair "
+  tvlUSD: BigInt!
+
+  " The change in tvlUSD since the last snapshot "
+  tvlUSDDelta: BigInt!
+}

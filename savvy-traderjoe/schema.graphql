@@ -28,8 +28,11 @@ type Pair @entity {
   " The deposit amount of token1 "
   reserve1: BigInt!
 
+  " The deposit amount of token1 normalized to 18 decimals "
+  reserve1Normalized: BigInt!
+
   " The total value fo the pair "
-  tvlUSD: BigDecimal!
+  tvlUSD: BigInt!
 
   " Last updated block number "
   lastUpdatedBN: BigInt!
@@ -54,12 +57,18 @@ type PairHourlySnapshot @entity {
   " The deposit amount of token1 "
   reserve1: BigInt!
 
+  " The deposit amount of token1 normalized to 18 decimals "
+  reserve1Normalized: BigInt!
+
   " The change in reserve0 since the last snapshot "
   reserve1Delta: BigInt!
 
+  " The deposit amount of token1 normalized to 18 decimals "
+  reserve1DeltaNormalized: BigInt!
+
   " The total value fo the pair "
-  tvlUSD: BigDecimal!
+  tvlUSD: BigInt!
 
   " The change in tvlUSD since the last snapshot "
-  tvlUSDDelta: BigDecimal!
+  tvlUSDDelta: BigInt!
 }

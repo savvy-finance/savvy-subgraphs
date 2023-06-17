@@ -19,6 +19,8 @@ dataSources:
           file: ./abis/LBPair.json
         - name: ERC20
           file: ./abis/ERC20.json
+        - name: SavvyPriceFeed
+          file: ./abis/SavvyPriceFeed.json
       eventHandlers:
         - event: DepositedToBins(indexed address,indexed address,uint256[],bytes32[])
           handler: handleAddLiquidity
@@ -42,6 +44,8 @@ dataSources:
           file: ./abis/LBPair.json
         - name: ERC20
           file: ./abis/ERC20.json
+        - name: SavvyPriceFeed
+          file: ./abis/SavvyPriceFeed.json
       eventHandlers:
         - event: DepositedToBins(indexed address,indexed address,uint256[],bytes32[])
           handler: handleAddLiquidity
@@ -65,6 +69,8 @@ dataSources:
           file: ./abis/LBPair.json
         - name: ERC20
           file: ./abis/ERC20.json
+        - name: SavvyPriceFeed
+          file: ./abis/SavvyPriceFeed.json
       eventHandlers:
         - event: DepositedToBins(indexed address,indexed address,uint256[],bytes32[])
           handler: handleAddLiquidity

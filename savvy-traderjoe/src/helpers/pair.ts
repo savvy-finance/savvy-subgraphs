@@ -1,17 +1,17 @@
 import { Address, BigDecimal, BigInt, ethereum, log } from "@graphprotocol/graph-ts";
 import { LBPair } from "../../generated/TJ_LP_SVBTC/LBPair";
 import { SavvyPriceFeed } from "../../generated/TJ_LP_SVBTC/SavvyPriceFeed";
-import { Pair, PairHourlySnapshot, Token } from "../../generated/schema";
-import { getBeginOfTheHourTimestamp, getHoursSinceEpoch } from "../utils/time";
+import { Pair, PairHourlySnapshot, PairSnapshot, Token } from "../../generated/schema";
+import { getBeginOfTheHourTimestamp, getBeginOfThePeriodTimestamp, getHoursSinceEpoch } from "../utils/time";
 import { getOrCreateToken } from "./token";
-import { SAVVY_PRICE_FEED } from "../constants";
+import { SAVVY_PRICE_FEED, SV_BTC, SV_ETH, SV_USD, TJ_LP_SVBTC, TJ_LP_SVETH, TJ_LP_SVUSD } from "../constants";
 
 const BASE_BIN_PRICE = 1.0005;
 const BASE_BIN_ID = 8388608;
-export function getTVLUSD(lbPair: LBPair, reserve0: BigInt, token1: string, reserve1: BigInt, reserve1Decimals: number): BigInt {
+export function getPriceFromBinId(binId: number, reserve0: BigInt, token1: string, reserve1: BigInt, reserve1Decimals: number): BigInt {
     // https://docs.traderjoexyz.com/guides/price-from-id
     // (1 + binStep / 10_000) ** (binId - 8388608)
-    const priceFactor = lbPair.getActiveId() - BASE_BIN_ID;
+    const priceFactor = binId - BASE_BIN_ID;
     const price = BASE_BIN_PRICE ** priceFactor;
     const conversionFactor = 10**(18-reserve1Decimals);
     const priceOfSyntheticInPairedAsset = BigDecimal.fromString(`${price * conversionFactor}`);
@@ -62,7 +62,7 @@ export function updatePair(block: ethereum.Block, contractAddress: string): Pair
         pair.reserve1Normalized = BigInt.zero();
     }
 
-    pair.tvlUSD = getTVLUSD(lbPair, pair.reserve0, token1Pair.id, pair.reserve1, token1Pair.decimals);
+    pair.tvlUSD = getPriceFromBinId(lbPair.getActiveId(), pair.reserve0, token1Pair.id, pair.reserve1, token1Pair.decimals);
 
     pair.lastUpdatedBN = block.number;
     pair.save();
@@ -100,4 +100,37 @@ export function createPairHourlySnapshot(block: ethereum.Block, contractAddress:
 
     snapshot.save();
     return snapshot;
+}
+
+export function createPairSnapshot(block: ethereum.Block, contractAddress: string, period: number): PairSnapshot {
+    const pair = updatePair(block, contractAddress);
+
+    const timestamp = getBeginOfThePeriodTimestamp(block.timestamp, period);
+    const snapshotId = `${pair.id}-${period}-${timestamp}`;
+    let snapshot = PairSnapshot.load(snapshotId);
+    if (!snapshot) {
+        snapshot = new PairSnapshot(snapshotId);
+        snapshot.pair = pair.id;
+        snapshot.period = period;
+        snapshot.timestamp = getBeginOfTheHourTimestamp(block.timestamp);
+    }
+
+    snapshot.reserve0 = pair.reserve0;
+    snapshot.reserve1 = pair.reserve1;
+    snapshot.reserve1Normalized = pair.reserve1Normalized;
+    snapshot.liquidityUSD = pair.tvlUSD;
+
+    snapshot.save();
+    return snapshot;
+}
+
+export function getLBPairFromSynthetic(synthetic: string): LBPair | null {
+    if (synthetic === SV_BTC) {
+        return LBPair.bind(Address.fromString(TJ_LP_SVBTC));
+    } else if (synthetic === SV_ETH) {
+        return LBPair.bind(Address.fromString(TJ_LP_SVETH));
+    } else if (synthetic === SV_USD) {
+        return LBPair.bind(Address.fromString(TJ_LP_SVUSD));
+    }
+    return null;
 }

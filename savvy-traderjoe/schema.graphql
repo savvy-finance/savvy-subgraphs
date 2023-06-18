@@ -72,3 +72,60 @@ type PairHourlySnapshot @entity {
   " The change in tvlUSD since the last snapshot "
   tvlUSDDelta: BigInt!
 }
+
+type PairSnapshot @entity {
+  " { The pair address }-{ period }-{ timestamp } "
+  id: ID!
+
+  " The pair "
+  pair: Pair!
+
+  " The time between snapshots "
+  period: Int!
+
+  " The timestamp of the snapshot "
+  timestamp: BigInt!
+
+  " The deposit amount of token0 "
+  reserve0: BigInt!
+
+  " The deposit amount of token1 "
+  reserve1: BigInt!
+
+  " The deposit amount of token1 normalized to 18 decimals "
+  reserve1Normalized: BigInt!
+
+  " The total value fo the pair "
+  liquidityUSD: BigInt!
+}
+
+type Account @entity {
+  " The account address "
+  id: ID!
+
+  " The liquidity provided in USD "
+  liquidityUSD: BigInt!
+
+  " Last updated block number "
+  lastUpdatedBN: BigInt!
+
+  " Snapshot of the account's liquidity "
+  liquiditySnapshots: [AccountLiquiditySnapshot!]!
+}
+
+type AccountLiquiditySnapshot @entity {
+  " { The account address }-{ period }-{ timestamp } "
+  id: ID!
+
+  " Time between snapshots "
+  period: Int!
+
+  " The account "
+  account: Account!
+
+  " The timestamp of the snapshot "
+  timestamp: BigInt!
+
+  " The liquidity provided in USD "
+  liquidityUSD: BigInt!
+}

@@ -22,3 +22,9 @@ export function getBeginOfTheHourTimestamp(secondsSinceEpoch: BigInt): BigInt {
     secondsSinceEpoch.mod(BigInt.fromI32(SECONDS_PER_HOUR))
   );
 }
+
+export function getBeginOfThePeriodTimestamp(secondsSinceEpoch: BigInt, period: number): BigInt {
+  return secondsSinceEpoch.minus(
+    secondsSinceEpoch.mod(BigInt.fromI32(<i32>period))
+  );
+}

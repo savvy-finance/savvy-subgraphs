@@ -1,6 +1,7 @@
 import { Token } from "../../generated/schema";
 import { ERC20 } from '../../generated/LBPair/ERC20';
 import { Address } from "@graphprotocol/graph-ts";
+import { SV_BTC, SV_ETH, SV_USD } from "../constants";
 
 export function getOrCreateToken(contractAddress: string): Token {
     let token = Token.load(contractAddress);
@@ -29,4 +30,8 @@ export function getOrCreateToken(contractAddress: string): Token {
         token.save();
     }
     return token;
+}
+
+export function isSavvySynthetic(address: string ): boolean {
+    return address === SV_BTC || address === SV_ETH || address === SV_USD;
 }

@@ -1,7 +1,7 @@
 import { ethereum } from "@graphprotocol/graph-ts";
 import { TJ_LP_SVBTC, TJ_LP_SVETH, TJ_LP_SVUSD } from "./constants";
 import { createPairHourlySnapshot, updatePair } from "./helpers/pair";
-import { DepositedToBins, WithdrawnFromBins } from '../generated/LBPair/LBPair';
+import { DepositedToBins, WithdrawnFromBins } from '../generated/TJ_LP_SVUSD/LBPair';
 
 function handlePair(block: ethereum.Block, contractAddress: string): void {
   updatePair(block, contractAddress);

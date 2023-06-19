@@ -103,25 +103,57 @@ type Account @entity {
   " The account address "
   id: ID!
 
-  " The liquidity provided in USD "
-  liquidityUSD: BigInt!
+  " The liquidity provided in USD across all pairs "
+  totalLiquidityUSD: BigInt!
 
   " Last updated block number "
   lastUpdatedBN: BigInt!
 
+  " Per pair liquidity "
+  liquidityPositions: [AccountLiquidity!]! @derivedFrom(field: "account")
+}
+
+type AccountLiquidity @entity {
+  " { The account address }-{ pair id } "
+  id: ID!
+
+  " The account "
+  account: Account!
+
+  " Pair id "
+  pairId: Pair!
+
+  " Last updated block number "
+  lastUpdatedBN: BigInt!
+
+  " The liquidity provided in USD "
+  liquidityUSD: BigInt!
+
+  " The synthetic balance of the account "
+  syntheticBalance: BigInt!
+
+  " The base token balance of the account "
+  baseTokenBalance: BigInt!
+
   " Snapshot of the account's liquidity "
-  liquiditySnapshots: [AccountLiquiditySnapshot!]!
+  liquiditySnapshots: [AccountLiquiditySnapshot!]! @derivedFrom(field: "account")
 }
 
 type AccountLiquiditySnapshot @entity {
-  " { The account address }-{ period }-{ timestamp } "
+  " { The account address }-{ pair id }-{ period }-{ timestamp } "
   id: ID!
 
   " Time between snapshots "
   period: Int!
 
-  " The account "
-  account: Account!
+  " The account and pair that this snapshot relates to"
+  account: AccountLiquidity!
+
+  " The synthetic balance of the account "
+  syntheticBalance: BigInt!
+
+  " The base token balance of the account "
+  baseTokenBalance: BigInt!
 
   " The timestamp of the snapshot "
   timestamp: BigInt!

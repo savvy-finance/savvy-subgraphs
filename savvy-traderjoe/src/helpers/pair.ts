@@ -30,11 +30,17 @@ export function getPriceFromBinId(binId: number, reserve0: BigInt, token1: strin
     return priceInUSD.value;
 }
 
-export function updatePair(block: ethereum.Block, contractAddress: string): Pair {
+export function getOrCreatePair(contractAddress: string): Pair {
     let pair = Pair.load(contractAddress);
     if (!pair) {
         pair = new Pair(contractAddress);
     }
+    return pair;
+}
+
+export function updatePair(block: ethereum.Block, contractAddress: string): Pair {
+    let pair = getOrCreatePair(contractAddress);
+
     const lbPair = LBPair.bind(Address.fromString(contractAddress));
     const token0 = lbPair.try_getTokenX();
     if (!token0.reverted) {

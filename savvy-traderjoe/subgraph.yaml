@@ -77,30 +77,30 @@ dataSources:
         - event: WithdrawnFromBins(indexed address,indexed address,uint256[],bytes32[])
           handler: handleRemoveLiquidity
       file: ./src/lb-pair.ts
-  - kind: ethereum
-    name: TJ_LPRouter
-    network: arbitrum-one
-    source:
-      address: "0xb4315e873dBcf96Ffd0acd8EA43f689D8c20fB30"
-      abi: LBRouter
-      startBlock: 100525329
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.7
-      language: wasm/assemblyscript
-      entities: []
-      abis:
-        - name: LBRouter
-          file: ./abis/LBRouter.json
-        - name: LBPair
-          file: ./abis/LBPair.json
-        - name: ERC20
-          file: ./abis/ERC20.json
-        - name: SavvyPriceFeed
-          file: ./abis/SavvyPriceFeed.json
-      callHandlers:
-        - function: addLiquidity((address,address,uint256,uint256,uint256,uint256,uint256,uint256,uint256,int256[],uint256[],uint256[],address,address,uint256))
-          handler: handleAddLiquidity
-        - function: removeLiquidity(address,address,uint16,uint256,uint256,uint256[],uint256[],address,uint256)
-          handler: handleRemoveLiquidity
-      file: ./src/lb-router.ts
+  # - kind: ethereum
+  #   name: TJ_LPRouter
+  #   network: arbitrum-one
+  #   source:
+  #     address: "0xb4315e873dBcf96Ffd0acd8EA43f689D8c20fB30"
+  #     abi: LBRouter
+  #     startBlock: 100525329
+  #   mapping:
+  #     kind: ethereum/events
+  #     apiVersion: 0.0.7
+  #     language: wasm/assemblyscript
+  #     entities: []
+  #     abis:
+  #       - name: LBRouter
+  #         file: ./abis/LBRouter.json
+  #       - name: LBPair
+  #         file: ./abis/LBPair.json
+  #       - name: ERC20
+  #         file: ./abis/ERC20.json
+  #       - name: SavvyPriceFeed
+  #         file: ./abis/SavvyPriceFeed.json
+  #     callHandlers:
+  #       - function: addLiquidity((address,address,uint256,uint256,uint256,uint256,uint256,uint256,uint256,int256[],uint256[],uint256[],address,address,uint256))
+  #         handler: handleAddLiquidity
+  #       - function: removeLiquidity(address,address,uint16,uint256,uint256,uint256[],uint256[],address,uint256)
+  #         handler: handleRemoveLiquidity
+  #     file: ./src/lb-router.ts

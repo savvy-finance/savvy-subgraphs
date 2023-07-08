@@ -24,7 +24,7 @@ export function getOrCreateAccountLiquidity(address: string, pairAddress: string
         accountLiquidity.syntheticBalance = BIGINT_ZERO;
         accountLiquidity.baseTokenBalance = BIGINT_ZERO;
         accountLiquidity.lastUpdatedBN = BIGINT_ZERO;
-        accountLiquidity.pairId = pairAddress;
+        accountLiquidity.pair = pairAddress;
         accountLiquidity.save();
     }
     return accountLiquidity;

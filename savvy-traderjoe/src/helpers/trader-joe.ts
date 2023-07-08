@@ -1,5 +1,6 @@
-import { bigInt, BigInt, Bytes, log } from "@graphprotocol/graph-ts"
-import { BIGINT_ONE } from "../constants";
+import { Address, bigInt, BigInt, Bytes, log } from "@graphprotocol/graph-ts"
+import { LiquidityAmountsContract } from "../../generated/TJ_LP_SVBTC/LiquidityAmountsContract";
+import { BIGINT_ONE, LIQUIDITY_AMOUNTS_CONTRACT } from "../constants";
 
 
 // https://docs.traderjoexyz.com/guides/tracking-pool-balances
@@ -34,3 +35,9 @@ export function decodeY(packedAmounts: Bytes): BigInt {
     log.debug("packedAmounts={} decodeY={} int={}", [packedAmounts.toHexString(), BigInt.fromUnsignedBytes(packedAmounts).rightShift(128).toHexString(), BigInt.fromUnsignedBytes(packedAmounts).rightShift(128).toString()]);
     return BigInt.fromUnsignedBytes(packedAmounts).rightShift(128)
   }
+
+export function getLiquidityForAccount(account: string, lbPair: string, bins: BigInt[]): BigInt[] {
+  const lens = LiquidityAmountsContract.bind(Address.fromString(LIQUIDITY_AMOUNTS_CONTRACT));
+  const result = lens.getAmountsOf(Address.fromString(account), bins, Address.fromString(lbPair));
+  return [result.value0, result.value1];
+}

@@ -121,7 +121,7 @@ type AccountLiquidity @entity {
   account: Account!
 
   " Pair id "
-  pairId: Pair!
+  pair: Pair!
 
   " Last updated block number "
   lastUpdatedBN: BigInt!
@@ -160,4 +160,110 @@ type AccountLiquiditySnapshot @entity {
 
   " The liquidity provided in USD "
   liquidityUSD: BigInt!
+}
+
+type Account2 @entity {
+  " The account address "
+  id: ID!
+
+  " svUSD balance for user  "
+  svUSD: BigInt!
+
+  " USDC balance for user  "
+  USDC: BigInt!
+
+  " svUSD pool liquidity   "
+  svUSDLiquidityUSD: BigInt!
+
+  " List of active bins "
+  svUSDBins: [BigInt!]! 
+
+  " svBTC balance for user  "
+  svBTC: BigInt!
+
+  " WBTC balance for user  "
+  WBTC: BigInt!
+
+  " svBTC pool liquidity   "
+  svBTCLiquidityUSD: BigInt!
+
+  " List of active bins "
+  svBTCBins: [BigInt!]! 
+
+  " svETH balance for user  "
+  svETH: BigInt!
+
+  " WETH balance for user  "
+  WETH: BigInt!
+
+  " svETH pool liquidity   "
+  svETHLiquidityUSD: BigInt!
+  
+  " List of active bins "
+  svETHBins: [BigInt!]! 
+
+  " The liquidity provided in USD across all pairs "
+  totalLiquidityUSD: BigInt!
+
+  " Last updated block number "
+  lastUpdatedBN: BigInt!
+
+  " Last updated timestamp "
+  lastUpdatedTimestamp: BigInt!
+
+  " Per pair liquidity "
+  snapshots: [Account2Snapshot!]! @derivedFrom(field: "account")
+}
+
+type Account2Snapshot @entity {
+  " { The account address }-{ timestamp } "
+  id: ID!
+
+  " The account "
+  account: Account2!
+
+  " svUSD balance for user  "
+  svUSD: BigInt!
+
+  " USDC balance for user  "
+  USDC: BigInt!
+
+  " svUSD pool liquidity   "
+  svUSDLiquidityUSD: BigInt!
+
+  " List of active bins "
+  svUSDBins: [BigInt!]! 
+
+  " svBTC balance for user  "
+  svBTC: BigInt!
+
+  " WBTC balance for user  "
+  WBTC: BigInt!
+
+  " svBTC pool liquidity   "
+  svBTCLiquidityUSD: BigInt!
+
+  " List of active bins "
+  svBTCBins: [BigInt!]! 
+
+  " svETH balance for user  "
+  svETH: BigInt!
+
+  " WETH balance for user  "
+  WETH: BigInt!
+
+  " svETH pool liquidity   "
+  svETHLiquidityUSD: BigInt!
+
+  " List of active bins "
+  svETHBins: [BigInt!]! 
+
+  " The liquidity provided in USD across all pairs "
+  totalLiquidityUSD: BigInt!
+
+  " Block number "
+  blockNumber: BigInt!
+
+  " Timestamp "
+  timestamp: BigInt!
 }

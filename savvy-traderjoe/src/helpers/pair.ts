@@ -1,10 +1,11 @@
 import { Address, BigDecimal, BigInt, ethereum, log } from "@graphprotocol/graph-ts";
 import { LBPair } from "../../generated/TJ_LP_SVBTC/LBPair";
 import { SavvyPriceFeed } from "../../generated/TJ_LP_SVBTC/SavvyPriceFeed";
+import { LiquidityAmountsContract } from "../../generated/TJ_LP_SVBTC/LiquidityAmountsContract";
 import { Pair, PairHourlySnapshot, PairSnapshot, Token } from "../../generated/schema";
 import { getBeginOfTheHourTimestamp, getBeginOfThePeriodTimestamp, getHoursSinceEpoch } from "../utils/time";
 import { getOrCreateToken } from "./token";
-import { SAVVY_PRICE_FEED, SV_BTC, SV_ETH, SV_USD, TJ_LP_SVBTC, TJ_LP_SVETH, TJ_LP_SVUSD } from "../constants";
+import { LIQUIDITY_AMOUNTS_CONTRACT, SAVVY_PRICE_FEED, SV_BTC, SV_ETH, SV_USD, TJ_LP_SVBTC, TJ_LP_SVETH, TJ_LP_SVUSD } from "../constants";
 
 const BASE_BIN_PRICE = 1.0005;
 const BASE_BIN_ID = 8388608;
@@ -117,7 +118,7 @@ export function createPairSnapshot(block: ethereum.Block, contractAddress: strin
     if (!snapshot) {
         snapshot = new PairSnapshot(snapshotId);
         snapshot.pair = pair.id;
-        snapshot.period = period;
+        snapshot.period = <i32>period;
         snapshot.timestamp = getBeginOfTheHourTimestamp(block.timestamp);
     }
 

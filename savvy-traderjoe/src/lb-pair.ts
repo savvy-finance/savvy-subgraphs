@@ -1,6 +1,6 @@
 import { BigInt, ethereum, log } from "@graphprotocol/graph-ts";
 import { BIGINT_ONE, BIGINT_TEN, QUARTERHOUR_IN_SECONDS, TJ_LP_SVBTC, TJ_LP_SVETH, TJ_LP_SVUSD } from "./constants";
-import { createPairHourlySnapshot, getOrCreatePair, getPriceFromBinId, updatePair } from "./helpers/pair";
+import { createPairHourlySnapshot, createPairSnapshot, getOrCreatePair, getPriceFromBinId, updatePair } from "./helpers/pair";
 import { DepositedToBins, WithdrawnFromBins } from '../generated/TJ_LP_SVUSD/LBPair';
 import { getAmounts } from "./helpers/trader-joe";
 import { LBPair } from "../generated/TJ_LP_SVBTC/LBPair";
@@ -23,9 +23,9 @@ export function handleSvBTCPair(block: ethereum.Block): void {
 
 export function handleAddLiquidity(event: DepositedToBins): void {
   createPairHourlySnapshot(event.block, event.address.toHexString());
+  createPairSnapshot(event.block, event.address.toHexString(), QUARTERHOUR_IN_SECONDS);
   const lbPair = LBPair.bind(event.address);
   const amounts = getAmounts(event.params.amounts);
-  log.debug('amounts[0]={} amounts[1]={} contract={} txhash={}', [amounts[0].toString(), amounts[1].toString(), event.address.toHexString(), event.transaction.hash.toHexString()]);
   const token = getOrCreateToken(lbPair.getTokenY().toHexString());
   const liquidityUSD = getPriceFromBinId(
       lbPair.getActiveId(), 
@@ -47,6 +47,7 @@ export function handleAddLiquidity(event: DepositedToBins): void {
 }
 export function handleRemoveLiquidity(event: WithdrawnFromBins): void {
   createPairHourlySnapshot(event.block, event.address.toHexString());
+  createPairSnapshot(event.block, event.address.toHexString(), QUARTERHOUR_IN_SECONDS);
   const lbPair = LBPair.bind(event.address);
   const amounts = getAmounts(event.params.amounts);
   const token = getOrCreateToken(lbPair.getTokenY().toHexString());

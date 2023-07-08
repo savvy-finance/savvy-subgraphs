@@ -21,6 +21,8 @@ dataSources:
           file: ./abis/ERC20.json
         - name: SavvyPriceFeed
           file: ./abis/SavvyPriceFeed.json
+        - name: LiquidityAmountsContract
+          file: ./abis/LiquidityAmountsContract.json
       eventHandlers:
         - event: DepositedToBins(indexed address,indexed address,uint256[],bytes32[])
           handler: handleAddLiquidity
@@ -46,6 +48,8 @@ dataSources:
           file: ./abis/ERC20.json
         - name: SavvyPriceFeed
           file: ./abis/SavvyPriceFeed.json
+        - name: LiquidityAmountsContract
+          file: ./abis/LiquidityAmountsContract.json
       eventHandlers:
         - event: DepositedToBins(indexed address,indexed address,uint256[],bytes32[])
           handler: handleAddLiquidity
@@ -71,6 +75,8 @@ dataSources:
           file: ./abis/ERC20.json
         - name: SavvyPriceFeed
           file: ./abis/SavvyPriceFeed.json
+        - name: LiquidityAmountsContract
+          file: ./abis/LiquidityAmountsContract.json
       eventHandlers:
         - event: DepositedToBins(indexed address,indexed address,uint256[],bytes32[])
           handler: handleAddLiquidity

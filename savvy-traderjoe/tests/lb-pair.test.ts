@@ -6,9 +6,11 @@ import {
   beforeAll,
   afterAll
 } from "matchstick-as/assembly/index";
-import { Address, Bytes, BigDecimal, BigInt, log } from "@graphprotocol/graph-ts";
+import { log } from "matchstick-as/assembly/log";
+import { Address, Bytes, BigDecimal, BigInt } from "@graphprotocol/graph-ts";
 import { decodeX, decodeY, getAmounts } from "../src/helpers/trader-joe";
-import { getPriceFromBinId } from '../src/helpers/pair';
+import { getLiquidityForAccount, getPriceFromBinId } from '../src/helpers/pair';
+import { TJ_LP_SVUSD } from "../src/constants";
 
 // Tests structure (matchstick-as >=0.5.0)
 // https://thegraph.com/docs/en/developer/matchstick/#tests-structure-0-5-0
@@ -42,6 +44,8 @@ describe("Describe entity assertions", () => {
     // packedAmounts.reverse();
     // decodeX(packedAmounts);
     // decodeY(packedAmounts);
+
+    
 
     const amounts = getAmounts([
       Bytes.fromHexString("0x0000000000000000000000000041607F00000000000000000000000000000000"),

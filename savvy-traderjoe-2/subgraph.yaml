@@ -18,6 +18,8 @@ dataSources:
       abis:
         - name: LBPair
           file: ./abis/LBPair.json
+        - name: SavvyPriceFeed
+          file: ./abis/SavvyPriceFeed.json
       eventHandlers:
         - event: DepositedToBins(indexed address,indexed address,uint256[],bytes32[])
           handler: handleDepositedToBins
@@ -44,6 +46,8 @@ dataSources:
       abis:
         - name: LBPair
           file: ./abis/LBPair.json
+        - name: SavvyPriceFeed
+          file: ./abis/SavvyPriceFeed.json
       eventHandlers:
         - event: DepositedToBins(indexed address,indexed address,uint256[],bytes32[])
           handler: handleDepositedToBins
@@ -70,6 +74,8 @@ dataSources:
       abis:
         - name: LBPair
           file: ./abis/LBPair.json
+        - name: SavvyPriceFeed
+          file: ./abis/SavvyPriceFeed.json
       eventHandlers:
         - event: DepositedToBins(indexed address,indexed address,uint256[],bytes32[])
           handler: handleDepositedToBins

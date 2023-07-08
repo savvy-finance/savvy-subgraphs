@@ -1,0 +1,42 @@
+type Token @entity {
+  " The token address "
+  id: ID!
+
+  " The token name "
+  name: String!
+
+  " The token symbol "
+  symbol: String!
+
+  " The token decimals "
+  decimals: Int!
+}
+
+type LiquidityPool @entity {
+  "The address of the liquidity pool"
+  id: ID!
+
+  "The synthetic token of the liquidity pool"
+  savvySynthetic: Token!
+
+  "The paired token of the liquidity pool"
+  pairToken: Token!
+
+  "The balance of Savvy Synthetics in the liquidity pool"
+  savvySyntheticBalance: BigInt!
+
+  "The balance of the paired token in the liquidity pool in the same decimals as the paired token"
+  pairTokenBalance: BigInt!
+
+  "The balance of paired tok in the liquidity pool in 18 decimals"
+  pairTokenBalanceNormalized: BigInt!
+
+  "The value of the pool in USD"
+  totalValueUSD: BigDecimal!
+
+  "The block number of the last update"
+  lastUpdatedBN: BigInt!
+
+  "The timestamp of the last update"
+  lastUpdatedTimestamp: BigInt!
+}

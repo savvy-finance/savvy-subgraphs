@@ -1,0 +1,52 @@
+import { Address, BigDecimal, BigInt, Bytes } from "@graphprotocol/graph-ts"
+import { BIGINT_ONE } from "../constants";
+import { getTokenValueInUSD } from "./tokens";
+
+export function getLPPairInUSD(binId: number, syntheticAmount: BigInt, pairTokenAddress: Address, pairTokenAmount: BigInt, pairTokenDecimals: number): BigDecimal {
+    const syntheticInPairedAmount = convertSyntheticAmountToPairedAmount(binId, syntheticAmount, pairTokenDecimals);
+    const totalPairedAmount = syntheticInPairedAmount.plus(pairTokenAmount);
+    const valueInUSD = getTokenValueInUSD(pairTokenAddress, totalPairedAmount);
+    return valueInUSD;
+}
+
+const BASE_BIN_PRICE = 1.0005; // (1 + binStep / 10_000)
+const BASE_BIN_ID = 8388608;
+export function convertSyntheticAmountToPairedAmount(binId: number, syntheticAmount: BigInt, pairTokenDecimals: number): BigInt {
+    // https://docs.traderjoexyz.com/guides/price-from-id
+    // (1 + binStep / 10_000) ** (binId - 8388608)
+    const priceFactor = binId - BASE_BIN_ID;
+    const price = BASE_BIN_PRICE ** priceFactor;
+    const conversionFactor = 10**(18-pairTokenDecimals);
+    const priceOfSyntheticInPairedAsset = BigDecimal.fromString(`${price * conversionFactor}`);
+    const normalizedSyntheticInPairedAsset = syntheticAmount.toBigDecimal().times(priceOfSyntheticInPairedAsset);
+    const syntheticInPairedAsset = normalizedSyntheticInPairedAsset.div(BigDecimal.fromString(`${conversionFactor}`));
+    return BigInt.fromString(syntheticInPairedAsset.toString().split('.')[0]);
+}
+
+// https://docs.traderjoexyz.com/guides/tracking-pool-balances
+// Assemblyscript API
+// https://thegraph.com/docs/en/developing/assemblyscript-api/
+export function getAmounts(amounts: Bytes[]): BigInt[] {
+    let amountX:BigInt = BIGINT_ONE;
+    let amountY:BigInt = BIGINT_ONE;
+    for (let i=0; i < amounts.length; i++) {
+      const _amounts = amounts[i]
+      // NOTE: reverse bytes to convert to big endianness
+      _amounts.reverse()
+      const _amountX = decodeX(_amounts);
+      const _amountY = decodeY(_amounts);
+      amountX = amountX.plus(_amountX);
+      amountY = amountY.plus(_amountY);
+    }
+    return [amountX, amountY];
+}
+
+export function decodeX(packedAmounts: Bytes): BigInt {
+  // Read the right 128 bits of the 256 bits
+  return BigInt.fromUnsignedBytes(packedAmounts).bitAnd(BigInt.fromI32(2).pow(128).minus(BigInt.fromI32(1)));
+}
+  
+export function decodeY(packedAmounts: Bytes): BigInt {
+  // Read the left 128 bits of the 256 bits
+  return BigInt.fromUnsignedBytes(packedAmounts).rightShift(128)
+}

@@ -1,5 +1,6 @@
 import { Address, log, BigInt, BigDecimal } from "@graphprotocol/graph-ts";
-import { BIGDECIMAL_TEN_TO_EIGHTEENTH, BIGDECIMAL_ZERO, BIGINT_TEN, BIGINT_ZERO, SAVVY_PRICE_FEED, SV_BTC, SV_ETH, SV_USD } from "../constants";
+import { BIGDECIMAL_TEN_TO_EIGHTEENTH, BIGDECIMAL_ZERO, BIGINT_TEN, SAVVY_PRICE_FEED, SV_BTC, SV_ETH, SV_USD } from "../constants";
+import { SavvyPriceFeed } from "../../generated/TJ_LP_SVUSD/SavvyPriceFeed";
 
 /**
  * Determines if an address is a Savvy synthetic.
@@ -29,6 +30,7 @@ export function getTokenValueInUSD(token: Address, amount: BigInt): BigDecimal {
 
 /**
  * Normalize BigInt to 18 decimals.
+ * @throws error when decimals is greater than 18.
  * @param number The number you want to normalize. 
  * @param decimals The decimals of the number.
  * @returns The number normalized to 18 decimals.

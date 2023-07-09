@@ -40,3 +40,53 @@ type LiquidityPool @entity {
   "The timestamp of the last update"
   lastUpdatedTimestamp: BigInt!
 }
+
+type Account @entity { 
+  "The address of the account"
+  id: ID!
+
+  " svUSD balance for user  "
+  svUSD: BigInt!
+
+  " USDC balance for user  "
+  USDC: BigInt!
+
+  " svUSD pool liquidity   "
+  svUSDLiquidityUSD: BigDecimal!
+
+  " List of active bins "
+  svUSDBinIds: [BigInt!]! 
+
+  " svBTC balance for user  "
+  svBTC: BigInt!
+
+  " WBTC balance for user  "
+  WBTC: BigInt!
+
+  " svBTC pool liquidity   "
+  svBTCLiquidityUSD: BigDecimal!
+
+  " List of active bins "
+  svBTCBinIds: [BigInt!]! 
+
+  " svETH balance for user  "
+  svETH: BigInt!
+
+  " WETH balance for user  "
+  WETH: BigInt!
+
+  " svETH pool liquidity   "
+  svETHLiquidityUSD: BigDecimal!
+  
+  " List of active bins "
+  svETHBinIds: [BigInt!]! 
+
+  " The liquidity provided in USD across all pairs "
+  totalLiquidityUSD: BigDecimal!
+
+  " Last updated block number "
+  lastUpdatedBN: BigInt!
+
+  " Last updated timestamp "
+  lastUpdatedTimestamp: BigInt!
+}

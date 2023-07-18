@@ -35,7 +35,7 @@ export function getBalancesFromBinIds(accountAddress: Address, lpAddress: Addres
   const liquidityAmountsContract = LiquidityAmountsContract.bind(LIQUIDITY_AMOUNTS_CONTRACT);
   const result = liquidityAmountsContract.try_getAmountsOf(accountAddress, binIds, lpAddress);
   if (result.reverted) {
-    log.error("[getBalancesFromBinIds] getAmountsOf reverted: %", [result.reverted.toString()]);
+    log.error("[getBalancesFromBinIds] getAmountsOf reverted: {}", [result.reverted.toString()]);
     return [BIGINT_ZERO, BIGINT_ZERO];
   }
   return [result.value.value0, result.value.value1];

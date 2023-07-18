@@ -62,6 +62,35 @@ type LiquidityPool @entity {
 
   "The timestamp of the last update"
   lastUpdatedTimestamp: BigInt!
+
+  "Liquidity snapshots"
+  snapshots: [LiquidityPoolSnapshot!]! @derivedFrom(field: "liquidityPool")
+}
+
+type LiquidityPoolSnapshot @entity {
+  "(The address of the liquidity pool)-(timestamp)"
+  id: ID!
+
+  "The address of the liquidity pool"
+  liquidityPool: LiquidityPool!
+
+  "The time between snapshots in seconds"
+  period: Int!
+
+  "The balance of Savvy Synthetics in the liquidity pool"
+  savvySyntheticBalance: BigInt!
+
+  "The balance of the paired token in the liquidity pool in the same decimals as the paired token"
+  pairTokenBalance: BigInt!
+
+  "The balance of paired tok in the liquidity pool in 18 decimals"
+  pairTokenBalanceNormalized: BigInt!
+
+  "The value of the pool in USD"
+  totalValueUSD: BigDecimal!
+
+  "The timestamp of the last update"
+  timestamp: BigInt!
 }
 
 type Account @entity { 

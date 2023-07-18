@@ -5,6 +5,7 @@ import { BIGINT_ZERO, BIGDECIMAL_ZERO } from '../constants';
 import { normalizeToEighteenDecimals } from '../utils/tokens';
 import { getLPPairInUSD } from '../utils/trader-joe';
 import { getOrCreateToken } from './token';
+import { createLiquidityPoolSnapshot } from './liquidity-pool-snapshot';
 
 export function getOrCreateLiquidityPool(contractAddress: Address): LiquidityPool {
   const id = contractAddress.toHexString();
@@ -46,5 +47,6 @@ export function updateLiquidityPool(contractAddress: Address, block: ethereum.Bl
   liquidityPool.lastUpdatedBN = block.number;
   liquidityPool.lastUpdatedTimestamp = block.timestamp;
   liquidityPool.save();
+  createLiquidityPoolSnapshot(contractAddress, block, liquidityPool);
   return liquidityPool;
 }

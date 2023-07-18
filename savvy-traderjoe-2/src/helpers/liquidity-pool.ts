@@ -49,6 +49,6 @@ export function updateLiquidityPool(contractAddress: Address, block: ethereum.Bl
   liquidityPool.lastUpdatedTimestamp = block.timestamp;
   liquidityPool.save();
   createLiquidityPoolSnapshot(contractAddress, block, liquidityPool);
-  updateProtocolPoolLiquidity(liquidityPool);
+  updateProtocolPoolLiquidity(liquidityPool, block);
   return liquidityPool;
 }

@@ -1,5 +1,7 @@
+import { ethereum } from "@graphprotocol/graph-ts";
 import { LiquidityPool, Protocol } from "../../generated/schema";
 import { BIGDECIMAL_ZERO, BIGINT_ZERO, PROTOCOL_NAME, PROTOCOL_SLUG, TJ_LP_SVBTC, TJ_LP_SVETH, TJ_LP_SVUSD } from "../constants";
+import { createProtocolSnapshot } from "./protocol-snapshot";
 
 export function getOrCreateProtocol(): Protocol {
   let protocol = Protocol.load(PROTOCOL_SLUG);
@@ -25,7 +27,7 @@ export function getOrCreateProtocol(): Protocol {
   return protocol;
 }
 
-export function updateProtocolPoolLiquidity(lbPair: LiquidityPool): Protocol {
+export function updateProtocolPoolLiquidity(lbPair: LiquidityPool, block: ethereum.Block): Protocol {
   const protocol = getOrCreateProtocol();
 
   if (lbPair.id.includes(TJ_LP_SVUSD)) {
@@ -50,5 +52,6 @@ export function updateProtocolPoolLiquidity(lbPair: LiquidityPool): Protocol {
   protocol.lastUpdatedBN = lbPair.lastUpdatedBN;
   protocol.lastUpdatedTimestamp = lbPair.lastUpdatedTimestamp;
   protocol.save();
+  createProtocolSnapshot(block, protocol);
   return protocol;
 }

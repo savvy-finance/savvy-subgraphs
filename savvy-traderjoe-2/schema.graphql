@@ -62,6 +62,53 @@ type Protocol @entity {
   lastUpdatedTimestamp: BigInt!
 }
 
+type ProtocolSnapshot @entity {
+  "(The id of the protocol)-(snapshot timestamp)"
+  id: ID!
+
+  "The protocol this snapshot belongs to"
+  protocol: Protocol!
+
+  "The time between snapshots in seconds"
+  period: Int!
+
+  " The timestamp of the snapshot "
+  timestamp: BigInt!
+
+  "Number of market makers"
+  numOfAccounts: BigInt!
+
+  " svUSD balance for user  "
+  svUSD: BigInt!
+
+  " USDC balance for user  "
+  USDC: BigInt!
+
+  " svUSD pool liquidity   "
+  svUSDLiquidityUSD: BigDecimal!
+  
+  " svBTC balance for user  "
+  svBTC: BigInt!
+
+  " WBTC balance for user  "
+  WBTC: BigInt!
+
+  " svBTC pool liquidity   "
+  svBTCLiquidityUSD: BigDecimal!
+
+  " svETH balance for user  "
+  svETH: BigInt!
+
+  " WETH balance for user  "
+  WETH: BigInt!
+
+  " svETH pool liquidity   "
+  svETHLiquidityUSD: BigDecimal!
+
+  "The value of the pool in USD"
+  totalLiquidityUSD: BigDecimal!
+}
+
 type LiquidityPool @entity {
   "The address of the liquidity pool"
   id: ID!

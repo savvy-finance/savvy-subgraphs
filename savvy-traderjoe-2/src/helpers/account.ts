@@ -5,6 +5,7 @@ import { BIGDECIMAL_ZERO, BIGINT_ONE, BIGINT_ZERO, TJ_LP_SVBTC, TJ_LP_SVETH, TJ_
 import { mergeSortedArrays, checkArrayIsAscSorted } from "../utils/array";
 import { normalizeToEighteenDecimals } from "../utils/tokens";
 import { getBalancesFromBinIds, getLPPairInUSD } from "../utils/trader-joe";
+import { createAccountSnapshot } from "./account-snapshot";
 import { getOrCreateProtocol } from "./protocol";
 import { getOrCreateToken } from "./token";
 
@@ -105,6 +106,8 @@ export function refreshBalances(accountAddress: Address, block: ethereum.Block):
   account.lastUpdatedBN = block.number;
   account.lastUpdatedTimestamp = block.timestamp;
   account.save();
+
+  createAccountSnapshot(accountAddress, block, account);
   return account;
 }
 

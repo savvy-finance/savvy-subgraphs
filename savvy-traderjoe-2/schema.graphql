@@ -145,3 +145,56 @@ type Account @entity {
   " Last updated timestamp "
   lastUpdatedTimestamp: BigInt!
 }
+
+type AccountSnapshot @entity { 
+  "(The address of the account)-(timstamp)"
+  id: ID!
+
+  "The account this snapshot belongs to"
+  account: Account!
+
+  "The time between snapshots in seconds"
+  period: Int!
+
+  " The timestamp of the snapshot "
+  timestamp: BigInt!
+
+  " svUSD balance for user  "
+  svUSD: BigInt!
+
+  " USDC balance for user  "
+  USDC: BigInt!
+
+  " svUSD pool liquidity   "
+  svUSDLiquidityUSD: BigDecimal!
+
+  " List of active bins "
+  svUSDBinIds: [BigInt!]! 
+
+  " svBTC balance for user  "
+  svBTC: BigInt!
+
+  " WBTC balance for user  "
+  WBTC: BigInt!
+
+  " svBTC pool liquidity   "
+  svBTCLiquidityUSD: BigDecimal!
+
+  " List of active bins "
+  svBTCBinIds: [BigInt!]! 
+
+  " svETH balance for user  "
+  svETH: BigInt!
+
+  " WETH balance for user  "
+  WETH: BigInt!
+
+  " svETH pool liquidity   "
+  svETHLiquidityUSD: BigDecimal!
+  
+  " List of active bins "
+  svETHBinIds: [BigInt!]! 
+
+  " The liquidity provided in USD across all pairs "
+  totalLiquidityUSD: BigDecimal!
+}

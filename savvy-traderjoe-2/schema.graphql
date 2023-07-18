@@ -25,14 +25,41 @@ type Protocol @entity {
   "Number of market makers"
   numOfAccounts: BigInt!
 
-  "svUSD pool liquidity"
-  svUSDLiquidityUSD: BigDecimal!
+  " svUSD balance for user  "
+  svUSD: BigInt!
 
-  "svBTC pool liquidity"
+  " USDC balance for user  "
+  USDC: BigInt!
+
+  " svUSD pool liquidity   "
+  svUSDLiquidityUSD: BigDecimal!
+  
+  " svBTC balance for user  "
+  svBTC: BigInt!
+
+  " WBTC balance for user  "
+  WBTC: BigInt!
+
+  " svBTC pool liquidity   "
   svBTCLiquidityUSD: BigDecimal!
 
-  "svETH pool liquidity"
+  " svETH balance for user  "
+  svETH: BigInt!
+
+  " WETH balance for user  "
+  WETH: BigInt!
+
+  " svETH pool liquidity   "
   svETHLiquidityUSD: BigDecimal!
+
+  "The value of the pool in USD"
+  totalLiquidityUSD: BigDecimal!
+
+  "The block number of the last update"
+  lastUpdatedBN: BigInt!
+
+  "The timestamp of the last update"
+  lastUpdatedTimestamp: BigInt!
 }
 
 type LiquidityPool @entity {
@@ -144,6 +171,9 @@ type Account @entity {
 
   " Last updated timestamp "
   lastUpdatedTimestamp: BigInt!
+
+  "Account snapshots"
+  snapshots: [AccountSnapshot!]! @derivedFrom(field: "account")
 }
 
 type AccountSnapshot @entity { 

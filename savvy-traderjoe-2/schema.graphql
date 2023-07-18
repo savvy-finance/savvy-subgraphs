@@ -12,6 +12,29 @@ type Token @entity {
   decimals: Int!
 }
 
+type Protocol @entity {
+  "The id of the protocol"
+  id: ID!
+
+  "The name of the protocol"
+  name: String!
+
+  "Market makers"
+  accounts: [Account!]! @derivedFrom(field: "protocol")
+
+  "Number of market makers"
+  numOfAccounts: BigInt!
+
+  "svUSD pool liquidity"
+  svUSDLiquidityUSD: BigDecimal!
+
+  "svBTC pool liquidity"
+  svBTCLiquidityUSD: BigDecimal!
+
+  "svETH pool liquidity"
+  svETHLiquidityUSD: BigDecimal!
+}
+
 type LiquidityPool @entity {
   "The address of the liquidity pool"
   id: ID!
@@ -44,6 +67,9 @@ type LiquidityPool @entity {
 type Account @entity { 
   "The address of the account"
   id: ID!
+
+  "The protocol the liquidity pool belongs to"
+  protocol: Protocol!
 
   " svUSD balance for user  "
   svUSD: BigInt!

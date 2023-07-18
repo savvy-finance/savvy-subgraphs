@@ -1,6 +1,7 @@
-import { Address, BigDecimal, BigInt, Bytes } from "@graphprotocol/graph-ts"
-import { BIGINT_ONE } from "../constants";
+import { Address, BigDecimal, BigInt, Bytes, log } from "@graphprotocol/graph-ts"
+import { BIGINT_ONE, BIGINT_ZERO, LIQUIDITY_AMOUNTS_CONTRACT } from "../constants";
 import { getTokenValueInUSD } from "./tokens";
+import { LiquidityAmountsContract } from '../../generated/TJ_LP_SVBTC/LiquidityAmountsContract';
 
 export function getLPPairInUSD(binId: number, syntheticAmount: BigInt, pairTokenAddress: Address, pairTokenAmount: BigInt, pairTokenDecimals: number): BigDecimal {
     const syntheticInPairedAmount = convertSyntheticAmountToPairedAmount(binId, syntheticAmount, pairTokenDecimals);
@@ -21,6 +22,23 @@ export function convertSyntheticAmountToPairedAmount(binId: number, syntheticAmo
     const normalizedSyntheticInPairedAsset = syntheticAmount.toBigDecimal().times(priceOfSyntheticInPairedAsset);
     const syntheticInPairedAsset = normalizedSyntheticInPairedAsset.div(BigDecimal.fromString(`${conversionFactor}`));
     return BigInt.fromString(syntheticInPairedAsset.toString().split('.')[0]);
+}
+
+/**
+ * Get token balances across bins.
+ * @param accountAddress The address of the account to get balances for.
+ * @param lpAddress The address of the TJ liquidity pool.
+ * @param binIds The bin IDs to get balances for.
+ * @returns The balance of [token0, token1] in the given bin IDs for the account.
+ */
+export function getBalancesFromBinIds(accountAddress: Address, lpAddress: Address, binIds: BigInt[]): BigInt[] {
+  const liquidityAmountsContract = LiquidityAmountsContract.bind(LIQUIDITY_AMOUNTS_CONTRACT);
+  const result = liquidityAmountsContract.try_getAmountsOf(accountAddress, binIds, lpAddress);
+  if (result.reverted) {
+    log.error("[getBalancesFromBinIds] getAmountsOf reverted: %", [result.reverted.toString()]);
+    return [BIGINT_ZERO, BIGINT_ZERO];
+  }
+  return [result.value.value0, result.value.value1];
 }
 
 // https://docs.traderjoexyz.com/guides/tracking-pool-balances

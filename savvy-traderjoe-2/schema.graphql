@@ -221,6 +221,12 @@ type Account @entity {
 
   "Account snapshots"
   snapshots: [AccountSnapshot!]! @derivedFrom(field: "account")
+
+  "Has ever held any of the NFT positions"
+  isEligibleForNFTBoost: Boolean!
+
+  "Account NFT positions"
+  nfts: AccountNFTPositions
 }
 
 type AccountSnapshot @entity { 
@@ -274,4 +280,11 @@ type AccountSnapshot @entity {
 
   " The liquidity provided in USD across all pairs "
   totalLiquidityUSD: BigDecimal!
+}
+
+type AccountNFTPositions @entity {
+  "The address of the account"
+  id: ID!
+  hasEverHeldUnshETHNFT: Boolean!
+  hasEverHeldMMCNFT: Boolean!
 }

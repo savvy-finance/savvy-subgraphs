@@ -1,4 +1,7 @@
 import { Address, BigInt } from "@graphprotocol/graph-ts";
+import { GalxeNFT } from "../generated/MMC_NFT/GalxeNFT";
+import { LiquidityAmountsContract } from "../generated/TJ_LP_SVBTC/LiquidityAmountsContract";
+import { ERC20 } from "../generated/TJ_LP_SVUSD/ERC20";
 
 export const SV_USD = "0xf202ab403cd7e90197ec0f010ee897e283037706";
 export const SV_ETH = "0xf7728582002ef82908c8242cf552e969ba863ffa";
@@ -8,7 +11,11 @@ export const TJ_LP_SVUSD = "0x3be852ff9f142783c71435524d63e2196e5f305a";
 export const TJ_LP_SVETH = "0x2e14e24ec3efbd3b8c8976405351f8233d59650e"; 
 export const TJ_LP_SVBTC = "0x830203b9a16920feb55d58d964ce83e1ba000269";
 export const SAVVY_PRICE_FEED = "0xbCDaB0382C17F58b828DB3AD840F0140C4f00156";
-export const LIQUIDITY_AMOUNTS_CONTRACT = Address.fromString("0x6277d122539110100fc2c78839c657033c294f64");
+export const LIQUIDITY_AMOUNTS_CONTRACT_ADDRESS = Address.fromString("0x6277d122539110100fc2c78839c657033c294f64");
+export const LIQUIDITY_AMOUNTS_CONTRACT = LiquidityAmountsContract.bind(LIQUIDITY_AMOUNTS_CONTRACT_ADDRESS);
+
+export const UNSHETH_NFT = GalxeNFT.bind(Address.fromString("0xa90679d031Fc2feb3235C265702c0fB61833978c"));
+export const MMC_NFT = GalxeNFT.bind(Address.fromString("0xB304461314C12D1C19af645B393961D52e113A2F"));
 
 export const BIGINT_ZERO = BigInt.fromI32(0);
 export const BIGINT_ONE = BigInt.fromI32(1);

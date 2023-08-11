@@ -1,7 +1,7 @@
 import { Address, BigDecimal, BigInt, Bytes, log } from "@graphprotocol/graph-ts"
-import { BIGINT_ONE, BIGINT_ZERO, LIQUIDITY_AMOUNTS_CONTRACT } from "../constants";
+import { LBPair } from "../../generated/TJ_LP_SVUSD/LBPair";
+import { BIGINT_MAX, BIGINT_ONE, BIGINT_ZERO, LIQUIDITY_AMOUNTS_CONTRACT } from "../constants";
 import { getTokenValueInUSD } from "./tokens";
-import { LiquidityAmountsContract } from '../../generated/TJ_LP_SVBTC/LiquidityAmountsContract';
 
 export function getLPPairInUSD(binId: number, syntheticAmount: BigInt, pairTokenAddress: Address, pairTokenAmount: BigInt, pairTokenDecimals: number): BigDecimal {
     const syntheticInPairedAmount = convertSyntheticAmountToPairedAmount(binId, syntheticAmount, pairTokenDecimals);
@@ -32,13 +32,14 @@ export function convertSyntheticAmountToPairedAmount(binId: number, syntheticAmo
  * @returns The balance of [token0, token1] in the given bin IDs for the account.
  */
 export function getBalancesFromBinIds(accountAddress: Address, lpAddress: Address, binIds: BigInt[]): BigInt[] {
-  const liquidityAmountsContract = LiquidityAmountsContract.bind(LIQUIDITY_AMOUNTS_CONTRACT);
-  const result = liquidityAmountsContract.try_getAmountsOf(accountAddress, binIds, lpAddress);
-  if (result.reverted) {
-    log.error("[getBalancesFromBinIds] getAmountsOf reverted: {}", [result.reverted.toString()]);
-    return [BIGINT_ZERO, BIGINT_ZERO];
-  }
-  return [result.value.value0, result.value.value1];
+  const result = LIQUIDITY_AMOUNTS_CONTRACT.getAmountsOf(accountAddress, binIds, lpAddress);
+  return [result.value0, result.value1];
+  // const result = LIQUIDITY_AMOUNTS_CONTRACT.try_getAmountsOf(accountAddress, binIds, lpAddress);
+  // if (result.reverted) {
+  //   log.error("[getBalancesFromBinIds] getAmountsOf reverted -- account: {} lp: {} binIds: {}", [accountAddress.toHexString(), lpAddress.toHexString(), binIds.toString()]);
+  //   return [BIGINT_MAX, BIGINT_MAX];
+  // }
+  // return [result.value.value0, result.value.value1];
 }
 
 // https://docs.traderjoexyz.com/guides/tracking-pool-balances
@@ -67,4 +68,15 @@ export function decodeX(packedAmounts: Bytes): BigInt {
 export function decodeY(packedAmounts: Bytes): BigInt {
   // Read the left 128 bits of the 256 bits
   return BigInt.fromUnsignedBytes(packedAmounts).rightShift(128)
+}
+
+export function pruneBins(lbPair: LBPair, binIds: BigInt[]): BigInt[] {
+  const prunedBinIds: BigInt[] = [];
+  for (let i=0; i < binIds.length; i++) {
+    const binSupply = lbPair.totalSupply(binIds[i]);
+    if (binSupply.gt(BIGINT_ZERO)) {
+      prunedBinIds.push(binIds[i]);
+    }
+  }
+  return prunedBinIds;
 }

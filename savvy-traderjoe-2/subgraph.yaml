@@ -24,6 +24,8 @@ dataSources:
           file: ./abis/ERC20.json
         - name: LiquidityAmountsContract
           file: ./abis/LiquidityAmountsContract.json
+        - name: GalxeNFT
+          file: ./abis/GalxeNFT.json
       eventHandlers:
         - event: DepositedToBins(indexed address,indexed address,uint256[],bytes32[])
           handler: handleDepositedToBins
@@ -56,6 +58,8 @@ dataSources:
           file: ./abis/ERC20.json
         - name: LiquidityAmountsContract
           file: ./abis/LiquidityAmountsContract.json
+        - name: GalxeNFT
+          file: ./abis/GalxeNFT.json
       eventHandlers:
         - event: DepositedToBins(indexed address,indexed address,uint256[],bytes32[])
           handler: handleDepositedToBins
@@ -88,6 +92,8 @@ dataSources:
           file: ./abis/ERC20.json
         - name: LiquidityAmountsContract
           file: ./abis/LiquidityAmountsContract.json
+        - name: GalxeNFT
+          file: ./abis/GalxeNFT.json
       eventHandlers:
         - event: DepositedToBins(indexed address,indexed address,uint256[],bytes32[])
           handler: handleDepositedToBins
@@ -98,3 +104,43 @@ dataSources:
         - event: WithdrawnFromBins(indexed address,indexed address,uint256[],bytes32[])
           handler: handleWithdrawnFromBins
       file: ./src/handlers/lb-pair.ts
+  - kind: ethereum
+    name: MMC_NFT
+    network: arbitrum-one
+    source:
+      address: "0xB304461314C12D1C19af645B393961D52e113A2F"
+      abi: GalxeNFT
+      startBlock: 100790000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+      abis:
+        - name: GalxeNFT
+          file: ./abis/GalxeNFT.json
+      eventHandlers:
+        - event: EventMinterAdded(indexed address)
+          handler: handleMinterAdded
+      file: ./src/handlers/galxe-nft.ts
+  - kind: ethereum
+    name: UNSHETH_NFT
+    network: arbitrum-one
+    source:
+      address: "0xa90679d031Fc2feb3235C265702c0fB61833978c"
+      abi: GalxeNFT
+      startBlock: 100790000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+      abis:
+        - name: GalxeNFT
+          file: ./abis/GalxeNFT.json
+      eventHandlers:
+        - event: EventMinterAdded(indexed address)
+          handler: handleMinterAdded
+      file: ./src/handlers/galxe-nft.ts

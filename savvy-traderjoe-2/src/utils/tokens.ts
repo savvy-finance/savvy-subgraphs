@@ -38,3 +38,13 @@ export function getTokenValueInUSD(token: Address, amount: BigInt): BigDecimal {
 export function normalizeToEighteenDecimals(number: BigInt, decimals: number): BigInt {
   return number.times(BIGINT_TEN.pow(<u8>(18 - decimals)));
 }
+
+/**
+ * Normalize 18 decimals to token decimals.
+ * @param number The number you want to normalize.
+ * @param decimals The decimals of the token.
+ * @returns The normalized number with `decimals` decimals.
+ */
+export function normalizeToTokenDecimals(number: BigInt, decimals: number): BigInt {
+  return number.div(BIGINT_TEN.pow(<u8>(18 - decimals)));
+}

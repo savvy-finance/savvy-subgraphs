@@ -72,3 +72,198 @@ type PairHourlySnapshot @entity {
   " The change in tvlUSD since the last snapshot "
   tvlUSDDelta: BigInt!
 }
+
+type PairSnapshot @entity {
+  " { The pair address }-{ period }-{ timestamp } "
+  id: ID!
+
+  " The pair "
+  pair: Pair!
+
+  " The time between snapshots "
+  period: Int!
+
+  " The timestamp of the snapshot "
+  timestamp: BigInt!
+
+  " The deposit amount of token0 "
+  reserve0: BigInt!
+
+  " The deposit amount of token1 "
+  reserve1: BigInt!
+
+  " The deposit amount of token1 normalized to 18 decimals "
+  reserve1Normalized: BigInt!
+
+  " The total value fo the pair "
+  liquidityUSD: BigInt!
+}
+
+type Account @entity {
+  " The account address "
+  id: ID!
+
+  " The liquidity provided in USD across all pairs "
+  totalLiquidityUSD: BigInt!
+
+  " Last updated block number "
+  lastUpdatedBN: BigInt!
+
+  " Per pair liquidity "
+  liquidityPositions: [AccountLiquidity!]! @derivedFrom(field: "account")
+}
+
+type AccountLiquidity @entity {
+  " { The account address }-{ pair id } "
+  id: ID!
+
+  " The account "
+  account: Account!
+
+  " Pair id "
+  pair: Pair!
+
+  " Last updated block number "
+  lastUpdatedBN: BigInt!
+
+  " The liquidity provided in USD "
+  liquidityUSD: BigInt!
+
+  " The synthetic balance of the account "
+  syntheticBalance: BigInt!
+
+  " The base token balance of the account "
+  baseTokenBalance: BigInt!
+
+  " Snapshot of the account's liquidity "
+  liquiditySnapshots: [AccountLiquiditySnapshot!]! @derivedFrom(field: "account")
+}
+
+type AccountLiquiditySnapshot @entity {
+  " { The account address }-{ pair id }-{ period }-{ timestamp } "
+  id: ID!
+
+  " Time between snapshots "
+  period: Int!
+
+  " The account and pair that this snapshot relates to"
+  account: AccountLiquidity!
+
+  " The synthetic balance of the account "
+  syntheticBalance: BigInt!
+
+  " The base token balance of the account "
+  baseTokenBalance: BigInt!
+
+  " The timestamp of the snapshot "
+  timestamp: BigInt!
+
+  " The liquidity provided in USD "
+  liquidityUSD: BigInt!
+}
+
+type Account2 @entity {
+  " The account address "
+  id: ID!
+
+  " svUSD balance for user  "
+  svUSD: BigInt!
+
+  " USDC balance for user  "
+  USDC: BigInt!
+
+  " svUSD pool liquidity   "
+  svUSDLiquidityUSD: BigInt!
+
+  " List of active bins "
+  svUSDBins: [BigInt!]! 
+
+  " svBTC balance for user  "
+  svBTC: BigInt!
+
+  " WBTC balance for user  "
+  WBTC: BigInt!
+
+  " svBTC pool liquidity   "
+  svBTCLiquidityUSD: BigInt!
+
+  " List of active bins "
+  svBTCBins: [BigInt!]! 
+
+  " svETH balance for user  "
+  svETH: BigInt!
+
+  " WETH balance for user  "
+  WETH: BigInt!
+
+  " svETH pool liquidity   "
+  svETHLiquidityUSD: BigInt!
+  
+  " List of active bins "
+  svETHBins: [BigInt!]! 
+
+  " The liquidity provided in USD across all pairs "
+  totalLiquidityUSD: BigInt!
+
+  " Last updated block number "
+  lastUpdatedBN: BigInt!
+
+  " Last updated timestamp "
+  lastUpdatedTimestamp: BigInt!
+
+  " Per pair liquidity "
+  snapshots: [Account2Snapshot!]! @derivedFrom(field: "account")
+}
+
+type Account2Snapshot @entity {
+  " { The account address }-{ timestamp } "
+  id: ID!
+
+  " The account "
+  account: Account2!
+
+  " svUSD balance for user  "
+  svUSD: BigInt!
+
+  " USDC balance for user  "
+  USDC: BigInt!
+
+  " svUSD pool liquidity   "
+  svUSDLiquidityUSD: BigInt!
+
+  " List of active bins "
+  svUSDBins: [BigInt!]! 
+
+  " svBTC balance for user  "
+  svBTC: BigInt!
+
+  " WBTC balance for user  "
+  WBTC: BigInt!
+
+  " svBTC pool liquidity   "
+  svBTCLiquidityUSD: BigInt!
+
+  " List of active bins "
+  svBTCBins: [BigInt!]! 
+
+  " svETH balance for user  "
+  svETH: BigInt!
+
+  " WETH balance for user  "
+  WETH: BigInt!
+
+  " svETH pool liquidity   "
+  svETHLiquidityUSD: BigInt!
+
+  " List of active bins "
+  svETHBins: [BigInt!]! 
+
+  " The liquidity provided in USD across all pairs "
+  totalLiquidityUSD: BigInt!
+
+  " Block number "
+  blockNumber: BigInt!
+
+  " Timestamp "
+  timestamp: BigInt!
+}

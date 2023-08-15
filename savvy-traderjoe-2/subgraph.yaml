@@ -1,0 +1,146 @@
+specVersion: 0.0.5
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: TJ_LP_SVUSD
+    network: arbitrum-one
+    source:
+      address: "0x3BE852FF9F142783c71435524D63E2196E5f305A"
+      abi: LBPair
+      startBlock: 100790000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        []
+      abis:
+        - name: LBPair
+          file: ./abis/LBPair.json
+        - name: SavvyPriceFeed
+          file: ./abis/SavvyPriceFeed.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+        - name: LiquidityAmountsContract
+          file: ./abis/LiquidityAmountsContract.json
+        - name: GalxeNFT
+          file: ./abis/GalxeNFT.json
+      eventHandlers:
+        - event: DepositedToBins(indexed address,indexed address,uint256[],bytes32[])
+          handler: handleDepositedToBins
+        - event: Swap(indexed address,indexed address,uint24,bytes32,bytes32,uint24,bytes32,bytes32)
+          handler: handleSwap
+        - event: TransferBatch(indexed address,indexed address,indexed address,uint256[],uint256[])
+          handler: handleTransferBatch
+        - event: WithdrawnFromBins(indexed address,indexed address,uint256[],bytes32[])
+          handler: handleWithdrawnFromBins
+      file: ./src/handlers/lb-pair.ts
+  - kind: ethereum
+    name: TJ_LP_SVBTC
+    network: arbitrum-one
+    source:
+      address: "0x830203b9a16920feb55d58d964ce83e1ba000269"
+      abi: LBPair
+      startBlock: 100790000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        []
+      abis:
+        - name: LBPair
+          file: ./abis/LBPair.json
+        - name: SavvyPriceFeed
+          file: ./abis/SavvyPriceFeed.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+        - name: LiquidityAmountsContract
+          file: ./abis/LiquidityAmountsContract.json
+        - name: GalxeNFT
+          file: ./abis/GalxeNFT.json
+      eventHandlers:
+        - event: DepositedToBins(indexed address,indexed address,uint256[],bytes32[])
+          handler: handleDepositedToBins
+        - event: Swap(indexed address,indexed address,uint24,bytes32,bytes32,uint24,bytes32,bytes32)
+          handler: handleSwap
+        - event: TransferBatch(indexed address,indexed address,indexed address,uint256[],uint256[])
+          handler: handleTransferBatch
+        - event: WithdrawnFromBins(indexed address,indexed address,uint256[],bytes32[])
+          handler: handleWithdrawnFromBins
+      file: ./src/handlers/lb-pair.ts
+  - kind: ethereum
+    name: TJ_LP_SVETH
+    network: arbitrum-one
+    source:
+      address: "0x2e14e24ec3efbd3b8c8976405351f8233d59650e"
+      abi: LBPair
+      startBlock: 100790000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        []
+      abis:
+        - name: LBPair
+          file: ./abis/LBPair.json
+        - name: SavvyPriceFeed
+          file: ./abis/SavvyPriceFeed.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+        - name: LiquidityAmountsContract
+          file: ./abis/LiquidityAmountsContract.json
+        - name: GalxeNFT
+          file: ./abis/GalxeNFT.json
+      eventHandlers:
+        - event: DepositedToBins(indexed address,indexed address,uint256[],bytes32[])
+          handler: handleDepositedToBins
+        - event: Swap(indexed address,indexed address,uint24,bytes32,bytes32,uint24,bytes32,bytes32)
+          handler: handleSwap
+        - event: TransferBatch(indexed address,indexed address,indexed address,uint256[],uint256[])
+          handler: handleTransferBatch
+        - event: WithdrawnFromBins(indexed address,indexed address,uint256[],bytes32[])
+          handler: handleWithdrawnFromBins
+      file: ./src/handlers/lb-pair.ts
+  - kind: ethereum
+    name: MMC_NFT
+    network: arbitrum-one
+    source:
+      address: "0xB304461314C12D1C19af645B393961D52e113A2F"
+      abi: GalxeNFT
+      startBlock: 100790000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+      abis:
+        - name: GalxeNFT
+          file: ./abis/GalxeNFT.json
+      eventHandlers:
+        - event: EventMinterAdded(indexed address)
+          handler: handleMinterAdded
+      file: ./src/handlers/galxe-nft.ts
+  - kind: ethereum
+    name: UNSHETH_NFT
+    network: arbitrum-one
+    source:
+      address: "0xa90679d031Fc2feb3235C265702c0fB61833978c"
+      abi: GalxeNFT
+      startBlock: 100790000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+      abis:
+        - name: GalxeNFT
+          file: ./abis/GalxeNFT.json
+      eventHandlers:
+        - event: EventMinterAdded(indexed address)
+          handler: handleMinterAdded
+      file: ./src/handlers/galxe-nft.ts

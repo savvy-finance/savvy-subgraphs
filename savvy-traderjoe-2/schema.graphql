@@ -1,0 +1,290 @@
+type Token @entity {
+  " The token address "
+  id: ID!
+
+  " The token name "
+  name: String!
+
+  " The token symbol "
+  symbol: String!
+
+  " The token decimals "
+  decimals: Int!
+}
+
+type Protocol @entity {
+  "The id of the protocol"
+  id: ID!
+
+  "The name of the protocol"
+  name: String!
+
+  "Market makers"
+  accounts: [Account!]! @derivedFrom(field: "protocol")
+
+  "Number of market makers"
+  numOfAccounts: BigInt!
+
+  " svUSD balance for user  "
+  svUSD: BigInt!
+
+  " USDC balance for user  "
+  USDC: BigInt!
+
+  " svUSD pool liquidity   "
+  svUSDLiquidityUSD: BigDecimal!
+  
+  " svBTC balance for user  "
+  svBTC: BigInt!
+
+  " WBTC balance for user  "
+  WBTC: BigInt!
+
+  " svBTC pool liquidity   "
+  svBTCLiquidityUSD: BigDecimal!
+
+  " svETH balance for user  "
+  svETH: BigInt!
+
+  " WETH balance for user  "
+  WETH: BigInt!
+
+  " svETH pool liquidity   "
+  svETHLiquidityUSD: BigDecimal!
+
+  "The value of the pool in USD"
+  totalLiquidityUSD: BigDecimal!
+
+  "The block number of the last update"
+  lastUpdatedBN: BigInt!
+
+  "The timestamp of the last update"
+  lastUpdatedTimestamp: BigInt!
+}
+
+type ProtocolSnapshot @entity {
+  "(The id of the protocol)-(snapshot timestamp)"
+  id: ID!
+
+  "The protocol this snapshot belongs to"
+  protocol: Protocol!
+
+  "The time between snapshots in seconds"
+  period: Int!
+
+  " The timestamp of the snapshot "
+  timestamp: BigInt!
+
+  "Number of market makers"
+  numOfAccounts: BigInt!
+
+  " svUSD balance for user  "
+  svUSD: BigInt!
+
+  " USDC balance for user  "
+  USDC: BigInt!
+
+  " svUSD pool liquidity   "
+  svUSDLiquidityUSD: BigDecimal!
+  
+  " svBTC balance for user  "
+  svBTC: BigInt!
+
+  " WBTC balance for user  "
+  WBTC: BigInt!
+
+  " svBTC pool liquidity   "
+  svBTCLiquidityUSD: BigDecimal!
+
+  " svETH balance for user  "
+  svETH: BigInt!
+
+  " WETH balance for user  "
+  WETH: BigInt!
+
+  " svETH pool liquidity   "
+  svETHLiquidityUSD: BigDecimal!
+
+  "The value of the pool in USD"
+  totalLiquidityUSD: BigDecimal!
+}
+
+type LiquidityPool @entity {
+  "The address of the liquidity pool"
+  id: ID!
+
+  "The synthetic token of the liquidity pool"
+  savvySynthetic: Token!
+
+  "The paired token of the liquidity pool"
+  pairToken: Token!
+
+  "The balance of Savvy Synthetics in the liquidity pool"
+  savvySyntheticBalance: BigInt!
+
+  "The balance of the paired token in the liquidity pool in the same decimals as the paired token"
+  pairTokenBalance: BigInt!
+
+  "The balance of paired tok in the liquidity pool in 18 decimals"
+  pairTokenBalanceNormalized: BigInt!
+
+  "The value of the pool in USD"
+  totalValueUSD: BigDecimal!
+
+  "The block number of the last update"
+  lastUpdatedBN: BigInt!
+
+  "The timestamp of the last update"
+  lastUpdatedTimestamp: BigInt!
+
+  "Liquidity snapshots"
+  snapshots: [LiquidityPoolSnapshot!]! @derivedFrom(field: "liquidityPool")
+}
+
+type LiquidityPoolSnapshot @entity {
+  "(The address of the liquidity pool)-(timestamp)"
+  id: ID!
+
+  "The address of the liquidity pool"
+  liquidityPool: LiquidityPool!
+
+  "The time between snapshots in seconds"
+  period: Int!
+
+  "The balance of Savvy Synthetics in the liquidity pool"
+  savvySyntheticBalance: BigInt!
+
+  "The balance of the paired token in the liquidity pool in the same decimals as the paired token"
+  pairTokenBalance: BigInt!
+
+  "The balance of paired tok in the liquidity pool in 18 decimals"
+  pairTokenBalanceNormalized: BigInt!
+
+  "The value of the pool in USD"
+  totalValueUSD: BigDecimal!
+
+  "The timestamp of the last update"
+  timestamp: BigInt!
+}
+
+type Account @entity { 
+  "The address of the account"
+  id: ID!
+
+  "The protocol the liquidity pool belongs to"
+  protocol: Protocol!
+
+  " svUSD balance for user  "
+  svUSD: BigInt!
+
+  " USDC balance for user  "
+  USDC: BigInt!
+
+  " svUSD pool liquidity   "
+  svUSDLiquidityUSD: BigDecimal!
+
+  " List of active bins "
+  svUSDBinIds: [BigInt!]! 
+
+  " svBTC balance for user  "
+  svBTC: BigInt!
+
+  " WBTC balance for user  "
+  WBTC: BigInt!
+
+  " svBTC pool liquidity   "
+  svBTCLiquidityUSD: BigDecimal!
+
+  " List of active bins "
+  svBTCBinIds: [BigInt!]! 
+
+  " svETH balance for user  "
+  svETH: BigInt!
+
+  " WETH balance for user  "
+  WETH: BigInt!
+
+  " svETH pool liquidity   "
+  svETHLiquidityUSD: BigDecimal!
+  
+  " List of active bins "
+  svETHBinIds: [BigInt!]! 
+
+  " The liquidity provided in USD across all pairs "
+  totalLiquidityUSD: BigDecimal!
+
+  " Last updated block number "
+  lastUpdatedBN: BigInt!
+
+  " Last updated timestamp "
+  lastUpdatedTimestamp: BigInt!
+
+  "Account snapshots"
+  snapshots: [AccountSnapshot!]! @derivedFrom(field: "account")
+
+  "Has ever held any of the NFT positions"
+  isEligibleForNFTBoost: Boolean!
+
+  "Account NFT positions"
+  nfts: AccountNFTPositions
+}
+
+type AccountSnapshot @entity { 
+  "(The address of the account)-(timstamp)"
+  id: ID!
+
+  "The account this snapshot belongs to"
+  account: Account!
+
+  "The time between snapshots in seconds"
+  period: Int!
+
+  " The timestamp of the snapshot "
+  timestamp: BigInt!
+
+  " svUSD balance for user  "
+  svUSD: BigInt!
+
+  " USDC balance for user  "
+  USDC: BigInt!
+
+  " svUSD pool liquidity   "
+  svUSDLiquidityUSD: BigDecimal!
+
+  " List of active bins "
+  svUSDBinIds: [BigInt!]! 
+
+  " svBTC balance for user  "
+  svBTC: BigInt!
+
+  " WBTC balance for user  "
+  WBTC: BigInt!
+
+  " svBTC pool liquidity   "
+  svBTCLiquidityUSD: BigDecimal!
+
+  " List of active bins "
+  svBTCBinIds: [BigInt!]! 
+
+  " svETH balance for user  "
+  svETH: BigInt!
+
+  " WETH balance for user  "
+  WETH: BigInt!
+
+  " svETH pool liquidity   "
+  svETHLiquidityUSD: BigDecimal!
+  
+  " List of active bins "
+  svETHBinIds: [BigInt!]! 
+
+  " The liquidity provided in USD across all pairs "
+  totalLiquidityUSD: BigDecimal!
+}
+
+type AccountNFTPositions @entity {
+  "The address of the account"
+  id: ID!
+  hasEverHeldUnshETHNFT: Boolean!
+  hasEverHeldMMCNFT: Boolean!
+}

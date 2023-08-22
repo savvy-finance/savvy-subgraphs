@@ -1,11 +1,8 @@
 import {
   Transfer as TransferEvent
 } from "../../generated/SavvyProtocolToken/SavvyProtocolToken";
-import {
-  increaseTotalSvyDistributed,
-  receiveSVY,
-  sendSVY
-} from "../helpers/balance";
+import { receiveSVY, sendSVY } from "../helpers/account";
+import { increaseTotalSvyDistributed } from "../helpers/svySource";
 
 export function handleTransfer(event: TransferEvent): void {
   const svyAmount = event.params.value;

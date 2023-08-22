@@ -23,4 +23,4 @@ dataSources:
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
-      file: ./src/savvy-protocol-token.ts
+      file: ./src/handlers/svy.ts

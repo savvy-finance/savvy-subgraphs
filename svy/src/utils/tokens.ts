@@ -1,4 +1,5 @@
 import { BigDecimal, BigInt } from "@graphprotocol/graph-ts";
+import { BIGDECIMAL_TEN_TO_EIGHTEENTH } from "../constants";
 
 /**
  * Convert svyBalance in USD value.
@@ -7,5 +8,5 @@ import { BigDecimal, BigInt } from "@graphprotocol/graph-ts";
  */
 export function getSvyBalanceInUSD(svyBalance: BigInt): BigDecimal {
   const svyPriceInUSD = BigDecimal.fromString("3");
-  return svyBalance.toBigDecimal().times(svyPriceInUSD);
+  return svyBalance.toBigDecimal().times(svyPriceInUSD).div(BIGDECIMAL_TEN_TO_EIGHTEENTH);
 }

@@ -1,18 +1,10 @@
 import {
   Transfer as TransferEvent
 } from "../../generated/SavvyProtocolToken/SavvyProtocolToken";
-import { getOrCreateAccount } from "../helpers/account";
-import { getSvyBalanceInUSD } from "../utils/tokens";
+import { receiveSVY, sendSVY } from "../helpers/balance";
 
 export function handleTransfer(event: TransferEvent): void {
-  const sender = getOrCreateAccount(event.params.from);
-  const receiver = getOrCreateAccount(event.params.to);
   const svyAmount = event.params.value;
-  sender.svyBalance = sender.svyBalance.minus(svyAmount);
-  sender.svyBalanceUSD = getSvyBalanceInUSD(sender.svyBalance);
-  receiver.svyBalance = receiver.svyBalance.plus(svyAmount);
-  receiver.svyBalanceUSD = getSvyBalanceInUSD(receiver.svyBalance);
-
-  sender.save();
-  receiver.save();
+  sendSVY(event.params.from, svyAmount, event.block);
+  receiveSVY(event.params.to, svyAmount, event.block);
 }

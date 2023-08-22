@@ -1,5 +1,7 @@
+import { ethereum } from "@graphprotocol/graph-ts";
 import { Protocol } from "../../generated/schema";
 import { PROTOCOL_SLUG } from "../constants";
+import { createProtocolSnapshot } from "./protocol-snapshot";
 
 export function getOrCreateProtocol(): Protocol {
   let protocol = Protocol.load(PROTOCOL_SLUG);
@@ -12,26 +14,30 @@ export function getOrCreateProtocol(): Protocol {
   return protocol as Protocol;
 }
 
-export function incrementSvyHolder(): void {
+export function incrementSvyHolder(block: ethereum.Block): void {
   const protocol = getOrCreateProtocol();
   protocol.totalSvyHolders += 1;
   protocol.save();
+  createProtocolSnapshot(block, protocol);
 }
 
-export function decrementSvyHolder(): void {
+export function decrementSvyHolder(block: ethereum.Block): void {
   const protocol = getOrCreateProtocol();
   protocol.totalSvyHolders -= 1;
   protocol.save();
+  createProtocolSnapshot(block, protocol);
 }
 
-export function incrementVeSVYHolder(): void {
+export function incrementVeSVYHolder(block: ethereum.Block): void {
   const protocol = getOrCreateProtocol();
   protocol.totalVeSVYHolders += 1;
   protocol.save();
+  createProtocolSnapshot(block, protocol);
 }
 
-export function decrementVeSVYHolder(): void {
+export function decrementVeSVYHolder(block: ethereum.Block): void {
   const protocol = getOrCreateProtocol();
   protocol.totalVeSVYHolders -= 1;
   protocol.save();
+  createProtocolSnapshot(block, protocol);
 }

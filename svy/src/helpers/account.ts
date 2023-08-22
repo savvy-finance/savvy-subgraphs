@@ -38,7 +38,7 @@ export function receiveSVY(accountAddress: Address, svyReceived: BigInt, block: 
   const account = getOrCreateAccount(accountAddress);
 
   if (account.svyBalance.isZero()) {
-    incrementSvyHolder();
+    incrementSvyHolder(block);
   }
 
   account.svyBalance = account.svyBalance.plus(svyReceived);
@@ -59,7 +59,7 @@ export function sendSVY(accountAddress: Address, svySent: BigInt, block: ethereu
   account.svyBalance = account.svyBalance.minus(svySent);
 
   if (account.svyBalance.isZero()) {
-    decrementSvyHolder();
+    decrementSvyHolder(block);
   }
 
   account.svyBalanceUSD = getSvyBalanceInUSD(account.svyBalance);
@@ -82,10 +82,10 @@ export function updateVeSVYBalance(
   account.veSVYBalance = veSVYContract.balanceOf(accountAddress);
 
   if (account.veSVYBalance.isZero()) {
-    decrementVeSVYHolder();
+    decrementVeSVYHolder(block);
   }
   else if (account.veSVYBalance.equals(updatedAmount)) {
-    incrementVeSVYHolder();
+    incrementVeSVYHolder(block);
   }
 
   account.lastUpdatedBN = block.number;

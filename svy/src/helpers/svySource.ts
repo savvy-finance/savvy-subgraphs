@@ -1,6 +1,7 @@
 import { Address, BigInt, ethereum } from "@graphprotocol/graph-ts";
 import { SvySource } from "../../generated/schema";
 import { BIGINT_ZERO, ZERO_ADDRESS } from "../constants";
+import { createSvySourceSnapshot } from "./svySource-snapshot";
 
 export function getOrCreateSvySource(address: Address): SvySource {
   const id = address.toHexString();
@@ -29,4 +30,5 @@ export function increaseTotalSvyDistributed(
   svySource.lastUpdatedBN = block.number;
   svySource.lastUpdatedTimestamp = block.timestamp;
   svySource.save();
+  createSvySourceSnapshot(accountAddress, block, svySource);
 }

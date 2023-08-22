@@ -1,6 +1,7 @@
 import { Address, BigInt, ethereum } from "@graphprotocol/graph-ts";
 import { SvySource } from "../../generated/schema";
-import { BIGINT_ZERO } from "../constants";
+import { BIGINT_ZERO, ZERO_ADDRESS } from "../constants";
+import { createSvySourceSnapshot } from "./svySource-snapshot";
 
 export function getOrCreateSvySource(address: Address): SvySource {
   const id = address.toHexString();
@@ -19,12 +20,15 @@ export function increaseTotalSvyDistributed(
   accountAddress: Address,
   svyAmount: BigInt,
   block: ethereum.Block
-): SvySource {
+): void {
 
+  if (accountAddress.toHexString() === ZERO_ADDRESS) {
+    return;
+  }
   const svySource = getOrCreateSvySource(accountAddress);
   svySource.totalSvyDistributed = svySource.totalSvyDistributed.plus(svyAmount);
   svySource.lastUpdatedBN = block.number;
   svySource.lastUpdatedTimestamp = block.timestamp;
   svySource.save();
-  return svySource;
+  createSvySourceSnapshot(accountAddress, block, svySource);
 }

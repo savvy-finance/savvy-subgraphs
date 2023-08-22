@@ -19,6 +19,35 @@ type Account @entity {
 
   " The last timestamp this account was updated "
   lastUpdatedTimestamp: BigInt!
+
+  "Account snapshots"
+  snapshots: [AccountSnapshot!]! @derivedFrom(field: "account")
+}
+
+type AccountSnapshot @entity {
+  "(The address of the account)-(timstamp)"
+  id: ID!
+
+  "The account this snapshot belongs to"
+  account: Account!
+
+  "The time between snapshots in seconds"
+  period: Int!
+
+  " The timestamp of the snapshot "
+  timestamp: BigInt!
+
+  " The name of the account "
+  name: String
+  
+  " The balance of SVY tokens held by snapshot account "
+  svyBalance: BigInt!
+
+  " The USD value of snapshot account's SVY balance "
+  svyBalanceUSD: BigDecimal!
+
+  " The balance of veSVY tokens held by snapshot account "
+  veSVYBalance: BigInt!
 }
 
 type SvySource @entity {
@@ -36,11 +65,54 @@ type SvySource @entity {
 
   " The last timestamp this account was updated "
   lastUpdatedTimestamp: BigInt!
+
+  "SvySource snapshots"
+  snapshots: [SvySourceSnapshot!]! @derivedFrom(field: "svySource")
+}
+
+type SvySourceSnapshot @entity {
+  "(The address of the svySource)-(timstamp)"
+  id: ID!
+
+  "The svySource this snapshot belongs to"
+  svySource: SvySource!
+
+  "The time between snapshots in seconds"
+  period: Int!
+
+  " The timestamp of the snapshot "
+  timestamp: BigInt!
+
+  " The total amount of SVY tokens this source has distributed "
+  totalSvyDistributed: BigInt!
 }
 
 type Protocol @entity {
   " Overall protocol metrics "
   id: ID!
+
+  " The total active holders "
+  totalSvyHolders: Int!
+
+  " The total active veSVY holders "
+  totalVeSVYHolders: Int!
+  
+  "Protocol snapshots"
+  snapshots: [ProtocolSnapshot!]! @derivedFrom(field: "protocol")
+}
+
+type ProtocolSnapshot @entity {
+  "(Overall protocol metrics)-(timstamp)"
+  id: ID!
+
+  "The protocol this snapshot belongs to"
+  protocol: Protocol!
+
+  "The time between snapshots in seconds"
+  period: Int!
+
+  " The timestamp of the snapshot "
+  timestamp: BigInt!
 
   " The total active holders "
   totalSvyHolders: Int!

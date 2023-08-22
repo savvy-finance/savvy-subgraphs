@@ -3,6 +3,7 @@ import { Account } from "../../generated/schema";
 import { BIGDECIMAL_ZERO, BIGINT_ZERO, veSVYContract } from "../constants";
 import { getSvyBalanceInUSD } from "../utils/tokens";
 import { getOrCreateProtocol } from "./protocol";
+import { increaseTotalSvyDistributed } from "./svySource";
 
 export function getOrCreateAccount(address: Address): Account {
   const id = address.toHexString();
@@ -37,6 +38,8 @@ export function receiveSVY(accountAddress: Address, svyReceived: BigInt, block: 
 }
 
 export function sendSVY(accountAddress: Address, svySent: BigInt, block: ethereum.Block): Account {
+  increaseTotalSvyDistributed(accountAddress, svySent, block);
+  
   const account = getOrCreateAccount(accountAddress);
   account.svyBalance = account.svyBalance.minus(svySent);
 
@@ -50,6 +53,7 @@ export function sendSVY(accountAddress: Address, svySent: BigInt, block: ethereu
   account.lastUpdatedBN = block.number;
   account.lastUpdatedTimestamp = block.timestamp;
   account.save();
+  
   return account;
 }
 

@@ -1,12 +1,11 @@
 import { Protocol } from "../../generated/schema";
-
-const protocolId = "1";
+import { PROTOCOL_SLUG } from "../constants";
 
 export function getOrCreateProtocol(): Protocol {
 
-  let protocol = Protocol.load(protocolId);
+  let protocol = Protocol.load(PROTOCOL_SLUG);
   if (protocol === null) {
-    protocol = new Protocol(protocolId);
+    protocol = new Protocol(PROTOCOL_SLUG);
     protocol.totalSvyHolders = 0;
     protocol.totalVeSVYHolders = 0;
     protocol.save();

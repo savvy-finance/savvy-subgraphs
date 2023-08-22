@@ -1,0 +1,50 @@
+type Account {
+  " The wallet address of the holder "
+  id: ID!
+
+  " The name of the holder (if the holder is known) "
+  name: String;
+  
+  " The balance of SVY tokens held by this account "
+  svyBalance: BigInt!;
+
+  " The USD value of this account's SVY balance "
+  svyBalanceUSD: BigDecimal!;
+
+  " The balance of veSVY tokens held by this account "
+  veSVYBalance: BigInt!;
+
+  " The last block number this account was updated "
+  lastUpdatedBN: BigInt!;
+
+  " The last timestamp this account was updated "
+  lastUpdatedTimestamp: BigInt!;
+}
+
+type SvySource {
+  " The address of the source "
+  id: ID!
+
+  " The name of the source (if known) "
+  name: String;
+
+  " The total amount of SVY tokens this source has distributed "
+  totalSvyDistributed: BigInt!;
+
+  " The last block number this account was updated "
+  lastUpdatedBN: BigInt!;
+
+  " The last timestamp this account was updated "
+  lastUpdatedTimestamp: BigInt!;
+}
+
+type Protocol {
+  " Overall protocol metrics "
+  id: ID!;
+
+  " The total active holders "
+  totalSvyHolders: Int!;
+
+  " The total active veSVY holders "
+  totalVeSVYHolders: Int!;
+}

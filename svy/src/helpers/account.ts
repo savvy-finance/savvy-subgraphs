@@ -1,8 +1,18 @@
 import { Address, BigInt, ethereum } from "@graphprotocol/graph-ts";
 import { Account } from "../../generated/schema";
-import { BIGDECIMAL_ZERO, BIGINT_ZERO, veSVYContract } from "../constants";
+import {
+  BIGDECIMAL_ZERO,
+  BIGINT_ZERO,
+  NULL_ADDRESS,
+  veSVYContract
+} from "../constants";
 import { getSvyBalanceInUSD } from "../utils/tokens";
-import { getOrCreateProtocol } from "./protocol";
+import {
+  decrementSvyHolder,
+  decrementVeSVYHolder,
+  incrementSvyHolder,
+  incrementVeSVYHolder
+} from "./protocol";
 import { increaseTotalSvyDistributed } from "./svySource";
 
 export function getOrCreateAccount(address: Address): Account {
@@ -20,13 +30,12 @@ export function getOrCreateAccount(address: Address): Account {
   return account as Account;
 }
 
-export function receiveSVY(accountAddress: Address, svyReceived: BigInt, block: ethereum.Block): Account {
+export function receiveSVY(accountAddress: Address, svyReceived: BigInt, block: ethereum.Block): void {
+  if (accountAddress.toHexString() === NULL_ADDRESS) return;
   const account = getOrCreateAccount(accountAddress);
 
   if (account.svyBalance.isZero()) {
-    const protocol = getOrCreateProtocol();
-    protocol.totalSvyHolders += 1;
-    protocol.save();
+    incrementSvyHolder();
   }
 
   account.svyBalance = account.svyBalance.plus(svyReceived);
@@ -34,49 +43,43 @@ export function receiveSVY(accountAddress: Address, svyReceived: BigInt, block: 
   account.lastUpdatedBN = block.number;
   account.lastUpdatedTimestamp = block.timestamp;
   account.save();
-  return account;
 }
 
-export function sendSVY(accountAddress: Address, svySent: BigInt, block: ethereum.Block): Account {
+export function sendSVY(accountAddress: Address, svySent: BigInt, block: ethereum.Block): void {
+  if (accountAddress.toHexString() === NULL_ADDRESS) return;
   increaseTotalSvyDistributed(accountAddress, svySent, block);
-  
+
   const account = getOrCreateAccount(accountAddress);
   account.svyBalance = account.svyBalance.minus(svySent);
 
   if (account.svyBalance.isZero()) {
-    const protocol = getOrCreateProtocol();
-    protocol.totalSvyHolders -= 1;
-    protocol.save();
+    decrementSvyHolder();
   }
 
   account.svyBalanceUSD = getSvyBalanceInUSD(account.svyBalance);
   account.lastUpdatedBN = block.number;
   account.lastUpdatedTimestamp = block.timestamp;
   account.save();
-  
-  return account;
 }
 
 export function updateVeSVYBalance(
   accountAddress: Address,
   updatedAmount: BigInt, // can be negative in case of Staked
   block: ethereum.Block
-): Account {
+): void {
 
+  if (accountAddress.toHexString() === NULL_ADDRESS) return;
   const account = getOrCreateAccount(accountAddress);
   account.veSVYBalance = veSVYContract.balanceOf(accountAddress);
 
-  const protocol = getOrCreateProtocol();
   if (account.veSVYBalance.isZero()) {
-    protocol.totalVeSVYHolders -= 1;
+    decrementVeSVYHolder();
   }
   else if (account.veSVYBalance.equals(updatedAmount)) {
-    protocol.totalVeSVYHolders += 1;
+    incrementVeSVYHolder();
   }
-  protocol.save();
 
   account.lastUpdatedBN = block.number;
   account.lastUpdatedTimestamp = block.timestamp;
   account.save();
-  return account;
 }

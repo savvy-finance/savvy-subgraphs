@@ -7,6 +7,7 @@ import {
   veSVYContract
 } from "../constants";
 import { getSvyBalanceInUSD } from "../utils/tokens";
+import { createAccountSnapshot } from "./account-snapshot";
 import {
   decrementSvyHolder,
   decrementVeSVYHolder,
@@ -45,6 +46,7 @@ export function receiveSVY(accountAddress: Address, svyReceived: BigInt, block: 
   account.lastUpdatedBN = block.number;
   account.lastUpdatedTimestamp = block.timestamp;
   account.save();
+  createAccountSnapshot(accountAddress, block, account);
 }
 
 export function sendSVY(accountAddress: Address, svySent: BigInt, block: ethereum.Block): void {
@@ -64,6 +66,7 @@ export function sendSVY(accountAddress: Address, svySent: BigInt, block: ethereu
   account.lastUpdatedBN = block.number;
   account.lastUpdatedTimestamp = block.timestamp;
   account.save();
+  createAccountSnapshot(accountAddress, block, account);
 }
 
 export function updateVeSVYBalance(
@@ -88,4 +91,5 @@ export function updateVeSVYBalance(
   account.lastUpdatedBN = block.number;
   account.lastUpdatedTimestamp = block.timestamp;
   account.save();
+  createAccountSnapshot(accountAddress, block, account);
 }

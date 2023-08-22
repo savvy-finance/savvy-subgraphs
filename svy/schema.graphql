@@ -19,6 +19,35 @@ type Account @entity {
 
   " The last timestamp this account was updated "
   lastUpdatedTimestamp: BigInt!
+
+  "Account snapshots"
+  snapshots: [AccountSnapshot!]! @derivedFrom(field: "account")
+}
+
+type AccountSnapshot @entity {
+  "(The address of the account)-(timstamp)"
+  id: ID!
+
+  "The account this snapshot belongs to"
+  account: Account!
+
+  "The time between snapshots in seconds"
+  period: Int!
+
+  " The timestamp of the snapshot "
+  timestamp: BigInt!
+
+  " The name of the account "
+  name: String
+  
+  " The balance of SVY tokens held by snapshot account "
+  svyBalance: BigInt!
+
+  " The USD value of snapshot account's SVY balance "
+  svyBalanceUSD: BigDecimal!
+
+  " The balance of veSVY tokens held by snapshot account "
+  veSVYBalance: BigInt!
 }
 
 type SvySource @entity {

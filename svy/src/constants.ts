@@ -14,3 +14,5 @@ export const BIGDECIMAL_ZERO = BIGINT_ZERO.toBigDecimal();
 export const BIGDECIMAL_TEN_TO_EIGHTEENTH = BIGINT_TEN_TO_EIGHTEENTH.toBigDecimal();
 
 export const PROTOCOL_SLUG = "savvy-defi";
+
+export const QUARTERHOUR_IN_SECONDS = 60 * 15;

@@ -3,7 +3,7 @@ import { Account } from "../../generated/schema";
 import {
   BIGDECIMAL_ZERO,
   BIGINT_ZERO,
-  NULL_ADDRESS,
+  ZERO_ADDRESS,
   veSVYContract
 } from "../constants";
 import { getSvyBalanceInUSD } from "../utils/tokens";
@@ -31,7 +31,9 @@ export function getOrCreateAccount(address: Address): Account {
 }
 
 export function receiveSVY(accountAddress: Address, svyReceived: BigInt, block: ethereum.Block): void {
-  if (accountAddress.toHexString() === NULL_ADDRESS) return;
+  if (accountAddress.toHexString() === ZERO_ADDRESS) {
+    return;
+  }
   const account = getOrCreateAccount(accountAddress);
 
   if (account.svyBalance.isZero()) {
@@ -46,7 +48,9 @@ export function receiveSVY(accountAddress: Address, svyReceived: BigInt, block: 
 }
 
 export function sendSVY(accountAddress: Address, svySent: BigInt, block: ethereum.Block): void {
-  if (accountAddress.toHexString() === NULL_ADDRESS) return;
+  if (accountAddress.toHexString() === ZERO_ADDRESS) {
+    return;
+  }
   increaseTotalSvyDistributed(accountAddress, svySent, block);
 
   const account = getOrCreateAccount(accountAddress);
@@ -68,7 +72,9 @@ export function updateVeSVYBalance(
   block: ethereum.Block
 ): void {
 
-  if (accountAddress.toHexString() === NULL_ADDRESS) return;
+  if (accountAddress.toHexString() === ZERO_ADDRESS) {
+    return;
+  }
   const account = getOrCreateAccount(accountAddress);
   account.veSVYBalance = veSVYContract.balanceOf(accountAddress);
 

@@ -12,25 +12,25 @@ export function getOrCreateProtocol(): Protocol {
   return protocol as Protocol;
 }
 
-export function incrementSvyHolder() {
+export function incrementSvyHolder(): void {
   const protocol = getOrCreateProtocol();
   protocol.totalSvyHolders += 1;
   protocol.save();
 }
 
-export function decrementSvyHolder() {
+export function decrementSvyHolder(): void {
   const protocol = getOrCreateProtocol();
   protocol.totalSvyHolders -= 1;
   protocol.save();
 }
 
-export function incrementVeSVYHolder() {
+export function incrementVeSVYHolder(): void {
   const protocol = getOrCreateProtocol();
   protocol.totalVeSVYHolders += 1;
   protocol.save();
 }
 
-export function decrementVeSVYHolder() {
+export function decrementVeSVYHolder(): void {
   const protocol = getOrCreateProtocol();
   protocol.totalVeSVYHolders -= 1;
   protocol.save();

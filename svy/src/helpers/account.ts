@@ -6,6 +6,7 @@ import {
   ZERO_ADDRESS,
   veSVYContract
 } from "../constants";
+import { getFriendlyName } from "../utils/contracts";
 import { getSvyBalanceInUSD } from "../utils/tokens";
 import { createAccountSnapshot } from "./account-snapshot";
 import {
@@ -21,6 +22,7 @@ export function getOrCreateAccount(address: Address): Account {
   let account = Account.load(id);
   if (account === null) {
     account = new Account(id);
+    account.name = getFriendlyName(address);
     account.svyBalance = BIGINT_ZERO;
     account.svyBalanceUSD = BIGDECIMAL_ZERO;
     account.veSVYBalance = BIGINT_ZERO;

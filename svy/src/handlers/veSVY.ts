@@ -24,7 +24,7 @@ export function handleClaimed(event: ClaimedEvent): void {
 export function handleUnstaked(event: UnstakedEvent): void {
   updateStakedSVYBalance(
     event.params.user,
-    event.params.amount,
+    event.params.amount.neg(),
     event.block
   );
 }

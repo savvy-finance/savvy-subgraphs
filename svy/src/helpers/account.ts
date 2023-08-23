@@ -24,6 +24,7 @@ export function getOrCreateAccount(address: Address): Account {
     account.svyBalance = BIGINT_ZERO;
     account.svyBalanceUSD = BIGDECIMAL_ZERO;
     account.veSVYBalance = BIGINT_ZERO;
+    account.stakedSVY = BIGINT_ZERO;
     account.lastUpdatedBN = BIGINT_ZERO;
     account.lastUpdatedTimestamp = BIGINT_ZERO;
     account.save();
@@ -35,17 +36,21 @@ export function receiveSVY(accountAddress: Address, svyReceived: BigInt, block: 
   if (accountAddress.toHexString() === ZERO_ADDRESS) {
     return;
   }
+
+  // Account
   const account = getOrCreateAccount(accountAddress);
-
-  if (account.svyBalance.isZero()) {
-    incrementSvyHolder(block);
-  }
-
   account.svyBalance = account.svyBalance.plus(svyReceived);
   account.svyBalanceUSD = getSvyBalanceInUSD(account.svyBalance);
   account.lastUpdatedBN = block.number;
   account.lastUpdatedTimestamp = block.timestamp;
   account.save();
+
+  // Protocol
+  if (account.svyBalance.isZero()) {
+    incrementSvyHolder(block);
+  }
+
+  // AccountSnapshot
   createAccountSnapshot(accountAddress, block, account);
 }
 
@@ -53,43 +58,52 @@ export function sendSVY(accountAddress: Address, svySent: BigInt, block: ethereu
   if (accountAddress.toHexString() === ZERO_ADDRESS) {
     return;
   }
-  increaseTotalSvyDistributed(accountAddress, svySent, block);
 
+  // Account
   const account = getOrCreateAccount(accountAddress);
   account.svyBalance = account.svyBalance.minus(svySent);
-
-  if (account.svyBalance.isZero()) {
-    decrementSvyHolder(block);
-  }
-
   account.svyBalanceUSD = getSvyBalanceInUSD(account.svyBalance);
   account.lastUpdatedBN = block.number;
   account.lastUpdatedTimestamp = block.timestamp;
   account.save();
+
+  // Protocol
+  if (account.svyBalance.isZero()) {
+    decrementSvyHolder(block);
+  }
+
+  // SvySource
+  increaseTotalSvyDistributed(accountAddress, svySent, block);
+
+  // AccountSnapshot
   createAccountSnapshot(accountAddress, block, account);
 }
 
-export function updateVeSVYBalance(
+export function updateStakedSVYAndVeSVYBalance(
   accountAddress: Address,
-  updatedAmount: BigInt, // can be negative in case of Staked
   block: ethereum.Block
 ): void {
-
   if (accountAddress.toHexString() === ZERO_ADDRESS) {
     return;
   }
-  const account = getOrCreateAccount(accountAddress);
-  account.veSVYBalance = veSVYContract.balanceOf(accountAddress);
 
+  // Account
+  const account = getOrCreateAccount(accountAddress);
+  const oldVeSVYBalance = account.veSVYBalance;
+  account.veSVYBalance = veSVYContract.balanceOf(accountAddress);
+  account.lastUpdatedBN = block.number;
+  account.lastUpdatedTimestamp = block.timestamp;
+  account.stakedSVY = account.stakedSVY.plus(account.veSVYBalance.minus(oldVeSVYBalance));
+  account.save();
+
+  // Protocol
   if (account.veSVYBalance.isZero()) {
     decrementVeSVYHolder(block);
   }
-  else if (account.veSVYBalance.equals(updatedAmount)) {
+  else if (oldVeSVYBalance.isZero()) {
     incrementVeSVYHolder(block);
   }
 
-  account.lastUpdatedBN = block.number;
-  account.lastUpdatedTimestamp = block.timestamp;
-  account.save();
+  // AccountSnapshot
   createAccountSnapshot(accountAddress, block, account);
 }

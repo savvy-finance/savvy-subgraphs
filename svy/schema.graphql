@@ -11,6 +11,9 @@ type Account @entity {
   " The USD value of this account's SVY balance "
   svyBalanceUSD: BigDecimal!
 
+  " The amount of staked SVY "
+  stakedSVY: BigInt!
+
   " The balance of veSVY tokens held by this account "
   veSVYBalance: BigInt!
 
@@ -45,6 +48,9 @@ type AccountSnapshot @entity {
 
   " The USD value of snapshot account's SVY balance "
   svyBalanceUSD: BigDecimal!
+
+  " The amount of staked SVY "
+  stakedSVY: BigInt!
 
   " The balance of veSVY tokens held by snapshot account "
   veSVYBalance: BigInt!

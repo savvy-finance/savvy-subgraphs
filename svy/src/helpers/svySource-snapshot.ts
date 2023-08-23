@@ -1,35 +1,35 @@
 import { Address, ethereum } from "@graphprotocol/graph-ts";
-import { SvySource, SvySourceSnapshot } from "../../generated/schema";
+import { SVYSource, SVYSourceSnapshot } from "../../generated/schema";
 import { BIGINT_ZERO, QUARTERHOUR_IN_SECONDS } from "../constants";
 import { getBeginOfThePeriodTimestamp } from "../utils/time";
-import { getOrCreateSvySource } from "./svySource";
+import { getOrCreateSVYSource } from "./svySource";
 
-export function getOrCreateSvySourceSnapshot(accountAddress: Address, block: ethereum.Block): SvySourceSnapshot {
+export function getOrCreateSVYSourceSnapshot(accountAddress: Address, block: ethereum.Block): SVYSourceSnapshot {
   const snapshot = getBeginOfThePeriodTimestamp(block.timestamp, QUARTERHOUR_IN_SECONDS);
   const id = accountAddress.toHexString().concat('-').concat(snapshot.toString());
-  let svySourceSnapshot = SvySourceSnapshot.load(id);
+  let svySourceSnapshot = SVYSourceSnapshot.load(id);
   if (!svySourceSnapshot) {
-    svySourceSnapshot = new SvySourceSnapshot(id);
+    svySourceSnapshot = new SVYSourceSnapshot(id);
     svySourceSnapshot.svySource = accountAddress.toHexString();
     svySourceSnapshot.period = QUARTERHOUR_IN_SECONDS;
     svySourceSnapshot.timestamp = snapshot;
-    svySourceSnapshot.totalSvyDistributed = BIGINT_ZERO;
+    svySourceSnapshot.totalSVYDistributed = BIGINT_ZERO;
     svySourceSnapshot.save();
   }
 
   return svySourceSnapshot;
 }
 
-export function createSvySourceSnapshot(
+export function createSVYSourceSnapshot(
   accountAddress: Address,
   block: ethereum.Block,
-  svySource: SvySource | null
-): SvySourceSnapshot {
-  const snapshot = getOrCreateSvySourceSnapshot(accountAddress, block);
+  svySource: SVYSource | null
+): SVYSourceSnapshot {
+  const snapshot = getOrCreateSVYSourceSnapshot(accountAddress, block);
   if (!svySource) {
-    svySource = getOrCreateSvySource(accountAddress);
+    svySource = getOrCreateSVYSource(accountAddress);
   }
-  snapshot.totalSvyDistributed = svySource.totalSvyDistributed;
+  snapshot.totalSVYDistributed = svySource.totalSVYDistributed;
   snapshot.save();
 
   return snapshot;

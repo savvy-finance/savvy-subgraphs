@@ -15,7 +15,7 @@ dataSources:
       language: wasm/assemblyscript
       entities:
         - Account
-        - SvySource
+        - SVYSource
         - Protocol
       abis:
         - name: SavvyProtocolToken
@@ -37,7 +37,7 @@ dataSources:
       language: wasm/assemblyscript
       entities:
         - Account
-        - SvySource
+        - SVYSource
         - Protocol
       abis:
         - name: veSVY

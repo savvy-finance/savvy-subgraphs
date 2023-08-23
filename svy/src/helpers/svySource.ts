@@ -1,22 +1,22 @@
 import { Address, BigInt, ethereum } from "@graphprotocol/graph-ts";
-import { SvySource } from "../../generated/schema";
+import { SVYSource } from "../../generated/schema";
 import { BIGINT_ZERO, ZERO_ADDRESS } from "../constants";
-import { createSvySourceSnapshot } from "./svySource-snapshot";
+import { createSVYSourceSnapshot } from "./svySource-snapshot";
 
-export function getOrCreateSvySource(address: Address): SvySource {
+export function getOrCreateSVYSource(address: Address): SVYSource {
   const id = address.toHexString();
-  let svySource = SvySource.load(id);
+  let svySource = SVYSource.load(id);
   if (svySource === null) {
-    svySource = new SvySource(id);
-    svySource.totalSvyDistributed = BIGINT_ZERO;
+    svySource = new SVYSource(id);
+    svySource.totalSVYDistributed = BIGINT_ZERO;
     svySource.lastUpdatedBN = BIGINT_ZERO;
     svySource.lastUpdatedTimestamp = BIGINT_ZERO;
     svySource.save();
   }
-  return svySource as SvySource;
+  return svySource as SVYSource;
 }
 
-export function increaseTotalSvyDistributed(
+export function increaseTotalSVYDistributed(
   accountAddress: Address,
   svyAmount: BigInt,
   block: ethereum.Block
@@ -25,10 +25,10 @@ export function increaseTotalSvyDistributed(
   if (accountAddress.toHexString() === ZERO_ADDRESS) {
     return;
   }
-  const svySource = getOrCreateSvySource(accountAddress);
-  svySource.totalSvyDistributed = svySource.totalSvyDistributed.plus(svyAmount);
+  const svySource = getOrCreateSVYSource(accountAddress);
+  svySource.totalSVYDistributed = svySource.totalSVYDistributed.plus(svyAmount);
   svySource.lastUpdatedBN = block.number;
   svySource.lastUpdatedTimestamp = block.timestamp;
   svySource.save();
-  createSvySourceSnapshot(accountAddress, block, svySource);
+  createSVYSourceSnapshot(accountAddress, block, svySource);
 }

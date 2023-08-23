@@ -7,23 +7,37 @@ export function getOrCreateProtocol(): Protocol {
   let protocol = Protocol.load(PROTOCOL_SLUG);
   if (protocol === null) {
     protocol = new Protocol(PROTOCOL_SLUG);
-    protocol.totalSvyHolders = 0;
+    protocol.totalSVYHolders = 0;
     protocol.totalVeSVYHolders = 0;
     protocol.save();
   }
   return protocol as Protocol;
 }
 
-export function incrementSvyHolder(block: ethereum.Block): void {
+export function incrementSVYHolder(block: ethereum.Block): void {
   const protocol = getOrCreateProtocol();
-  protocol.totalSvyHolders += 1;
+  protocol.totalSVYHolders += 1;
   protocol.save();
   createProtocolSnapshot(block, protocol);
 }
 
-export function decrementSvyHolder(block: ethereum.Block): void {
+export function decrementSVYHolder(block: ethereum.Block): void {
   const protocol = getOrCreateProtocol();
-  protocol.totalSvyHolders -= 1;
+  protocol.totalSVYHolders -= 1;
+  protocol.save();
+  createProtocolSnapshot(block, protocol);
+}
+
+export function incrementSVYStaker(block: ethereum.Block): void {
+  const protocol = getOrCreateProtocol();
+  protocol.totalSVYStakers += 1;
+  protocol.save();
+  createProtocolSnapshot(block, protocol);
+}
+
+export function decrementSVYStaker(block: ethereum.Block): void {
+  const protocol = getOrCreateProtocol();
+  protocol.totalSVYStakers -= 1;
   protocol.save();
   createProtocolSnapshot(block, protocol);
 }

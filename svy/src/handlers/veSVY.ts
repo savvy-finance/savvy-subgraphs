@@ -3,12 +3,11 @@ import {
   Staked as StakedEvent,
   Unstaked as UnstakedEvent
 } from "../../generated/veSVY/veSVY";
-import { updateVeSVYBalance } from "../helpers/account";
+import { updateStakedSVYBalance, updateVeSVYBalance } from "../helpers/account";
 
 export function handleStaked(event: StakedEvent): void {
-  updateVeSVYBalance(
+  updateStakedSVYBalance(
     event.params.user,
-    "Staked",
     event.params.amount,
     event.block
   );
@@ -17,16 +16,14 @@ export function handleStaked(event: StakedEvent): void {
 export function handleClaimed(event: ClaimedEvent): void {
   updateVeSVYBalance(
     event.params.user,
-    "Claimed",
-    event.params.amount,
-    event.block
+    event.block,
+    null
   );
 }
 
 export function handleUnstaked(event: UnstakedEvent): void {
-  updateVeSVYBalance(
+  updateStakedSVYBalance(
     event.params.user,
-    "Unstaked",
     event.params.amount,
     event.block
   );

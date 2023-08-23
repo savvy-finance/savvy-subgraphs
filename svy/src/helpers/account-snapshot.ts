@@ -1,6 +1,11 @@
 import { Address, ethereum } from "@graphprotocol/graph-ts";
 import { Account, AccountSnapshot } from "../../generated/schema";
-import { BIGDECIMAL_ZERO, BIGINT_ZERO, QUARTERHOUR_IN_SECONDS } from "../constants";
+import {
+  BIGDECIMAL_ZERO,
+  BIGINT_ZERO,
+  QUARTERHOUR_IN_SECONDS
+} from "../constants";
+import { getFriendlyName } from "../utils/contracts";
 import { getBeginOfThePeriodTimestamp } from "../utils/time";
 import { getOrCreateAccount } from "./account";
 
@@ -11,6 +16,7 @@ export function getOrCreateAccountSnapshot(accountAddress: Address, block: ether
   if (!accountSnapshot) {
     accountSnapshot = new AccountSnapshot(id);
     accountSnapshot.account = accountAddress.toHexString();
+    accountSnapshot.name = getFriendlyName(accountAddress);
     accountSnapshot.period = QUARTERHOUR_IN_SECONDS;
     accountSnapshot.timestamp = snapshot;
     accountSnapshot.svyBalance = BIGINT_ZERO;
@@ -38,6 +44,6 @@ export function createAccountSnapshot(
   snapshot.veSVYBalance = account.veSVYBalance;
   snapshot.stakedSVY = account.stakedSVY;
   snapshot.save();
-  
+
   return snapshot;
 }

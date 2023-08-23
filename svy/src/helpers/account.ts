@@ -41,6 +41,7 @@ export function receiveSVY(accountAddress: Address, svyReceived: BigInt, block: 
 
   // Account
   const account = getOrCreateAccount(accountAddress);
+  const oldSVYBalance = account.svyBalance;
   account.svyBalance = account.svyBalance.plus(svyReceived);
   account.svyBalanceUSD = getSVYBalanceInUSD(account.svyBalance);
   account.lastUpdatedBN = block.number;
@@ -48,7 +49,7 @@ export function receiveSVY(accountAddress: Address, svyReceived: BigInt, block: 
   account.save();
 
   // Protocol
-  if (account.svyBalance.isZero()) {
+  if (oldSVYBalance.isZero() && account.svyBalance.gt(BIGINT_ZERO)) {
     incrementSVYHolder(block);
   }
 
@@ -63,6 +64,7 @@ export function sendSVY(accountAddress: Address, svySent: BigInt, block: ethereu
 
   // Account
   const account = getOrCreateAccount(accountAddress);
+  const oldSVYBalance = account.svyBalance;
   account.svyBalance = account.svyBalance.minus(svySent);
   account.svyBalanceUSD = getSVYBalanceInUSD(account.svyBalance);
   account.lastUpdatedBN = block.number;
@@ -70,7 +72,7 @@ export function sendSVY(accountAddress: Address, svySent: BigInt, block: ethereu
   account.save();
 
   // Protocol
-  if (account.svyBalance.isZero()) {
+  if (account.svyBalance.isZero() && oldSVYBalance.gt(BIGINT_ZERO)) {
     decrementSVYHolder(block);
   }
 
@@ -99,16 +101,15 @@ export function updateStakedSVYBalance(
   account.save();
 
   // Protocol
-  if (account.stakedSVY.isZero()) {
+  if (account.stakedSVY.isZero() && oldStakedSVYBalance.gt(BIGINT_ZERO)) {
     decrementSVYStaker(block);
-  } else if (oldStakedSVYBalance.isZero() && !account.stakedSVY.isZero()) {
+  } else if (oldStakedSVYBalance.isZero() && account.stakedSVY.gt(BIGINT_ZERO)) {
     incrementSVYStaker(block);
   }
 
   // AccountSnapshot is created by updateVeSVYBalance
   return updateVeSVYBalance(accountAddress, block, account);
 }
-
 
 export function updateVeSVYBalance(
   accountAddress: Address,
@@ -130,9 +131,9 @@ export function updateVeSVYBalance(
   account.save();
 
   // Protocol
-  if (account.veSVYBalance.isZero()) {
+  if (account.veSVYBalance.isZero() && oldVeSVYBalance.gt(BIGINT_ZERO)) {
     decrementVeSVYHolder(block);
-  } else if (oldVeSVYBalance.isZero() && !account.veSVYBalance.isZero()) {
+  } else if (oldVeSVYBalance.isZero() && account.veSVYBalance.gt(BIGINT_ZERO)) {
     incrementVeSVYHolder(block);
   }
 

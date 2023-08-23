@@ -71,7 +71,6 @@ export function sendSVY(accountAddress: Address, svySent: BigInt, block: ethereu
 
 export function updateVeSVYBalance(
   accountAddress: Address,
-  updatedAmount: BigInt, // can be negative in case of Staked
   block: ethereum.Block
 ): void {
 
@@ -79,12 +78,13 @@ export function updateVeSVYBalance(
     return;
   }
   const account = getOrCreateAccount(accountAddress);
+  const oldBalance = account.veSVYBalance; 
   account.veSVYBalance = veSVYContract.balanceOf(accountAddress);
 
   if (account.veSVYBalance.isZero()) {
     decrementVeSVYHolder(block);
   }
-  else if (account.veSVYBalance.equals(updatedAmount)) {
+  else if (oldBalance.isZero() && !account.veSVYBalance.isZero()) {
     incrementVeSVYHolder(block);
   }
 

@@ -7,7 +7,7 @@ import {
   veSVYContract
 } from "../constants";
 import { getFriendlyName } from "../utils/contracts";
-import { getSvyBalanceInUSD } from "../utils/tokens";
+import { getSVYBalanceInUSD } from "../utils/tokens";
 import { createAccountSnapshot } from "./account-snapshot";
 import {
   decrementSVYHolder,

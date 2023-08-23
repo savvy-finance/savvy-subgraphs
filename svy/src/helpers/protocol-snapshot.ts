@@ -13,7 +13,7 @@ export function getOrCreateProtocolSnapshot(block: ethereum.Block): ProtocolSnap
     protocolSnapshot.protocol = PROTOCOL_SLUG;
     protocolSnapshot.period = QUARTERHOUR_IN_SECONDS;
     protocolSnapshot.timestamp = snapshot;
-    protocolSnapshot.totalSvyHolders = 0;
+    protocolSnapshot.totalSVYHolders = 0;
     protocolSnapshot.totalVeSVYHolders = 0;
     protocolSnapshot.save();
   }
@@ -26,7 +26,8 @@ export function createProtocolSnapshot(block: ethereum.Block, protocol: Protocol
   if (!protocol) {
     protocol = getOrCreateProtocol();
   }
-  snapshot.totalSvyHolders = protocol.totalSvyHolders;
+  snapshot.totalSVYHolders = protocol.totalSVYHolders;
+  snapshot.totalSVYStakers = protocol.totalSVYStakers;
   snapshot.totalVeSVYHolders = protocol.totalVeSVYHolders;
   snapshot.save();
 

@@ -22,13 +22,19 @@ export function getOrCreateAccountSnapshot(accountAddress: Address, block: ether
     accountSnapshot.svyBalance = BIGINT_ZERO;
     accountSnapshot.svyBalanceUSD = BIGDECIMAL_ZERO;
     accountSnapshot.veSVYBalance = BIGINT_ZERO;
+    accountSnapshot.stakedSVY = BIGINT_ZERO;
     accountSnapshot.save();
   }
 
   return accountSnapshot;
 }
 
-export function createAccountSnapshot(accountAddress: Address, block: ethereum.Block, account: Account | null): AccountSnapshot {
+export function createAccountSnapshot(
+  accountAddress: Address,
+  block: ethereum.Block,
+  account: Account | null
+): AccountSnapshot {
+
   const snapshot = getOrCreateAccountSnapshot(accountAddress, block);
   if (!account) {
     account = getOrCreateAccount(accountAddress);
@@ -36,6 +42,7 @@ export function createAccountSnapshot(accountAddress: Address, block: ethereum.B
   snapshot.svyBalance = account.svyBalance;
   snapshot.svyBalanceUSD = account.svyBalanceUSD;
   snapshot.veSVYBalance = account.veSVYBalance;
+  snapshot.stakedSVY = account.stakedSVY;
   snapshot.save();
 
   return snapshot;

@@ -11,6 +11,9 @@ type Account @entity {
   " The USD value of this account's SVY balance "
   svyBalanceUSD: BigDecimal!
 
+  " The amount of staked SVY "
+  stakedSVY: BigInt!
+
   " The balance of veSVY tokens held by this account "
   veSVYBalance: BigInt!
 
@@ -46,11 +49,14 @@ type AccountSnapshot @entity {
   " The USD value of snapshot account's SVY balance "
   svyBalanceUSD: BigDecimal!
 
+  " The amount of staked SVY "
+  stakedSVY: BigInt!
+
   " The balance of veSVY tokens held by snapshot account "
   veSVYBalance: BigInt!
 }
 
-type SvySource @entity {
+type SVYSource @entity {
   " The address of the source "
   id: ID!
 
@@ -58,7 +64,7 @@ type SvySource @entity {
   name: String
 
   " The total amount of SVY tokens this source has distributed "
-  totalSvyDistributed: BigInt!
+  totalSVYDistributed: BigInt!
 
   " The last block number this account was updated "
   lastUpdatedBN: BigInt!
@@ -66,16 +72,16 @@ type SvySource @entity {
   " The last timestamp this account was updated "
   lastUpdatedTimestamp: BigInt!
 
-  "SvySource snapshots"
-  snapshots: [SvySourceSnapshot!]! @derivedFrom(field: "svySource")
+  "SVYSource snapshots"
+  snapshots: [SVYSourceSnapshot!]! @derivedFrom(field: "svySource")
 }
 
-type SvySourceSnapshot @entity {
+type SVYSourceSnapshot @entity {
   "(The address of the svySource)-(timstamp)"
   id: ID!
 
   "The svySource this snapshot belongs to"
-  svySource: SvySource!
+  svySource: SVYSource!
 
   "The time between snapshots in seconds"
   period: Int!
@@ -84,7 +90,7 @@ type SvySourceSnapshot @entity {
   timestamp: BigInt!
 
   " The total amount of SVY tokens this source has distributed "
-  totalSvyDistributed: BigInt!
+  totalSVYDistributed: BigInt!
 }
 
 type Protocol @entity {
@@ -92,7 +98,10 @@ type Protocol @entity {
   id: ID!
 
   " The total active holders "
-  totalSvyHolders: Int!
+  totalSVYHolders: Int!
+
+  " The total active stakers "
+  totalSVYStakers: Int!
 
   " The total active veSVY holders "
   totalVeSVYHolders: Int!
@@ -115,7 +124,10 @@ type ProtocolSnapshot @entity {
   timestamp: BigInt!
 
   " The total active holders "
-  totalSvyHolders: Int!
+  totalSVYHolders: Int!
+
+  " The total active stakers "
+  totalSVYStakers: Int!
 
   " The total active veSVY holders "
   totalVeSVYHolders: Int!

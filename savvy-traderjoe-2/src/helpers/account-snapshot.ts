@@ -1,18 +1,36 @@
-import { Address, ethereum } from "@graphprotocol/graph-ts";
+import { Address, BigInt, ethereum } from "@graphprotocol/graph-ts";
 import { Account, AccountSnapshot } from "../../generated/schema";
-import { BIGDECIMAL_ZERO, BIGINT_ZERO, QUARTERHOUR_IN_SECONDS } from "../constants";
+import {
+  BIGDECIMAL_ZERO,
+  BIGINT_ZERO,
+  QUARTERHOUR_IN_SECONDS,
+} from "../constants";
 import { getBeginOfThePeriodTimestamp } from "../utils/time";
 import { getOrCreateAccount } from "./account";
+import { createBinSnapshotsFromBinIdArray } from "./bin-snapshots";
 
-export function getOrCreateAccountSnapshot(accountAddress: Address, block: ethereum.Block): AccountSnapshot {
-  const snapshot = getBeginOfThePeriodTimestamp(block.timestamp, QUARTERHOUR_IN_SECONDS);
-  const id = accountAddress.toHexString().concat('-').concat(snapshot.toString());
+export function getOrCreateAccountSnapshot(
+  accountAddress: Address,
+  timestamp: BigInt
+): AccountSnapshot {
+  const snapshot = getBeginOfThePeriodTimestamp(
+    timestamp,
+    QUARTERHOUR_IN_SECONDS
+  );
+  const id = accountAddress
+    .toHexString()
+    .concat("-")
+    .concat(snapshot.toString());
   let accountSnapshot = AccountSnapshot.load(id);
   if (!accountSnapshot) {
     accountSnapshot = new AccountSnapshot(id);
     accountSnapshot.account = accountAddress.toHexString();
     accountSnapshot.period = QUARTERHOUR_IN_SECONDS;
     accountSnapshot.timestamp = snapshot;
+    accountSnapshot.svy = BIGINT_ZERO;
+    accountSnapshot.svyWETH = BIGINT_ZERO;
+    accountSnapshot.svyBinIds = [];
+    accountSnapshot.svyLiquidityUSD = BIGDECIMAL_ZERO;
     accountSnapshot.svUSD = BIGINT_ZERO;
     accountSnapshot.USDC = BIGINT_ZERO;
     accountSnapshot.svUSDBinIds = [];
@@ -32,23 +50,43 @@ export function getOrCreateAccountSnapshot(accountAddress: Address, block: ether
   return accountSnapshot;
 }
 
-export function createAccountSnapshot(accountAddress: Address, block: ethereum.Block, account: Account | null): AccountSnapshot {
-  const snapshot = getOrCreateAccountSnapshot(accountAddress, block);
+export function createAccountSnapshot(
+  accountAddress: Address,
+  timestamp: BigInt,
+  account: Account | null
+): AccountSnapshot {
+  const snapshot = getOrCreateAccountSnapshot(accountAddress, timestamp);
   if (!account) {
     account = getOrCreateAccount(accountAddress);
   }
-  
+
   snapshot.svUSD = account.svUSD;
   snapshot.USDC = account.USDC;
-  snapshot.svUSDBinIds = account.svUSDBinIds;
+  snapshot.svy = account.svy;
+  snapshot.svyWETH = account.svyWETH;
+  snapshot.svyBinIds = createBinSnapshotsFromBinIdArray(
+    account.svyBinIds,
+    timestamp
+  );
+  snapshot.svyLiquidityUSD = account.svyLiquidityUSD;
+  snapshot.svUSDBinIds = createBinSnapshotsFromBinIdArray(
+    account.svUSDBinIds,
+    timestamp
+  );
   snapshot.svUSDLiquidityUSD = account.svUSDLiquidityUSD;
   snapshot.svETH = account.svETH;
   snapshot.WETH = account.WETH;
-  snapshot.svETHBinIds = account.svETHBinIds;
+  snapshot.svETHBinIds = createBinSnapshotsFromBinIdArray(
+    account.svETHBinIds,
+    timestamp
+  );
   snapshot.svETHLiquidityUSD = account.svETHLiquidityUSD;
   snapshot.svBTC = account.svBTC;
   snapshot.WBTC = account.WBTC;
-  snapshot.svBTCBinIds = account.svBTCBinIds;
+  snapshot.svBTCBinIds = createBinSnapshotsFromBinIdArray(
+    account.svBTCBinIds,
+    timestamp
+  );
   snapshot.svBTCLiquidityUSD = account.svBTCLiquidityUSD;
   snapshot.totalLiquidityUSD = account.totalLiquidityUSD;
   snapshot.save();

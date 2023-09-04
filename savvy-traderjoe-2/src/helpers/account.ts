@@ -1,12 +1,23 @@
-import { Address, BigInt, ethereum, log } from "@graphprotocol/graph-ts";
-import { Account } from '../../generated/schema';
+import { Address, BigInt, log } from "@graphprotocol/graph-ts";
+import { Account, Token } from "../../generated/schema";
 import { LBPair } from "../../generated/TJ_LP_SVUSD/LBPair";
-import { BIGDECIMAL_ZERO, BIGINT_MAX, BIGINT_ONE, BIGINT_ZERO, TJ_LP_SVBTC, TJ_LP_SVETH, TJ_LP_SVUSD } from "../constants";
-import { mergeSortedArrays, checkArrayIsAscSorted } from "../utils/array";
-import { normalizeToEighteenDecimals, normalizeToTokenDecimals } from "../utils/tokens";
-import { getBalancesFromBinIds, getLPPairInUSD, pruneBins } from "../utils/trader-joe";
-import { getOrCreateAccountNFTPositions, syncAccountNFTPositions } from "./account-nft-positions";
+import {
+  BIGDECIMAL_ZERO,
+  BIGINT_ONE,
+  BIGINT_ZERO,
+  TJ_LP_SVBTC,
+  TJ_LP_SVETH,
+  TJ_LP_SVUSD,
+  TJ_LP_SVY,
+} from "../constants";
+import { normalizeToTokenDecimals } from "../utils/tokens";
+import { getLPPairInUSD } from "../utils/trader-joe";
+import {
+  getOrCreateAccountNFTPositions,
+  syncAccountNFTPositions,
+} from "./account-nft-positions";
 import { createAccountSnapshot } from "./account-snapshot";
+import { getOrCreateBin, refreshBinBalances } from "./bin";
 import { getOrCreateProtocol } from "./protocol";
 import { getOrCreateToken } from "./token";
 
@@ -19,6 +30,10 @@ export function getOrCreateAccount(address: Address): Account {
     protocol.numOfAccounts = protocol.numOfAccounts.plus(BIGINT_ONE);
     protocol.save();
     account.protocol = protocol.id;
+    account.svy = BIGINT_ZERO;
+    account.svyWETH = BIGINT_ZERO;
+    account.svyBinIds = [];
+    account.svyLiquidityUSD = BIGDECIMAL_ZERO;
     account.svUSD = BIGINT_ZERO;
     account.USDC = BIGINT_ZERO;
     account.svUSDBinIds = [];
@@ -43,88 +58,231 @@ export function getOrCreateAccount(address: Address): Account {
   return account as Account;
 }
 
-export function updateBinIds(accountAddress: Address, pairAddress: Address, binIds: BigInt[]): Account {
+export function updateBinIds(
+  accountAddress: Address,
+  pairAddress: Address,
+  binIds: BigInt[]
+): Account {
   const account = getOrCreateAccount(accountAddress);
   if (binIds.length === 0) {
     return account;
   }
 
+  let binList: string[] = [];
+
+  if (pairAddress.toHexString().includes(TJ_LP_SVY)) {
+    binList = account.svyBinIds;
+  } else if (pairAddress.toHexString().includes(TJ_LP_SVUSD)) {
+    log.debug("updateBinIds for svUSD - before ids: {}", [
+      account.svUSDBinIds.toString(),
+    ]);
+    binList = account.svUSDBinIds;
+  } else if (pairAddress.toHexString().includes(TJ_LP_SVETH)) {
+    binList = account.svETHBinIds;
+  } else if (pairAddress.toHexString().includes(TJ_LP_SVBTC)) {
+    binList = account.svBTCBinIds;
+  }
+
+  for (let i = 0; i < binIds.length; i++) {
+    const binId = binIds[i];
+    const bin = getOrCreateBin(accountAddress, pairAddress, binId);
+
+    if (!bin) {
+      continue;
+    }
+
+    if (!binList.includes(bin.id)) {
+      binList.push(bin.id);
+    }
+  }
+
+  if (pairAddress.toHexString().includes(TJ_LP_SVY)) {
+    account.svyBinIds = binList;
+  } else if (pairAddress.toHexString().includes(TJ_LP_SVUSD)) {
+    account.svUSDBinIds = binList;
+    log.debug("updateBinIds for svUSD - after ids: {}", [
+      account.svUSDBinIds.toString(),
+    ]);
+  } else if (pairAddress.toHexString().includes(TJ_LP_SVETH)) {
+    account.svETHBinIds = binList;
+  } else if (pairAddress.toHexString().includes(TJ_LP_SVBTC)) {
+    account.svBTCBinIds = binList;
+  }
+
+  account.save();
+  return account;
+}
+
+export function refreshBalances(
+  accountAddress: Address,
+  pairAddress: Address,
+  blockNumber: BigInt,
+  timestamp: BigInt
+): Account {
+  const account = getOrCreateAccount(accountAddress);
+
+  let lbPair: LBPair;
+  let pairedToken: Token;
+  let binIds: string[];
+  let tokenX: BigInt;
+  let tokenY: BigInt;
+  if (pairAddress.toHexString().includes(TJ_LP_SVY)) {
+    lbPair = LBPair.bind(Address.fromString(TJ_LP_SVY));
+    pairedToken = getOrCreateToken(lbPair.getTokenY());
+    binIds = account.svyBinIds;
+    tokenX = BIGINT_ZERO;
+    tokenY = BIGINT_ZERO;
+    for (let i = 0; i < binIds.length; i++) {
+      const binId = binIds[i];
+      const bin = refreshBinBalances(
+        accountAddress,
+        binId,
+        lbPair,
+        pairedToken.decimals
+      );
+      if (bin) {
+        tokenX = tokenX.plus(bin.tokenXBalance);
+        tokenY = tokenY.plus(bin.tokenYBalance);
+      }
+    }
+    account.svy = tokenX;
+    account.svyWETH = tokenY;
+    account.svyLiquidityUSD = getLPPairInUSD(
+      lbPair.getActiveId(),
+      account.svy,
+      lbPair.getTokenY(),
+      normalizeToTokenDecimals(account.svyWETH, pairedToken.decimals),
+      pairedToken.decimals
+    );
+  }
+
   if (pairAddress.toHexString().includes(TJ_LP_SVUSD)) {
-    account.svUSDBinIds = mergeSortedArrays(account.svUSDBinIds, checkArrayIsAscSorted(binIds));
+    lbPair = LBPair.bind(Address.fromString(TJ_LP_SVUSD));
+    pairedToken = getOrCreateToken(lbPair.getTokenY());
+    binIds = account.svUSDBinIds;
+    tokenX = BIGINT_ZERO;
+    tokenY = BIGINT_ZERO;
+    for (let i = 0; i < binIds.length; i++) {
+      const binId = binIds[i];
+      const bin = refreshBinBalances(
+        accountAddress,
+        binId,
+        lbPair,
+        pairedToken.decimals
+      );
+      if (bin) {
+        log.debug(
+          "RAMSEY refreshAccount bin: {} tokenX: {} bin.tokenXBalance: {} tokenY: {} bin.tokenYBalance: {}",
+          [
+            bin.id,
+            tokenX.toString(),
+            bin.tokenXBalance.toString(),
+            tokenY.toString(),
+            bin.tokenYBalance.toString(),
+          ]
+        );
+        tokenX = tokenX.plus(bin.tokenXBalance);
+        tokenY = tokenY.plus(bin.tokenYBalance);
+      } else {
+        log.debug("RAMSEY refreshAccount bin: {} bin is null", [binId]);
+      }
+    }
+    account.svUSD = tokenX;
+    account.USDC = tokenY;
+    log.debug("RAMSEY refreshAccount svUSD: {} usdc: {}", [
+      tokenX.toString(),
+      tokenY.toString(),
+    ]);
+    account.svUSDLiquidityUSD = getLPPairInUSD(
+      lbPair.getActiveId(),
+      account.svUSD,
+      lbPair.getTokenY(),
+      normalizeToTokenDecimals(account.USDC, pairedToken.decimals),
+      pairedToken.decimals
+    );
   }
 
   if (pairAddress.toHexString().includes(TJ_LP_SVETH)) {
-    account.svETHBinIds = mergeSortedArrays(account.svETHBinIds, checkArrayIsAscSorted(binIds));
+    lbPair = LBPair.bind(Address.fromString(TJ_LP_SVETH));
+    pairedToken = getOrCreateToken(lbPair.getTokenY());
+    binIds = account.svETHBinIds;
+    tokenX = BIGINT_ZERO;
+    tokenY = BIGINT_ZERO;
+    for (let i = 0; i < binIds.length; i++) {
+      const binId = binIds[i];
+      const bin = refreshBinBalances(
+        accountAddress,
+        binId,
+        lbPair,
+        pairedToken.decimals
+      );
+      if (bin) {
+        tokenX = tokenX.plus(bin.tokenXBalance);
+        tokenY = tokenY.plus(bin.tokenYBalance);
+      }
+    }
+    account.svETH = tokenX;
+    account.WETH = tokenY;
+    account.svETHLiquidityUSD = getLPPairInUSD(
+      lbPair.getActiveId(),
+      account.svETH,
+      lbPair.getTokenY(),
+      normalizeToTokenDecimals(account.WETH, pairedToken.decimals),
+      pairedToken.decimals
+    );
   }
 
   if (pairAddress.toHexString().includes(TJ_LP_SVBTC)) {
-    account.svBTCBinIds = mergeSortedArrays(account.svBTCBinIds, checkArrayIsAscSorted(binIds));
+    lbPair = LBPair.bind(Address.fromString(TJ_LP_SVBTC));
+    pairedToken = getOrCreateToken(lbPair.getTokenY());
+    binIds = account.svBTCBinIds;
+    tokenX = BIGINT_ZERO;
+    tokenY = BIGINT_ZERO;
+    for (let i = 0; i < binIds.length; i++) {
+      const binId = binIds[i];
+      const bin = refreshBinBalances(
+        accountAddress,
+        binId,
+        lbPair,
+        pairedToken.decimals
+      );
+      if (bin) {
+        tokenX = tokenX.plus(bin.tokenXBalance);
+        tokenY = tokenY.plus(bin.tokenYBalance);
+      }
+    }
+    account.svBTC = tokenX;
+    account.WBTC = tokenY;
+    account.svBTCLiquidityUSD = getLPPairInUSD(
+      lbPair.getActiveId(),
+      account.svBTC,
+      lbPair.getTokenY(),
+      normalizeToTokenDecimals(account.WBTC, pairedToken.decimals),
+      pairedToken.decimals
+    );
   }
-  
+  account.totalLiquidityUSD = account.svyLiquidityUSD
+    .plus(account.svUSDLiquidityUSD)
+    .plus(account.svETHLiquidityUSD)
+    .plus(account.svBTCLiquidityUSD);
+  account.lastUpdatedBN = blockNumber;
+  account.lastUpdatedTimestamp = timestamp;
   account.save();
+
+  createAccountSnapshot(accountAddress, timestamp, account);
   return account;
 }
 
-export function refreshBalances(accountAddress: Address, block: ethereum.Block): Account {
-  const account = getOrCreateAccount(accountAddress);
-
-  let lbPair = LBPair.bind(Address.fromString(TJ_LP_SVUSD));
-  account.svUSDBinIds = pruneBins(lbPair, account.svUSDBinIds); 
-  let pairedToken = getOrCreateToken(lbPair.getTokenY());
-  let balances = getBalancesFromBinIds(accountAddress, lbPair._address, account.svUSDBinIds);
-  account.svUSD = balances[0] === BIGINT_MAX ? account.svUSD : balances[0];
-  account.USDC = balances[1] === BIGINT_MAX ? account.USDC : normalizeToEighteenDecimals(balances[1], pairedToken.decimals);
-  account.svUSDLiquidityUSD = getLPPairInUSD(
-    lbPair.getActiveId(), 
-    account.svUSD, 
-    lbPair.getTokenY(),
-    normalizeToTokenDecimals(account.USDC, pairedToken.decimals),
-    pairedToken.decimals
-  );
-
-  lbPair = LBPair.bind(Address.fromString(TJ_LP_SVETH));
-  pairedToken = getOrCreateToken(lbPair.getTokenY());
-  account.svETHBinIds = pruneBins(lbPair, account.svETHBinIds); 
-  balances = getBalancesFromBinIds(accountAddress, lbPair._address, account.svETHBinIds);
-  account.svETH = balances[0] === BIGINT_MAX ? account.svETH : balances[0];
-  account.WETH = balances[1] === BIGINT_MAX ? account.WETH : normalizeToEighteenDecimals(balances[1], pairedToken.decimals);
-  account.svETHLiquidityUSD = getLPPairInUSD(
-    lbPair.getActiveId(), 
-    account.svETH, 
-    lbPair.getTokenY(),
-    normalizeToTokenDecimals(account.WETH, pairedToken.decimals),
-    pairedToken.decimals
-  );
-
-  lbPair = LBPair.bind(Address.fromString(TJ_LP_SVBTC));
-  pairedToken = getOrCreateToken(lbPair.getTokenY());
-  account.svBTCBinIds = pruneBins(lbPair, account.svBTCBinIds); 
-  balances = getBalancesFromBinIds(accountAddress, lbPair._address, account.svBTCBinIds);
-  account.svBTC = balances[0] === BIGINT_MAX ? account.svBTC : balances[0];
-  account.WBTC = balances[1] === BIGINT_MAX ? account.WBTC : normalizeToEighteenDecimals(balances[1], pairedToken.decimals);
-  account.svBTCLiquidityUSD = getLPPairInUSD(
-    lbPair.getActiveId(), 
-    account.svBTC, 
-    lbPair.getTokenY(),
-    normalizeToTokenDecimals(account.WBTC, pairedToken.decimals),
-    pairedToken.decimals
-  );
-
-  account.totalLiquidityUSD = account.svUSDLiquidityUSD.plus(account.svETHLiquidityUSD).plus(account.svBTCLiquidityUSD);
-  account.lastUpdatedBN = block.number;
-  account.lastUpdatedTimestamp = block.timestamp;
-  account.save();
-
-  createAccountSnapshot(accountAddress, block, account);
-  return account;
-}
-
-export function refreshAllAccountBalances(block: ethereum.Block): void {
+export function refreshAllAccountBalances(
+  pairAddress: Address,
+  blockNumber: BigInt,
+  timestamp: BigInt
+): void {
   const protocol = getOrCreateProtocol();
   const accounts = protocol.accounts.load();
   const numOfAddresses = accounts.length;
   for (let i = 0; i < numOfAddresses; i++) {
     const address = Address.fromString(accounts[i].id);
-    refreshBalances(address, block);
+    refreshBalances(address, pairAddress, blockNumber, timestamp);
   }
 }

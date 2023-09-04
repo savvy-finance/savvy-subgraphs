@@ -1,3 +1,48 @@
+type Bin @entity {
+  " (account address)-(lp address)-(Bin id) "
+  id: ID!
+
+  " The account this bin belongs to "
+  account: Account!
+
+  " The lp this bin belongs to "
+  lpAddress: String!
+
+  " The bin id "
+  binId: BigInt!
+
+  " The token x balance "
+  tokenXBalance: BigInt!
+
+  " The token y balance "
+  tokenYBalance: BigInt!
+}
+type BinSnapshot @entity {
+  " (account address)-(lp address)-(Bin id)-(timestamp)"
+  id: ID!
+
+  "The time between snapshots in seconds"
+  period: Int!
+
+  " The timestamp of the snapshot "
+  timestamp: BigInt!
+
+  " The account this bin belongs to "
+  account: Account!
+
+  " The lp this bin belongs to "
+  lpAddress: String!
+
+  " The bin id "
+  binId: BigInt!
+
+  " The token x balance "
+  tokenXBalance: BigInt!
+
+  " The token y balance "
+  tokenYBalance: BigInt!
+}
+
 type Token @entity {
   " The token address "
   id: ID!
@@ -25,31 +70,52 @@ type Protocol @entity {
   "Number of market makers"
   numOfAccounts: BigInt!
 
-  " svUSD balance for user  "
+  " The active bin of the SVY<>WETH LP "
+  svyActiveBinId: Int!
+
+  " SVY<>WETH LP: SVY balance for user  "
+  svy: BigInt!
+
+  " SVY<>WETH LP: WETH balance for user  "
+  svyWETH: BigInt!
+
+  " SVY<>WETH pool liquidity   "
+  svyLiquidityUSD: BigDecimal!
+
+  " The active bin of the svUSD<>USDC LP "
+  svUSDActiveBinId: Int!
+
+  " svUSD<>USDC LP: svUSD balance for user  "
   svUSD: BigInt!
 
-  " USDC balance for user  "
+  " svUSD<>USDC LP: USDC balance for user  "
   USDC: BigInt!
 
-  " svUSD pool liquidity   "
+  " svUSD<>USDC pool liquidity   "
   svUSDLiquidityUSD: BigDecimal!
-  
-  " svBTC balance for user  "
+
+  " The active bin of the svBTC<>WBTC LP "
+  svBTCActiveBinId: Int!
+
+  " svBTC<>WBTC LP: svBTC balance for user  "
   svBTC: BigInt!
 
-  " WBTC balance for user  "
+  " svBTC<>WBTC LP: WBTC balance for user  "
   WBTC: BigInt!
 
-  " svBTC pool liquidity   "
+  " svBTC<>WBTC pool liquidity   "
   svBTCLiquidityUSD: BigDecimal!
 
-  " svETH balance for user  "
+  " The active bin of the svETH<>WETH LP"
+  svETHActiveBinId: Int!
+
+  " svETH<>WETH LP: svETH balance for user  "
   svETH: BigInt!
 
-  " WETH balance for user  "
+  " svETH<>WETH LP: WETH balance for user  "
   WETH: BigInt!
 
-  " svETH pool liquidity   "
+  " svETH<>WETH pool liquidity   "
   svETHLiquidityUSD: BigDecimal!
 
   "The value of the pool in USD"
@@ -78,31 +144,52 @@ type ProtocolSnapshot @entity {
   "Number of market makers"
   numOfAccounts: BigInt!
 
-  " svUSD balance for user  "
+  " The active bin of the SVY<>WETH LP "
+  svyActiveBinId: Int!
+
+  " SVY<>WETH LP: SVY balance for user  "
+  svy: BigInt!
+
+  " SVY<>WETH LP: WETH balance for user  "
+  svyWETH: BigInt!
+
+  " SVY<>WETH pool liquidity   "
+  svyLiquidityUSD: BigDecimal!
+
+  " The active bin of the svUSD<>USDC LP "
+  svUSDActiveBinId: Int!
+
+  " svUSD<>USDC LP: svUSD balance for user  "
   svUSD: BigInt!
 
-  " USDC balance for user  "
+  " svUSD<>USDC LP: USDC balance for user  "
   USDC: BigInt!
 
-  " svUSD pool liquidity   "
+  " svUSD<>USDC pool liquidity   "
   svUSDLiquidityUSD: BigDecimal!
-  
-  " svBTC balance for user  "
+
+  " The active bin of the svBTC<>WBTC LP "
+  svBTCActiveBinId: Int!
+
+  " svBTC<>WBTC LP: svBTC balance for user  "
   svBTC: BigInt!
 
-  " WBTC balance for user  "
+  " svBTC<>WBTC LP: WBTC balance for user  "
   WBTC: BigInt!
 
-  " svBTC pool liquidity   "
+  " svBTC<>WBTC pool liquidity   "
   svBTCLiquidityUSD: BigDecimal!
 
-  " svETH balance for user  "
+  " The active bin of the svETH<>WETH LP"
+  svETHActiveBinId: Int!
+
+  " svETH<>WETH LP: svETH balance for user  "
   svETH: BigInt!
 
-  " WETH balance for user  "
+  " svETH<>WETH LP: WETH balance for user  "
   WETH: BigInt!
 
-  " svETH pool liquidity   "
+  " svETH<>WETH pool liquidity   "
   svETHLiquidityUSD: BigDecimal!
 
   "The value of the pool in USD"
@@ -112,6 +199,9 @@ type ProtocolSnapshot @entity {
 type LiquidityPool @entity {
   "The address of the liquidity pool"
   id: ID!
+
+  " The actively trading bin id for this lp "
+  activeBinId: Int!
 
   "The synthetic token of the liquidity pool"
   savvySynthetic: Token!
@@ -151,6 +241,9 @@ type LiquidityPoolSnapshot @entity {
   "The time between snapshots in seconds"
   period: Int!
 
+  " The actively trading bin id for this lp "
+  activeBinId: Int!
+
   "The balance of Savvy Synthetics in the liquidity pool"
   savvySyntheticBalance: BigInt!
 
@@ -167,12 +260,24 @@ type LiquidityPoolSnapshot @entity {
   timestamp: BigInt!
 }
 
-type Account @entity { 
+type Account @entity {
   "The address of the account"
   id: ID!
 
   "The protocol the liquidity pool belongs to"
   protocol: Protocol!
+
+  " SVY<>WETH LP: SVY balance for user  "
+  svy: BigInt!
+
+  " SVY<>WETH LP: WETH balance for user  "
+  svyWETH: BigInt!
+
+  " SVY<>WETH pool liquidity   "
+  svyLiquidityUSD: BigDecimal!
+
+  " List of active bins "
+  svyBinIds: [Bin!]!
 
   " svUSD balance for user  "
   svUSD: BigInt!
@@ -184,7 +289,7 @@ type Account @entity {
   svUSDLiquidityUSD: BigDecimal!
 
   " List of active bins "
-  svUSDBinIds: [BigInt!]! 
+  svUSDBinIds: [Bin!]!
 
   " svBTC balance for user  "
   svBTC: BigInt!
@@ -196,7 +301,7 @@ type Account @entity {
   svBTCLiquidityUSD: BigDecimal!
 
   " List of active bins "
-  svBTCBinIds: [BigInt!]! 
+  svBTCBinIds: [Bin!]!
 
   " svETH balance for user  "
   svETH: BigInt!
@@ -206,9 +311,9 @@ type Account @entity {
 
   " svETH pool liquidity   "
   svETHLiquidityUSD: BigDecimal!
-  
+
   " List of active bins "
-  svETHBinIds: [BigInt!]! 
+  svETHBinIds: [Bin!]!
 
   " The liquidity provided in USD across all pairs "
   totalLiquidityUSD: BigDecimal!
@@ -229,7 +334,7 @@ type Account @entity {
   nfts: AccountNFTPositions
 }
 
-type AccountSnapshot @entity { 
+type AccountSnapshot @entity {
   "(The address of the account)-(timstamp)"
   id: ID!
 
@@ -242,6 +347,18 @@ type AccountSnapshot @entity {
   " The timestamp of the snapshot "
   timestamp: BigInt!
 
+  " SVY<>WETH LP: SVY balance for user  "
+  svy: BigInt!
+
+  " SVY<>WETH LP: WETH balance for user  "
+  svyWETH: BigInt!
+
+  " SVY<>WETH pool liquidity   "
+  svyLiquidityUSD: BigDecimal!
+
+  " List of active bins "
+  svyBinIds: [BinSnapshot!]!
+
   " svUSD balance for user  "
   svUSD: BigInt!
 
@@ -252,7 +369,7 @@ type AccountSnapshot @entity {
   svUSDLiquidityUSD: BigDecimal!
 
   " List of active bins "
-  svUSDBinIds: [BigInt!]! 
+  svUSDBinIds: [BinSnapshot!]!
 
   " svBTC balance for user  "
   svBTC: BigInt!
@@ -264,7 +381,7 @@ type AccountSnapshot @entity {
   svBTCLiquidityUSD: BigDecimal!
 
   " List of active bins "
-  svBTCBinIds: [BigInt!]! 
+  svBTCBinIds: [BinSnapshot!]!
 
   " svETH balance for user  "
   svETH: BigInt!
@@ -274,9 +391,9 @@ type AccountSnapshot @entity {
 
   " svETH pool liquidity   "
   svETHLiquidityUSD: BigDecimal!
-  
+
   " List of active bins "
-  svETHBinIds: [BigInt!]! 
+  svETHBinIds: [BinSnapshot!]!
 
   " The liquidity provided in USD across all pairs "
   totalLiquidityUSD: BigDecimal!

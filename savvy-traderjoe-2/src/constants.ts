@@ -2,7 +2,7 @@ import { Address, BigInt } from "@graphprotocol/graph-ts";
 import { GalxeNFT } from "../generated/MMC_NFT/GalxeNFT";
 import { LiquidityAmountsContract } from "../generated/TJ_LP_SVBTC/LiquidityAmountsContract";
 
-export const SVY = "0xf202ab403cd7e90197ec0f010ee897e283037706";
+export const SVY = "0x43ab8f7d2a8dd4102ccea6b438f6d747b1b9f034";
 export const SV_USD = "0xf202ab403cd7e90197ec0f010ee897e283037706";
 export const SV_ETH = "0xf7728582002ef82908c8242cf552e969ba863ffa";
 export const SV_BTC = "0xeee18334c414a47fb886a7317e1885b2bfb8c2a6";

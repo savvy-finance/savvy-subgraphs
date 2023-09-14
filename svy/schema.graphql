@@ -17,6 +17,15 @@ type Account @entity {
   " The balance of veSVY tokens held by this account "
   veSVYBalance: BigInt!
 
+  " The amount of earning SVY per second "
+  svyEarnRatePerSec: BigInt!
+
+  " The amount of earning VeSVY per second "
+  veSVYEarnRatePerSec: BigInt!
+
+  " The amount of maximum earnable VeSVY "
+  maxVeSvyEarnable: BigInt!
+
   " The last block number this account was updated "
   lastUpdatedBN: BigInt!
 
@@ -54,6 +63,15 @@ type AccountSnapshot @entity {
 
   " The balance of veSVY tokens held by snapshot account "
   veSVYBalance: BigInt!
+
+  " The amount of earning SVY per second "
+  svyEarnRatePerSec: BigInt!
+
+  " The amount of earning VeSVY per second "
+  veSVYEarnRatePerSec: BigInt!
+
+  " The amount of maximum earnable VeSVY "
+  maxVeSvyEarnable: BigInt!
 }
 
 type SVYSource @entity {

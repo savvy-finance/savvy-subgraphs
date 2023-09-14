@@ -23,6 +23,9 @@ export function getOrCreateAccountSnapshot(accountAddress: Address, block: ether
     accountSnapshot.svyBalanceUSD = BIGDECIMAL_ZERO;
     accountSnapshot.veSVYBalance = BIGINT_ZERO;
     accountSnapshot.stakedSVY = BIGINT_ZERO;
+    accountSnapshot.svyEarnRatePerSec = BIGINT_ZERO;
+    accountSnapshot.veSVYEarnRatePerSec = BIGINT_ZERO;
+    accountSnapshot.maxVeSvyEarnable = BIGINT_ZERO;
     accountSnapshot.save();
   }
 
@@ -43,6 +46,9 @@ export function createAccountSnapshot(
   snapshot.svyBalanceUSD = account.svyBalanceUSD;
   snapshot.veSVYBalance = account.veSVYBalance;
   snapshot.stakedSVY = account.stakedSVY;
+  snapshot.svyEarnRatePerSec = account.svyEarnRatePerSec;
+  snapshot.veSVYEarnRatePerSec = account.veSVYEarnRatePerSec;
+  snapshot.maxVeSvyEarnable = account.maxVeSvyEarnable;
   snapshot.save();
 
   return snapshot;

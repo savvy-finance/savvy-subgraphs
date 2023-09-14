@@ -1,9 +1,11 @@
 import { Address, BigInt, TypedMap } from "@graphprotocol/graph-ts";
+import { SavvyFrontendInfoAggregator } from "../generated/veSVY/SavvyFrontendInfoAggregator";
 import { veSVY } from "../generated/veSVY/veSVY";
 
 export const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 export const SAVVY_PRICE_FEED = "0xbCDaB0382C17F58b828DB3AD840F0140C4f00156";
 export const VESVY_CONTRACT_ADDRESS = "0x9aEEe4656F67034B06D99294062feBA1015430ad";
+export const SFIA_CONTRACT_ADDRESS = "0x97DCA4000B2b89AFD926f5987ad7b054B3e39dB2";
 export let CONTRACT_TO_NAME_MAP = new TypedMap<string, string>();
 
 CONTRACT_TO_NAME_MAP.set("0x210c0856cd966fb8990b062488a18de778122329", "savvy-dao-arbitrum");
@@ -19,6 +21,7 @@ CONTRACT_TO_NAME_MAP.set("0xa7ccba432d1d4861098f155341644e96a492224c", "savvy-ho
 CONTRACT_TO_NAME_MAP.set("0x7754b5ccd22261c651f926b9eb8ee286f836cdd2", "savvy-peanut-admin-arbitrum");
 
 export const veSVYContract = veSVY.bind(Address.fromString(VESVY_CONTRACT_ADDRESS));
+export const SFIAContract = SavvyFrontendInfoAggregator.bind(Address.fromString(SFIA_CONTRACT_ADDRESS));
 
 export const BIGINT_ZERO = BigInt.fromI32(0);
 export const BIGINT_TEN_TO_EIGHTEENTH = BigInt.fromString("10").pow(18);

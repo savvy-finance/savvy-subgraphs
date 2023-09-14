@@ -3,6 +3,7 @@ import { Account } from "../../generated/schema";
 import {
   BIGDECIMAL_ZERO,
   BIGINT_ZERO,
+  SFIAContract,
   ZERO_ADDRESS,
   veSVYContract
 } from "../constants";
@@ -29,6 +30,9 @@ export function getOrCreateAccount(address: Address): Account {
     account.svyBalanceUSD = BIGDECIMAL_ZERO;
     account.veSVYBalance = BIGINT_ZERO;
     account.stakedSVY = BIGINT_ZERO;
+    account.svyEarnRatePerSec = BIGINT_ZERO;
+    account.veSVYEarnRatePerSec = BIGINT_ZERO;
+    account.maxVeSvyEarnable = BIGINT_ZERO;
     account.lastUpdatedBN = BIGINT_ZERO;
     account.lastUpdatedTimestamp = BIGINT_ZERO;
     account.save();
@@ -46,6 +50,9 @@ export function receiveSVY(accountAddress: Address, svyReceived: BigInt, block: 
   const oldSVYBalance = account.svyBalance;
   account.svyBalance = account.svyBalance.plus(svyReceived);
   account.svyBalanceUSD = getSVYBalanceInUSD(account.svyBalance);
+  account.svyEarnRatePerSec = SFIAContract.getMySVYPageInfo(accountAddress).svyEarnRatePerSec;
+  account.veSVYEarnRatePerSec = SFIAContract.getMySVYPageInfo(accountAddress).veSVYEarnRatePerSec;
+  account.maxVeSvyEarnable = SFIAContract.getMySVYPageInfo(accountAddress).maxVeSvyEarnable;
   account.lastUpdatedBN = block.number;
   account.lastUpdatedTimestamp = block.timestamp;
   account.save();
@@ -69,6 +76,9 @@ export function sendSVY(accountAddress: Address, svySent: BigInt, block: ethereu
   const oldSVYBalance = account.svyBalance;
   account.svyBalance = account.svyBalance.minus(svySent);
   account.svyBalanceUSD = getSVYBalanceInUSD(account.svyBalance);
+  account.svyEarnRatePerSec = SFIAContract.getMySVYPageInfo(accountAddress).svyEarnRatePerSec;
+  account.veSVYEarnRatePerSec = SFIAContract.getMySVYPageInfo(accountAddress).veSVYEarnRatePerSec;
+  account.maxVeSvyEarnable = SFIAContract.getMySVYPageInfo(accountAddress).maxVeSvyEarnable;
   account.lastUpdatedBN = block.number;
   account.lastUpdatedTimestamp = block.timestamp;
   account.save();

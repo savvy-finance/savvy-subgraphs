@@ -50,9 +50,11 @@ export function receiveSVY(accountAddress: Address, svyReceived: BigInt, block: 
   const oldSVYBalance = account.svyBalance;
   account.svyBalance = account.svyBalance.plus(svyReceived);
   account.svyBalanceUSD = getSVYBalanceInUSD(account.svyBalance);
-  account.svyEarnRatePerSec = SFIAContract.getMySVYPageInfo(accountAddress).svyEarnRatePerSec;
-  account.veSVYEarnRatePerSec = SFIAContract.getMySVYPageInfo(accountAddress).veSVYEarnRatePerSec;
-  account.maxVeSvyEarnable = SFIAContract.getMySVYPageInfo(accountAddress).maxVeSvyEarnable;
+
+  const mySVYPageInfo = SFIAContract.getMySVYPageInfo(accountAddress);
+  account.svyEarnRatePerSec = mySVYPageInfo.svyEarnRatePerSec;
+  account.veSVYEarnRatePerSec = mySVYPageInfo.veSVYEarnRatePerSec;
+  account.maxVeSvyEarnable = mySVYPageInfo.maxVeSvyEarnable;
   account.lastUpdatedBN = block.number;
   account.lastUpdatedTimestamp = block.timestamp;
   account.save();
@@ -76,9 +78,10 @@ export function sendSVY(accountAddress: Address, svySent: BigInt, block: ethereu
   const oldSVYBalance = account.svyBalance;
   account.svyBalance = account.svyBalance.minus(svySent);
   account.svyBalanceUSD = getSVYBalanceInUSD(account.svyBalance);
-  account.svyEarnRatePerSec = SFIAContract.getMySVYPageInfo(accountAddress).svyEarnRatePerSec;
-  account.veSVYEarnRatePerSec = SFIAContract.getMySVYPageInfo(accountAddress).veSVYEarnRatePerSec;
-  account.maxVeSvyEarnable = SFIAContract.getMySVYPageInfo(accountAddress).maxVeSvyEarnable;
+  const mySVYPageInfo = SFIAContract.getMySVYPageInfo(accountAddress);
+  account.svyEarnRatePerSec = mySVYPageInfo.svyEarnRatePerSec;
+  account.veSVYEarnRatePerSec = mySVYPageInfo.veSVYEarnRatePerSec;
+  account.maxVeSvyEarnable = mySVYPageInfo.maxVeSvyEarnable;
   account.lastUpdatedBN = block.number;
   account.lastUpdatedTimestamp = block.timestamp;
   account.save();

@@ -20,6 +20,8 @@ dataSources:
       abis:
         - name: SavvyProtocolToken
           file: ./abis/SavvyProtocolToken.json
+        - name: SavvyFrontendInfoAggregator
+          file: ./abis/SavvyFrontendInfoAggregator.json
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
@@ -42,6 +44,8 @@ dataSources:
       abis:
         - name: veSVY
           file: ./abis/veSVY.json
+        - name: SavvyFrontendInfoAggregator
+          file: ./abis/SavvyFrontendInfoAggregator.json
       eventHandlers:
         - event: Staked(indexed address,indexed address,indexed uint256)
           handler: handleStaked

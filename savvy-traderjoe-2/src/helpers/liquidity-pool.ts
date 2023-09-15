@@ -46,7 +46,7 @@ export function updateLiquidityPool(
   const reserves = lbPair.getReserves();
   liquidityPool.savvySyntheticBalance = reserves.getReserveX();
   liquidityPool.pairTokenBalance = reserves.getReserveY();
-  const pairtokenAddress = lbPair.getTokenY();
+  const pairtokenAddress = Address.fromString(liquidityPool.pairToken);
   const pairToken = getOrCreateToken(pairtokenAddress);
   liquidityPool.pairTokenBalanceNormalized = normalizeToEighteenDecimals(
     reserves.getReserveY(),

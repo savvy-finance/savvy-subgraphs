@@ -1,6 +1,7 @@
 import { Address, BigInt } from "@graphprotocol/graph-ts";
 import { GalxeNFT } from "../generated/MMC_NFT/GalxeNFT";
 import { LiquidityAmountsContract } from "../generated/TJ_LP_SVBTC/LiquidityAmountsContract";
+import { LBPair } from "../generated/TJ_LP_SVUSD/LBPair";
 
 export const SVY = "0x43ab8f7d2a8dd4102ccea6b438f6d747b1b9f034";
 export const SV_USD = "0xf202ab403cd7e90197ec0f010ee897e283037706";
@@ -11,6 +12,18 @@ export const TJ_LP_SVY = "0x9f28b1eacf17f64cd952deaa14f0487b9f74bbb6";
 export const TJ_LP_SVUSD = "0x3be852ff9f142783c71435524d63e2196e5f305a";
 export const TJ_LP_SVETH = "0x2e14e24ec3efbd3b8c8976405351f8233d59650e";
 export const TJ_LP_SVBTC = "0x830203b9a16920feb55d58d964ce83e1ba000269";
+
+export const TJ_LP_SVY_CONTRACT = LBPair.bind(Address.fromString(TJ_LP_SVY));
+export const TJ_LP_SVUSD_CONTRACT = LBPair.bind(
+  Address.fromString(TJ_LP_SVUSD)
+);
+export const TJ_LP_SVETH_CONTRACT = LBPair.bind(
+  Address.fromString(TJ_LP_SVETH)
+);
+export const TJ_LP_SVBTC_CONTRACT = LBPair.bind(
+  Address.fromString(TJ_LP_SVBTC)
+);
+
 export const SAVVY_PRICE_FEED = "0xbCDaB0382C17F58b828DB3AD840F0140C4f00156";
 export const LIQUIDITY_AMOUNTS_CONTRACT_ADDRESS = Address.fromString(
   "0x6277d122539110100fc2c78839c657033c294f64"

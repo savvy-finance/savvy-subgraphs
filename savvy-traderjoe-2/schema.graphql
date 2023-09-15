@@ -1,3 +1,20 @@
+" Used to store the total supply/bin reserves for a bin of an lp at a block number to reduce eth_calls "
+type BinLiquidityLookupCache @entity {
+  " (lb pair address)-(binid)-(blocknumber) "
+  id: ID!
+
+  binId: BigInt!
+
+  lpAddress: String!
+
+  blocknumber: BigInt!
+
+  totalSupply: BigInt!
+
+  reserveX: BigInt!
+
+  reserveY: BigInt!
+}
 type Bin @entity {
   " (account address)-(lp address)-(Bin id) "
   id: ID!

@@ -12,6 +12,7 @@ import {
   BIGINT_ZERO,
   LIQUIDITY_AMOUNTS_CONTRACT,
 } from "../constants";
+import { getBinLiquidity } from "../helpers/bin-liquidity-lookup-cache";
 import { getTokenValueInUSD } from "./tokens";
 
 export function getLPPairInUSD(
@@ -89,20 +90,24 @@ export function getBalancesFromBinIds(
 export function getBalancesFromBinIds2(
   accountAddress: Address,
   lbPair: LBPair,
-  binIds: BigInt[]
+  binIds: BigInt[],
+  blockNumber: BigInt
 ): BigInt[] {
   let tokenX = BIGINT_ZERO;
   let tokenY = BIGINT_ZERO;
 
   for (let i = 0; i < binIds.length; i++) {
     const balance = lbPair.balanceOf(accountAddress, binIds[i]);
-    const bin = lbPair.getBin(binIds[i].toI32());
-    const totalSupply = lbPair.totalSupply(binIds[i]);
-    if (totalSupply.equals(BIGINT_ZERO)) {
+    const binLiquidity = getBinLiquidity(null, lbPair, binIds[i], blockNumber);
+    if (binLiquidity.totalSupply.isZero()) {
       continue;
     }
-    tokenX = tokenX.plus(balance.times(bin.getBinReserveX()).div(totalSupply));
-    tokenY = tokenY.plus(balance.times(bin.getBinReserveY()).div(totalSupply));
+    tokenX = tokenX.plus(
+      balance.times(binLiquidity.reserveX).div(binLiquidity.totalSupply)
+    );
+    tokenY = tokenY.plus(
+      balance.times(binLiquidity.reserveY).div(binLiquidity.totalSupply)
+    );
   }
   return [tokenX, tokenY];
 }

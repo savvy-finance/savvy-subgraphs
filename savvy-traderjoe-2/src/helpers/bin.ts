@@ -8,6 +8,7 @@ import {
   getBalancesFromBinIds,
   getBalancesFromBinIds2,
 } from "../utils/trader-joe";
+import { getBinLiquidity } from "./bin-liquidity-lookup-cache";
 
 export function getOrCreateBin(
   accountAddress: Address,
@@ -32,7 +33,8 @@ export function refreshBinBalances(
   account: Address,
   binId: string,
   lbPair: LBPair,
-  tokenYDecimals: number
+  tokenYDecimals: number,
+  blockNumber: BigInt
 ): Bin | null {
   const bin = Bin.load(binId);
 
@@ -40,12 +42,18 @@ export function refreshBinBalances(
     return null;
   }
 
-  const binSupply = lbPair.totalSupply(bin.binId);
-  if (binSupply === BIGINT_ZERO) {
+  const binLiquidity = getBinLiquidity(null, lbPair, bin.binId, blockNumber);
+  const binSupply = binLiquidity.totalSupply;
+  if (binSupply.isZero()) {
     bin.tokenXBalance = BIGINT_ZERO;
     bin.tokenYBalance = BIGINT_ZERO;
   } else {
-    const amounts = getBalancesFromBinIds2(account, lbPair, [bin.binId]);
+    const amounts = getBalancesFromBinIds2(
+      account,
+      lbPair,
+      [bin.binId],
+      blockNumber
+    );
     bin.tokenXBalance = amounts[0];
     bin.tokenYBalance = normalizeToEighteenDecimals(amounts[1], tokenYDecimals);
   }

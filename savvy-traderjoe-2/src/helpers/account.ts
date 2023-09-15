@@ -1,14 +1,18 @@
 import { Address, BigInt, log } from "@graphprotocol/graph-ts";
-import { Account, Token } from "../../generated/schema";
+import { Account, LiquidityPool, Token } from "../../generated/schema";
 import { LBPair } from "../../generated/TJ_LP_SVUSD/LBPair";
 import {
   BIGDECIMAL_ZERO,
   BIGINT_ONE,
   BIGINT_ZERO,
   TJ_LP_SVBTC,
+  TJ_LP_SVBTC_CONTRACT,
   TJ_LP_SVETH,
+  TJ_LP_SVETH_CONTRACT,
   TJ_LP_SVUSD,
+  TJ_LP_SVUSD_CONTRACT,
   TJ_LP_SVY,
+  TJ_LP_SVY_CONTRACT,
 } from "../constants";
 import { normalizeToTokenDecimals } from "../utils/tokens";
 import { getLPPairInUSD } from "../utils/trader-joe";
@@ -18,6 +22,7 @@ import {
 } from "./account-nft-positions";
 import { createAccountSnapshot } from "./account-snapshot";
 import { getOrCreateBin, refreshBinBalances } from "./bin";
+import { getOrCreateLiquidityPool } from "./liquidity-pool";
 import { getOrCreateProtocol } from "./protocol";
 import { getOrCreateToken } from "./token";
 
@@ -115,159 +120,162 @@ export function refreshBalances(
 ): Account {
   const account = getOrCreateAccount(accountAddress);
 
-  let lbPair: LBPair;
-  let pairedToken: Token;
+  const lp = getOrCreateLiquidityPool(pairAddress);
+  let lbPairContract: LBPair;
+  const pairedTokenAddress = Address.fromString(lp.pairToken);
+  const pairedToken: Token = getOrCreateToken(pairedTokenAddress);
   let binIds: string[];
   let prunedBinIds: string[];
-  let tokenX: BigInt;
-  let tokenY: BigInt;
-  if (pairAddress.toHexString().includes(TJ_LP_SVY)) {
-    lbPair = LBPair.bind(Address.fromString(TJ_LP_SVY));
-    pairedToken = getOrCreateToken(lbPair.getTokenY());
+  let tokenXBalance = BIGINT_ZERO;
+  let tokenYBalance = BIGINT_ZERO;
+  if (
+    pairAddress.toHexString().includes(TJ_LP_SVY) &&
+    account.svyBinIds.length
+  ) {
+    lbPairContract = TJ_LP_SVY_CONTRACT;
     binIds = account.svyBinIds;
     prunedBinIds = [];
-    tokenX = BIGINT_ZERO;
-    tokenY = BIGINT_ZERO;
     for (let i = 0; i < binIds.length; i++) {
       const binId = binIds[i];
       const bin = refreshBinBalances(
         accountAddress,
         binId,
-        lbPair,
-        pairedToken.decimals
+        lbPairContract,
+        pairedToken.decimals,
+        blockNumber
       );
       if (bin) {
         if (bin.tokenXBalance.isZero() && bin.tokenYBalance.isZero()) {
           continue;
         }
 
-        tokenX = tokenX.plus(bin.tokenXBalance);
-        tokenY = tokenY.plus(bin.tokenYBalance);
+        tokenXBalance = tokenXBalance.plus(bin.tokenXBalance);
+        tokenYBalance = tokenYBalance.plus(bin.tokenYBalance);
         prunedBinIds.push(binId);
       }
     }
     account.svyBinIds = prunedBinIds;
-    account.svy = tokenX;
-    account.svyWETH = tokenY;
+    account.svy = tokenXBalance;
+    account.svyWETH = tokenYBalance;
     account.svyLiquidityUSD = getLPPairInUSD(
-      lbPair.getActiveId(),
+      lp.activeBinId,
       account.svy,
-      lbPair.getTokenY(),
+      pairedTokenAddress,
       normalizeToTokenDecimals(account.svyWETH, pairedToken.decimals),
       pairedToken.decimals
     );
   }
 
-  if (pairAddress.toHexString().includes(TJ_LP_SVUSD)) {
-    lbPair = LBPair.bind(Address.fromString(TJ_LP_SVUSD));
-    pairedToken = getOrCreateToken(lbPair.getTokenY());
+  if (
+    pairAddress.toHexString().includes(TJ_LP_SVUSD) &&
+    account.svUSDBinIds.length
+  ) {
+    lbPairContract = TJ_LP_SVUSD_CONTRACT;
     binIds = account.svUSDBinIds;
     prunedBinIds = [];
-    tokenX = BIGINT_ZERO;
-    tokenY = BIGINT_ZERO;
+    tokenXBalance;
     for (let i = 0; i < binIds.length; i++) {
       const binId = binIds[i];
       const bin = refreshBinBalances(
         accountAddress,
         binId,
-        lbPair,
-        pairedToken.decimals
+        lbPairContract,
+        pairedToken.decimals,
+        blockNumber
       );
       if (bin) {
         if (bin.tokenXBalance.isZero() && bin.tokenYBalance.isZero()) {
           continue;
         }
 
-        tokenX = tokenX.plus(bin.tokenXBalance);
-        tokenY = tokenY.plus(bin.tokenYBalance);
+        tokenXBalance = tokenXBalance.plus(bin.tokenXBalance);
+        tokenYBalance = tokenYBalance.plus(bin.tokenYBalance);
         prunedBinIds.push(binId);
       }
     }
     account.svUSDBinIds = prunedBinIds;
-    account.svUSD = tokenX;
-    account.USDC = tokenY;
-    log.debug("RAMSEY refreshAccount svUSD: {} usdc: {}", [
-      tokenX.toString(),
-      tokenY.toString(),
-    ]);
+    account.svUSD = tokenXBalance;
+    account.USDC = tokenYBalance;
     account.svUSDLiquidityUSD = getLPPairInUSD(
-      lbPair.getActiveId(),
+      lp.activeBinId,
       account.svUSD,
-      lbPair.getTokenY(),
+      pairedTokenAddress,
       normalizeToTokenDecimals(account.USDC, pairedToken.decimals),
       pairedToken.decimals
     );
   }
 
-  if (pairAddress.toHexString().includes(TJ_LP_SVETH)) {
-    lbPair = LBPair.bind(Address.fromString(TJ_LP_SVETH));
-    pairedToken = getOrCreateToken(lbPair.getTokenY());
+  if (
+    pairAddress.toHexString().includes(TJ_LP_SVETH) &&
+    account.svETHBinIds.length
+  ) {
+    lbPairContract = TJ_LP_SVETH_CONTRACT;
     binIds = account.svETHBinIds;
     prunedBinIds = [];
-    tokenX = BIGINT_ZERO;
-    tokenY = BIGINT_ZERO;
     for (let i = 0; i < binIds.length; i++) {
       const binId = binIds[i];
       const bin = refreshBinBalances(
         accountAddress,
         binId,
-        lbPair,
-        pairedToken.decimals
+        lbPairContract,
+        pairedToken.decimals,
+        blockNumber
       );
       if (bin) {
         if (bin.tokenXBalance.isZero() && bin.tokenYBalance.isZero()) {
           continue;
         }
 
-        tokenX = tokenX.plus(bin.tokenXBalance);
-        tokenY = tokenY.plus(bin.tokenYBalance);
+        tokenXBalance = tokenXBalance.plus(bin.tokenXBalance);
+        tokenYBalance = tokenYBalance.plus(bin.tokenYBalance);
         prunedBinIds.push(binId);
       }
     }
     account.svETHBinIds = prunedBinIds;
-    account.svETH = tokenX;
-    account.WETH = tokenY;
+    account.svETH = tokenXBalance;
+    account.WETH = tokenYBalance;
     account.svETHLiquidityUSD = getLPPairInUSD(
-      lbPair.getActiveId(),
+      lp.activeBinId,
       account.svETH,
-      lbPair.getTokenY(),
+      pairedTokenAddress,
       normalizeToTokenDecimals(account.WETH, pairedToken.decimals),
       pairedToken.decimals
     );
   }
 
-  if (pairAddress.toHexString().includes(TJ_LP_SVBTC)) {
-    lbPair = LBPair.bind(Address.fromString(TJ_LP_SVBTC));
-    pairedToken = getOrCreateToken(lbPair.getTokenY());
+  if (
+    pairAddress.toHexString().includes(TJ_LP_SVBTC) &&
+    account.svBTCBinIds.length
+  ) {
+    lbPairContract = TJ_LP_SVBTC_CONTRACT;
     binIds = account.svBTCBinIds;
     prunedBinIds = [];
-    tokenX = BIGINT_ZERO;
-    tokenY = BIGINT_ZERO;
     for (let i = 0; i < binIds.length; i++) {
       const binId = binIds[i];
       const bin = refreshBinBalances(
         accountAddress,
         binId,
-        lbPair,
-        pairedToken.decimals
+        lbPairContract,
+        pairedToken.decimals,
+        blockNumber
       );
       if (bin) {
         if (bin.tokenXBalance.isZero() && bin.tokenYBalance.isZero()) {
           continue;
         }
 
-        tokenX = tokenX.plus(bin.tokenXBalance);
-        tokenY = tokenY.plus(bin.tokenYBalance);
+        tokenXBalance = tokenXBalance.plus(bin.tokenXBalance);
+        tokenYBalance = tokenYBalance.plus(bin.tokenYBalance);
         prunedBinIds.push(binId);
       }
     }
     account.svBTCBinIds = prunedBinIds;
-    account.svBTC = tokenX;
-    account.WBTC = tokenY;
+    account.svBTC = tokenXBalance;
+    account.WBTC = tokenYBalance;
     account.svBTCLiquidityUSD = getLPPairInUSD(
-      lbPair.getActiveId(),
+      lp.activeBinId,
       account.svBTC,
-      lbPair.getTokenY(),
+      pairedTokenAddress,
       normalizeToTokenDecimals(account.WBTC, pairedToken.decimals),
       pairedToken.decimals
     );

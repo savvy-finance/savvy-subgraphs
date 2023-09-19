@@ -5,7 +5,7 @@ import {
   BIGINT_ZERO,
   SFIAContract,
   ZERO_ADDRESS,
-  veSVYContract
+  veSVYContract,
 } from "../constants";
 import { getFriendlyName } from "../utils/contracts";
 import { getSVYBalanceInUSD } from "../utils/tokens";
@@ -16,7 +16,7 @@ import {
   decrementVeSVYHolder,
   incrementSVYHolder,
   incrementSVYStaker,
-  incrementVeSVYHolder
+  incrementVeSVYHolder,
 } from "./protocol";
 import { increaseTotalSVYDistributed } from "./svySource";
 
@@ -40,7 +40,11 @@ export function getOrCreateAccount(address: Address): Account {
   return account as Account;
 }
 
-export function receiveSVY(accountAddress: Address, svyReceived: BigInt, block: ethereum.Block): void {
+export function receiveSVY(
+  accountAddress: Address,
+  svyReceived: BigInt,
+  block: ethereum.Block
+): void {
   if (accountAddress.toHexString() === ZERO_ADDRESS) {
     return;
   }
@@ -50,11 +54,7 @@ export function receiveSVY(accountAddress: Address, svyReceived: BigInt, block: 
   const oldSVYBalance = account.svyBalance;
   account.svyBalance = account.svyBalance.plus(svyReceived);
   account.svyBalanceUSD = getSVYBalanceInUSD(account.svyBalance);
-
-  const mySVYPageInfo = SFIAContract.getMySVYPageInfo(accountAddress);
-  account.svyEarnRatePerSec = mySVYPageInfo.svyEarnRatePerSec;
-  account.veSVYEarnRatePerSec = mySVYPageInfo.veSVYEarnRatePerSec;
-  account.maxVeSvyEarnable = mySVYPageInfo.maxVeSvyEarnable;
+  refreshEarnRate(accountAddress, account);
   account.lastUpdatedBN = block.number;
   account.lastUpdatedTimestamp = block.timestamp;
   account.save();
@@ -68,7 +68,11 @@ export function receiveSVY(accountAddress: Address, svyReceived: BigInt, block: 
   createAccountSnapshot(accountAddress, block, account);
 }
 
-export function sendSVY(accountAddress: Address, svySent: BigInt, block: ethereum.Block): void {
+export function sendSVY(
+  accountAddress: Address,
+  svySent: BigInt,
+  block: ethereum.Block
+): void {
   if (accountAddress.toHexString() === ZERO_ADDRESS) {
     return;
   }
@@ -78,10 +82,7 @@ export function sendSVY(accountAddress: Address, svySent: BigInt, block: ethereu
   const oldSVYBalance = account.svyBalance;
   account.svyBalance = account.svyBalance.minus(svySent);
   account.svyBalanceUSD = getSVYBalanceInUSD(account.svyBalance);
-  const mySVYPageInfo = SFIAContract.getMySVYPageInfo(accountAddress);
-  account.svyEarnRatePerSec = mySVYPageInfo.svyEarnRatePerSec;
-  account.veSVYEarnRatePerSec = mySVYPageInfo.veSVYEarnRatePerSec;
-  account.maxVeSvyEarnable = mySVYPageInfo.maxVeSvyEarnable;
+  refreshEarnRate(accountAddress, account);
   account.lastUpdatedBN = block.number;
   account.lastUpdatedTimestamp = block.timestamp;
   account.save();
@@ -118,7 +119,10 @@ export function updateStakedSVYBalance(
   // Protocol
   if (account.stakedSVY.isZero() && oldStakedSVYBalance.gt(BIGINT_ZERO)) {
     decrementSVYStaker(block);
-  } else if (oldStakedSVYBalance.isZero() && account.stakedSVY.gt(BIGINT_ZERO)) {
+  } else if (
+    oldStakedSVYBalance.isZero() &&
+    account.stakedSVY.gt(BIGINT_ZERO)
+  ) {
     incrementSVYStaker(block);
   }
 
@@ -155,5 +159,16 @@ export function updateVeSVYBalance(
   // AccountSnapshot
   createAccountSnapshot(accountAddress, block, account);
 
+  return account;
+}
+
+function refreshEarnRate(accountAddress: Address, account: Account): Account {
+  const mySVYPageInfo = SFIAContract.try_getMySVYPageInfo(accountAddress);
+  if (!mySVYPageInfo.reverted) {
+    account.svyEarnRatePerSec = mySVYPageInfo.value.svyEarnRatePerSec;
+    account.veSVYEarnRatePerSec = mySVYPageInfo.value.veSVYEarnRatePerSec;
+    account.maxVeSvyEarnable = mySVYPageInfo.value.maxVeSvyEarnable;
+    account.save();
+  }
   return account;
 }

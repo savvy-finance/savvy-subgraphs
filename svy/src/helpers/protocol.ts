@@ -8,6 +8,7 @@ export function getOrCreateProtocol(): Protocol {
   if (protocol === null) {
     protocol = new Protocol(PROTOCOL_SLUG);
     protocol.totalSVYHolders = 0;
+    protocol.totalSVYStakers = 0;
     protocol.totalVeSVYHolders = 0;
     protocol.save();
   }

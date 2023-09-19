@@ -4,9 +4,14 @@ import { PROTOCOL_SLUG, QUARTERHOUR_IN_SECONDS } from "../constants";
 import { getBeginOfThePeriodTimestamp } from "../utils/time";
 import { getOrCreateProtocol } from "./protocol";
 
-export function getOrCreateProtocolSnapshot(block: ethereum.Block): ProtocolSnapshot {
-  const snapshot = getBeginOfThePeriodTimestamp(block.timestamp, QUARTERHOUR_IN_SECONDS);
-  const id = PROTOCOL_SLUG.concat('-').concat(snapshot.toString());
+export function getOrCreateProtocolSnapshot(
+  block: ethereum.Block
+): ProtocolSnapshot {
+  const snapshot = getBeginOfThePeriodTimestamp(
+    block.timestamp,
+    QUARTERHOUR_IN_SECONDS
+  );
+  const id = PROTOCOL_SLUG.concat("-").concat(snapshot.toString());
   let protocolSnapshot = ProtocolSnapshot.load(id);
   if (!protocolSnapshot) {
     protocolSnapshot = new ProtocolSnapshot(id);
@@ -14,6 +19,7 @@ export function getOrCreateProtocolSnapshot(block: ethereum.Block): ProtocolSnap
     protocolSnapshot.period = QUARTERHOUR_IN_SECONDS;
     protocolSnapshot.timestamp = snapshot;
     protocolSnapshot.totalSVYHolders = 0;
+    protocolSnapshot.totalSVYStakers = 0;
     protocolSnapshot.totalVeSVYHolders = 0;
     protocolSnapshot.save();
   }
@@ -21,7 +27,10 @@ export function getOrCreateProtocolSnapshot(block: ethereum.Block): ProtocolSnap
   return protocolSnapshot;
 }
 
-export function createProtocolSnapshot(block: ethereum.Block, protocol: Protocol | null): ProtocolSnapshot {
+export function createProtocolSnapshot(
+  block: ethereum.Block,
+  protocol: Protocol | null
+): ProtocolSnapshot {
   const snapshot = getOrCreateProtocolSnapshot(block);
   if (!protocol) {
     protocol = getOrCreateProtocol();

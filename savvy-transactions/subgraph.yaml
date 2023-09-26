@@ -1,0 +1,30 @@
+specVersion: 0.0.5
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: SavvyPositionManager
+    network: arbitrum-one
+    source:
+      address: "0x3204d81C73F8100766C1691A67078b16Ec7c142c"
+      abi: SavvyPositionManager
+      startBlock: 100300012
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - AdminChanged
+        - BeaconUpgraded
+        - Upgraded
+      abis:
+        - name: SavvyPositionManager
+          file: ./abis/SavvyPositionManager.json
+      eventHandlers:
+        - event: AdminChanged(address,address)
+          handler: handleAdminChanged
+        - event: BeaconUpgraded(indexed address)
+          handler: handleBeaconUpgraded
+        - event: Upgraded(indexed address)
+          handler: handleUpgraded
+      file: ./src/savvy-position-manager.ts

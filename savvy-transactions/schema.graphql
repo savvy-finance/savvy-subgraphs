@@ -1,49 +1,176 @@
+
+type Block @entity {
+  " Block number "
+  id: ID!
+
+  " Block number "
+  number: BigInt!
+
+  " Block hash "
+  hash: Bytes!
+
+  " Timestamp of this block "
+  timestamp: BigInt!
+
+  " List of events related to this block "
+  events: [Event!]! @derivedFrom(field: "block")
+
+  " List of transactions in this block "
+  transactions: [Transaction!]! @derivedFrom(field: "block")
+}
+
+type Transaction @entity {
+  " Transaction hash "
+  id: ID!
+
+  " Transaction hash "
+  hash: Bytes!
+
+  " Transaction input data "
+  input: Bytes!
+
+  " Transaction from "
+  from: Bytes
+
+  " Transaction to "
+  to: Bytes
+
+  " Block this transaction commited on "
+  block: Block!
+
+  " Timestamp of this transaction "
+  timestamp: BigInt!
+
+  " List of events emitted by this transaction "
+  events: [Event!]! @derivedFrom(field: "transaction")
+}
+
+"""
+An event is any user action that occurs in a protocol. Generally, they are Ethereum events
+emitted by a function in the smart contracts, stored in transaction receipts as event logs.
+However, some user actions of interest are function calls that don't emit events. For example,
+the deposit and withdraw functions in Yearn do not emit any events. In our subgraphs, we still
+store them as events, although they are not technically Ethereum events emitted by smart
+contracts.
+"""
+interface Event {
+  " { Transaction hash }-{ Log index } "
+  id: ID!
+
+  " Transaction hash of the transaction that emitted this event "
+  transaction: Transaction!
+
+  " Event log index. For transactions that don't emit event, create arbitrary index starting from 0 "
+  logIndex: Int!
+
+  " Block number of this event "
+  block: Block!
+
+  " Timestamp of this event "
+  timestamp: BigInt!
+}
+
+type Token @entity {
+  " Smart contract address of the token "
+  id: ID!
+
+  " Name of the token, mirrored from the smart contract "
+  name: String!
+
+  " Symbol of the token, mirrored from the smart contract "
+  symbol: String!
+
+  " The number of decimal places this token uses, default to 18 "
+  decimals: Int!
+}
+
+
 type Deposit @entity(immutable: true) {
-  id: Bytes!
+  " { Transaction hash }-{ Log index } "
+  id: ID!
+
+  " Transaction hash of the transaction that emitted this event "
+  transaction: Transaction!
+
+  " Event log index. For transactions that don't emit event, create arbitrary index starting from 0 "
+  logIndex: Int!
+
+  " Block number of this event "
+  block: Block!
+
+  " Timestamp of this event "
+  timestamp: BigInt!
+
   depositor: Bytes! # address
-  yieldToken: Bytes! # address
+  yieldToken: Token!
   amount: BigInt!
   recipient: Bytes! # address
-
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
 }
 
 type Borrow @entity(immutable: true) {
-  id: Bytes!
+  " { Transaction hash }-{ Log index } "
+  id: ID!
+
+  " Transaction hash of the transaction that emitted this event "
+  transaction: Transaction!
+
+  " Event log index. For transactions that don't emit event, create arbitrary index starting from 0 "
+  logIndex: Int!
+
+  " Block number of this event "
+  block: Block!
+
+  " Timestamp of this event "
+  timestamp: BigInt!
+
   borrower: Bytes! # address
   amount: BigInt!
   recipient: Bytes! # address
-
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
 }
 
 type Repay @entity(immutable: true) {
-  id: Bytes!
+  " { Transaction hash }-{ Log index } "
+  id: ID!
+
+  " Transaction hash of the transaction that emitted this event "
+  transaction: Transaction!
+
+  " Event log index. For transactions that don't emit event, create arbitrary index starting from 0 "
+  logIndex: Int!
+
+  " Block number of this event "
+  block: Block!
+
+  " Timestamp of this event "
+  timestamp: BigInt!
+
   repayer: Bytes! # address
   repayWith: string! # "DebtToken, BaseToken, Collateral"
   repayToken: Bytes! # address
   repayTokenAmount: BigInt!
   credit: BigInt!
   recipient: Bytes! # address
-
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
 }
 
 type Withdraw @entity(immutable: true) {
-  id: Bytes!
+  " { Transaction hash }-{ Log index } "
+  id: ID!
+
+  " Transaction hash of the transaction that emitted this event "
+  transaction: Transaction!
+
+  " Event log index. For transactions that don't emit event, create arbitrary index starting from 0 "
+  logIndex: Int!
+
+  " Block number of this event "
+  block: Block!
+
+  " Timestamp of this event "
+  timestamp: BigInt!
+
   withdrawer: Bytes! # address
   yieldToken: Bytes! # address
   yieldTokenAmount: BigInt!
   recipient: Bytes! # address
-
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
 }
 

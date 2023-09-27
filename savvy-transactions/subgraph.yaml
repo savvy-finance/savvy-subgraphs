@@ -14,17 +14,24 @@ dataSources:
       apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
-        - AdminChanged
-        - BeaconUpgraded
-        - Upgraded
+        - Deposit
+        - Borrow
+        - Repay
+        - Withdraw
       abis:
         - name: SavvyPositionManager
           file: ./abis/SavvyPositionManager.json
       eventHandlers:
-        - event: AdminChanged(address,address)
-          handler: handleAdminChanged
-        - event: BeaconUpgraded(indexed address)
-          handler: handleBeaconUpgraded
-        - event: Upgraded(indexed address)
-          handler: handleUpgraded
+        - event: DepositYieldToken(indexed address,indexed address, uint256, address)
+          handler: handleDeposit
+        - event: Borrow(address indexed owner, uint256 amount, address recipient)
+          handler: handleBorrow
+        - event: RepayWithDebtToken(address indexed sender, uint256 amount, address recipient)
+          handler: handleRepay
+        - event: RepayWithBaseToken(address indexed sender, address indexed baseToken, uint256 amount, address recipient, uint256 credit)
+          handler: handleRepay
+        - event: RepayWithCollateral(address indexed owner, address indexed yieldToken, address indexed baseToken, uint256 shares, uint256 credit)
+          handler: handleRepay
+        - event: WithdrawYieldToken(address indexed owner, address indexed yieldToken, uint256 shares, address recipient)
+          handler: handleWithdraw
       file: ./src/savvy-position-manager.ts

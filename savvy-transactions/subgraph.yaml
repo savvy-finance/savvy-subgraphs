@@ -13,25 +13,21 @@ dataSources:
       kind: ethereum/events
       apiVersion: 0.0.7
       language: wasm/assemblyscript
-      entities:
-        - Deposit
-        - Borrow
-        - Repay
-        - Withdraw
+      entities: []
       abis:
         - name: SavvyPositionManager
           file: ./abis/SavvyPositionManager.json
       eventHandlers:
-        - event: DepositYieldToken(indexed address,indexed address, uint256, address)
-          handler: handleDeposit
-        - event: Borrow(address indexed owner, uint256 amount, address recipient)
+        - event: DepositYieldToken(indexed address,indexed address,uint256,address)
+          handler: handleDepositYieldToken
+        - event: Borrow(indexed address,uint256,address)
           handler: handleBorrow
-        - event: RepayWithDebtToken(address indexed sender, uint256 amount, address recipient)
-          handler: handleRepay
-        - event: RepayWithBaseToken(address indexed sender, address indexed baseToken, uint256 amount, address recipient, uint256 credit)
-          handler: handleRepay
-        - event: RepayWithCollateral(address indexed owner, address indexed yieldToken, address indexed baseToken, uint256 shares, uint256 credit)
-          handler: handleRepay
-        - event: WithdrawYieldToken(address indexed owner, address indexed yieldToken, uint256 shares, address recipient)
-          handler: handleWithdraw
+        - event: RepayWithDebtToken(indexed address,uint256,address)
+          handler: handleRepayWithDebtToken
+        - event: RepayWithBaseToken(indexed address,indexed address,uint256,address,uint256)
+          handler: handleRepayWithBaseToken
+        - event: RepayWithCollateral(indexed address,indexed address,indexed address,uint256,uint256)
+          handler: handleRepayWithCollateral
+        - event: WithdrawYieldToken(indexed address,indexed address,uint256,address)
+          handler: handleWithdrawYieldToken
       file: ./src/savvy-position-manager.ts

@@ -3,45 +3,45 @@ import {
   Deposit,
   Swap,
   Withdraw,
-} from "../../generated/SavvySwapUSDC/SavvySwap";
+} from "../../generated/SavvySwapBTC/SavvySwap";
 import {
-  SwapDepositEvent,
-  SwapWithdrawEvent,
-  SwapClaimEvent,
-  SwapSwapEvent,
+  SSDeposit,
+  SSWithdraw,
+  SSClaim,
+  SSSwap,
 } from "../../generated/schema";
 import { createEvent } from "./utils";
 
-export function createDepositEvent(event: Deposit): SwapDepositEvent {
-  const depositEvent = createEvent<SwapDepositEvent>(event);
-  depositEvent.sender = event.params.sender.toHexString();
-  depositEvent.owner = event.params.owner.toHexString();
+export function createDepositEvent(event: Deposit): SSDeposit {
+  const depositEvent = createEvent<SSDeposit>(event);
+  depositEvent.sender = event.params.sender;
+  depositEvent.recipient = event.params.owner;
   depositEvent.amount = event.params.amount;
   depositEvent.save();
   return depositEvent;
 }
 
-export function createWithdrawEvent(event: Withdraw): SwapWithdrawEvent {
-  const withdrawEvent = createEvent<SwapWithdrawEvent>(event);
-  withdrawEvent.sender = event.params.sender.toHexString();
-  withdrawEvent.recipient = event.params.recipient.toHexString();
+export function createWithdrawEvent(event: Withdraw): SSWithdraw {
+  const withdrawEvent = createEvent<SSWithdraw>(event);
+  withdrawEvent.sender = event.params.sender;
+  withdrawEvent.recipient = event.params.recipient;
   withdrawEvent.amount = event.params.amount;
   withdrawEvent.save();
   return withdrawEvent;
 }
 
-export function createClaimEvent(event: Claim): SwapClaimEvent {
-  const claimEvent = createEvent<SwapClaimEvent>(event);
-  claimEvent.sender = event.params.sender.toHexString();
-  claimEvent.recipient = event.params.recipient.toHexString();
+export function createClaimEvent(event: Claim): SSClaim {
+  const claimEvent = createEvent<SSClaim>(event);
+  claimEvent.sender = event.params.sender;
+  claimEvent.recipient = event.params.recipient;
   claimEvent.amount = event.params.amount;
   claimEvent.save();
   return claimEvent;
 }
 
-export function createSwapEvent(event: Swap): SwapSwapEvent {
-  const swapEvent = createEvent<SwapSwapEvent>(event);
-  swapEvent.sender = event.params.sender.toHexString();
+export function createSwapEvent(event: Swap): SSSwap {
+  const swapEvent = createEvent<SSSwap>(event);
+  swapEvent.sender = event.params.sender;
   swapEvent.amount = event.params.amount;
   swapEvent.save();
   return swapEvent;

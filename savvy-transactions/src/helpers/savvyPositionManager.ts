@@ -5,13 +5,13 @@ import {
   RepayWithCollateral as RepayWithCollateralEvent,
   RepayWithDebtToken as RepayWithDebtTokenEvent,
   WithdrawYieldToken as WithdrawYieldTokenEvent,
-} from "../../generated/SavvyPositionManager/SavvyPositionManager";
+} from "../../generated/SavvyPositionManagerBTC/SavvyPositionManager";
 
 import {
-  Deposit as DepositEntity,
-  Borrow as BorrowEntity,
-  Repay as RepayEntity,
-  Withdraw as WithdrawEntity
+  SPMDeposit as DepositEntity,
+  SPMBorrow as BorrowEntity,
+  SPMRepay as RepayEntity,
+  SPMWithdraw as WithdrawEntity
 } from "../../generated/schema";
 import { createEvent } from "./utils";
 
@@ -57,7 +57,7 @@ export function createRepayWithDebtTokenEvent(
 
   repayEntity.repayer = event.params.sender;
   repayEntity.repayWith = "DebtToken";
-  // repayWithDebtTokenEvent.repayToken = event.params.repayToken;  // It must be debt token of SPM
+  repayEntity.repayToken = event.params.recipient;  // It must be debt token of SPM
   repayEntity.repayTokenAmount = event.params.amount;
   repayEntity.credit = event.params.amount;
   repayEntity.recipient = event.params.recipient;

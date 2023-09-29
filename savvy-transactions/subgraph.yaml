@@ -3,7 +3,7 @@ schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum
-    name: SavvyPositionManager
+    name: SavvyPositionManagerBTC
     network: arbitrum-one
     source:
       address: "0x3204d81C73F8100766C1691A67078b16Ec7c142c"
@@ -31,3 +31,53 @@ dataSources:
         - event: WithdrawYieldToken(indexed address,indexed address,uint256,address)
           handler: handleWithdrawYieldToken
       file: ./src/savvy-position-manager.ts
+
+  - kind: ethereum
+    name: SavvySwapBTC
+    network: arbitrum-one
+    source:
+      address: "0x9A3A3ba687Fcb8AFE6367Eff3A5F5A11F51626DA"
+      abi: SavvySwap
+      startBlock: 100300151
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities: []
+      abis:
+        - name: SavvySwap
+          file: ./abis/SavvySwap.json
+      eventHandlers:
+        - event: Deposit(indexed address,indexed address,uint256)
+          handler: handleDeposit
+        - event: Withdraw(indexed address,indexed address,uint256)
+          handler: handleWithdraw
+        - event: Claim(indexed address,indexed address,uint256)
+          handler: handleClaim
+        - event: Swap(indexed address,uint256)
+          handler: handleSwap
+      file: ./src/savvy-swap.ts
+
+  - kind: ethereum
+    name: VeSVY
+    network: arbitrum-one
+    source:
+      address: "0x9aEEe4656F67034B06D99294062feBA1015430ad"
+      abi: VeSVY
+      startBlock: 96792324
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities: []
+      abis:
+        - name: VeSVY
+          file: ./abis/VeSvy.json
+      eventHandlers:
+        - event: Staked(indexed address,indexed address,indexed uint256)
+          handler: handleStaked
+        - event: Unstaked(indexed address,indexed uint256)
+          handler: handleUnstaked
+        - event: Claimed(indexed address,indexed uint256)
+          handler: handleClaimed
+      file: ./src/savvy-ve-svy.ts

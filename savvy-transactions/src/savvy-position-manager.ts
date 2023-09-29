@@ -5,8 +5,7 @@ import {
   RepayWithBaseToken as RepayWithBaseTokenEvent,
   RepayWithCollateral as RepayWithCollateralEvent,
   WithdrawYieldToken as WithdrawYieldTokenEvent,
-} from "../generated/SavvyPositionManager/SavvyPositionManager"
-import { Deposit, Borrow, Repay, Withdraw } from "../generated/schema"
+} from "../generated/SavvyPositionManagerBTC/SavvyPositionManager"
 import {
   createBorrowEvent,
   createDepositYieldTokenEvent,

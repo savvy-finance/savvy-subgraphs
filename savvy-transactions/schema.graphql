@@ -83,7 +83,8 @@ type Token @entity {
   decimals: Int!
 }
 
-type Deposit implements Event @entity(immutable: true) {
+" for SavvyPositionManager "
+type SPMDeposit implements Event @entity(immutable: true) {
   " { Transaction hash }-{ Log index } "
   id: ID!
 
@@ -105,7 +106,7 @@ type Deposit implements Event @entity(immutable: true) {
   recipient: Bytes! # address
 }
 
-type Borrow implements Event @entity(immutable: true) {
+type SPMBorrow implements Event @entity(immutable: true) {
   " { Transaction hash }-{ Log index } "
   id: ID!
 
@@ -126,7 +127,7 @@ type Borrow implements Event @entity(immutable: true) {
   recipient: Bytes! # address
 }
 
-type Repay implements Event @entity(immutable: true) {
+type SPMRepay implements Event @entity(immutable: true) {
   " { Transaction hash }-{ Log index } "
   id: ID!
 
@@ -150,7 +151,7 @@ type Repay implements Event @entity(immutable: true) {
   recipient: Bytes! # address
 }
 
-type Withdraw implements Event @entity(immutable: true) {
+type SPMWithdraw implements Event @entity(immutable: true) {
   " { Transaction hash }-{ Log index } "
   id: ID!
 
@@ -170,4 +171,150 @@ type Withdraw implements Event @entity(immutable: true) {
   yieldToken: Bytes! # address
   shares: BigInt!
   recipient: Bytes! # address
+}
+
+" for SavvySwap "
+type SSDeposit implements Event @entity(immutable: true) {
+  " { Transaction hash }-{ Log index } "
+  id: ID!
+
+  " Transaction hash of the transaction that emitted this event "
+  transaction: Transaction!
+
+  " Event log index. For transactions that don't emit event, create arbitrary index starting from 0 "
+  logIndex: Int!
+
+  " Block number of this event "
+  block: Block!
+
+  " Timestamp of this event "
+  timestamp: BigInt!
+
+  sender: Bytes! # address
+  recipient: Bytes! # address
+  amount: BigInt!
+}
+
+type SSWithdraw implements Event @entity(immutable: true) {
+  " { Transaction hash }-{ Log index } "
+  id: ID!
+
+  " Transaction hash of the transaction that emitted this event "
+  transaction: Transaction!
+
+  " Event log index. For transactions that don't emit event, create arbitrary index starting from 0 "
+  logIndex: Int!
+
+  " Block number of this event "
+  block: Block!
+
+  " Timestamp of this event "
+  timestamp: BigInt!
+
+  sender: Bytes! # address
+  recipient: Bytes! # address
+  amount: BigInt!
+}
+
+type SSClaim implements Event @entity(immutable: true) {
+  " { Transaction hash }-{ Log index } "
+  id: ID!
+
+  " Transaction hash of the transaction that emitted this event "
+  transaction: Transaction!
+
+  " Event log index. For transactions that don't emit event, create arbitrary index starting from 0 "
+  logIndex: Int!
+
+  " Block number of this event "
+  block: Block!
+
+  " Timestamp of this event "
+  timestamp: BigInt!
+
+  sender: Bytes! # address
+  recipient: Bytes! # address
+  amount: BigInt!
+}
+
+type SSSwap implements Event @entity(immutable: true) {
+  " { Transaction hash }-{ Log index } "
+  id: ID!
+
+  " Transaction hash of the transaction that emitted this event "
+  transaction: Transaction!
+
+  " Event log index. For transactions that don't emit event, create arbitrary index starting from 0 "
+  logIndex: Int!
+
+  " Block number of this event "
+  block: Block!
+
+  " Timestamp of this event "
+  timestamp: BigInt!
+
+  sender: Bytes! # address
+  amount: BigInt!
+}
+
+" for VeSvy "
+type VeSStaked implements Event @entity(immutable: true) {
+  " { Transaction hash }-{ Log index } "
+  id: ID!
+
+  " Transaction hash of the transaction that emitted this event "
+  transaction: Transaction!
+
+  " Event log index. For transactions that don't emit event, create arbitrary index starting from 0 "
+  logIndex: Int!
+
+  " Block number of this event "
+  block: Block!
+
+  " Timestamp of this event "
+  timestamp: BigInt!
+
+  sender: Bytes! # address
+  user: Bytes! # address
+  amount: BigInt!
+}
+
+type VeSUnstaked implements Event @entity(immutable: true) {
+  " { Transaction hash }-{ Log index } "
+  id: ID!
+
+  " Transaction hash of the transaction that emitted this event "
+  transaction: Transaction!
+
+  " Event log index. For transactions that don't emit event, create arbitrary index starting from 0 "
+  logIndex: Int!
+
+  " Block number of this event "
+  block: Block!
+
+  " Timestamp of this event "
+  timestamp: BigInt!
+
+  user: Bytes! # address
+  amount: BigInt!
+}
+
+type VeSClaimed implements Event @entity(immutable: true) {
+  " { Transaction hash }-{ Log index } "
+  id: ID!
+
+  " Transaction hash of the transaction that emitted this event "
+  transaction: Transaction!
+
+  " Event log index. For transactions that don't emit event, create arbitrary index starting from 0 "
+  logIndex: Int!
+
+  " Block number of this event "
+  block: Block!
+
+  " Timestamp of this event "
+  timestamp: BigInt!
+
+  user: Bytes! # address
+  amount: BigInt!
 }

@@ -19,3 +19,24 @@ import {
 export function handleDepositYieldToken(event: DepositYieldTokenEvent): void {
   createDepositYieldTokenEvent(event);
 }
+
+export function handleWithdrawYieldToken(event: WithdrawYieldTokenEvent): void {
+  createWithdrawYieldTokenEvent(event);
+}
+
+export function handleBorrow(event: BorrowEvent): void {
+  createBorrowEvent(event);
+}
+
+export function handleRepayWithDebtToken(event: RepayWithDebtTokenEvent): void {
+  createRepayWithDebtTokenEvent(event);
+}
+
+export function handleRepayWithBaseToken(event: RepayWithBaseTokenEvent): void {
+  createRepayWithBaseTokenEvent(event);
+}
+
+export function handleRepayWithCollateral(event: RepayWithCollateralEvent): void {
+  createRepayWithCollateralEvent(event);
+}
+

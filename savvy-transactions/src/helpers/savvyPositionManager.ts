@@ -1,92 +1,98 @@
 import {
-  Borrow,
-  DepositYieldToken,
-  RepayWithBaseToken,
-  RepayWithCollateral,
-  RepayWithDebtToken,
-  WithdrawYieldToken,
+  Borrow as BorrowEvent,
+  DepositYieldToken as DepositYieldTokenEvent,
+  RepayWithBaseToken as RepayWithBaseTokenEvent,
+  RepayWithCollateral as RepayWithCollateralEvent,
+  RepayWithDebtToken as RepayWithDebtTokenEvent,
+  WithdrawYieldToken as WithdrawYieldTokenEvent,
 } from "../../generated/SavvyPositionManager/SavvyPositionManager";
 
 import {
-  SPMBorrowEvent,
-  SPMDepositYieldTokenEvent,
-  SPMRepayWithBaseTokenEvent,
-  SPMRepayWithCollateralEvent,
-  SPMRepayWithDebtTokenEvent,
-  SPMWithdrawYieldTokenEvent,
+  Deposit as DepositEntity,
+  Borrow as BorrowEntity,
+  Repay as RepayEntity,
+  Withdraw as WithdrawEntity
 } from "../../generated/schema";
 import { createEvent } from "./utils";
 
 export function createDepositYieldTokenEvent(
-  event: DepositYieldToken
-): SPMDepositYieldTokenEvent {
-  const depositYieldTokenEvent = createEvent<SPMDepositYieldTokenEvent>(event);
-  depositYieldTokenEvent.sender = event.params.sender.toHexString();
-  depositYieldTokenEvent.yieldToken = event.params.yieldToken;
-  depositYieldTokenEvent.amount = event.params.amount;
-  depositYieldTokenEvent.recipient = event.params.recipient.toHexString();
-  depositYieldTokenEvent.save();
-  return depositYieldTokenEvent;
+  event: DepositYieldTokenEvent
+): DepositEntity {
+  const depositEntity = createEvent<DepositEntity>(event);
+  depositEntity.sender = event.params.sender;
+  depositEntity.yieldToken = event.params.yieldToken;
+  depositEntity.amount = event.params.amount;
+  depositEntity.recipient = event.params.recipient;
+  depositEntity.save();
+  return depositEntity;
 }
 
 export function createWithdrawYieldTokenEvent(
-  event: WithdrawYieldToken
-): SPMWithdrawYieldTokenEvent {
-  const withdrawYieldTokenEvent =
-    createEvent<SPMWithdrawYieldTokenEvent>(event);
-  withdrawYieldTokenEvent.owner = event.params.owner.toHexString();
-  withdrawYieldTokenEvent.yieldToken = event.params.yieldToken;
-  withdrawYieldTokenEvent.shares = event.params.shares;
-  withdrawYieldTokenEvent.recipient = event.params.recipient.toHexString();
-  withdrawYieldTokenEvent.save();
-  return withdrawYieldTokenEvent;
+  event: WithdrawYieldTokenEvent
+): WithdrawEntity {
+  const withdrawEntity =
+    createEvent<WithdrawEntity>(event);
+  withdrawEntity.owner = event.params.owner;
+  withdrawEntity.yieldToken = event.params.yieldToken;
+  withdrawEntity.shares = event.params.shares;
+  withdrawEntity.recipient = event.params.recipient;
+  withdrawEntity.save();
+  return withdrawEntity;
 }
 
-export function createBorrowEvent(event: Borrow): SPMBorrowEvent {
-  const borrowEvent = createEvent<SPMBorrowEvent>(event);
-  borrowEvent.owner = event.params.owner.toHexString();
-  borrowEvent.amount = event.params.amount;
-  borrowEvent.recipient = event.params.recipient.toHexString();
-  borrowEvent.save();
-  return borrowEvent;
+export function createBorrowEvent(event: BorrowEvent): BorrowEntity {
+  const borrowEntity = createEvent<BorrowEntity>(event);
+  borrowEntity.owner = event.params.owner;
+  borrowEntity.amount = event.params.amount;
+  borrowEntity.recipient = event.params.recipient;
+  borrowEntity.save();
+  return borrowEntity;
 }
 
 export function createRepayWithDebtTokenEvent(
-  event: RepayWithDebtToken
-): SPMRepayWithDebtTokenEvent {
-  const repayWithDebtTokenEvent =
-    createEvent<SPMRepayWithDebtTokenEvent>(event);
-  repayWithDebtTokenEvent.sender = event.params.sender.toHexString();
-  repayWithDebtTokenEvent.amount = event.params.amount;
-  repayWithDebtTokenEvent.recipient = event.params.recipient.toHexString();
-  repayWithDebtTokenEvent.save();
-  return repayWithDebtTokenEvent;
+  event: RepayWithDebtTokenEvent
+): RepayEntity {
+  const repayEntity =
+    createEvent<RepayEntity>(event);
+
+  repayEntity.repayer = event.params.sender;
+  repayEntity.repayWith = "DebtToken";
+  // repayWithDebtTokenEvent.repayToken = event.params.repayToken;  // It must be debt token of SPM
+  repayEntity.repayTokenAmount = event.params.amount;
+  repayEntity.credit = event.params.amount;
+  repayEntity.recipient = event.params.recipient;
+  repayEntity.save();
+  return repayEntity;
 }
 
 export function createRepayWithBaseTokenEvent(
-  event: RepayWithBaseToken
-): SPMRepayWithBaseTokenEvent {
-  const repayWithBaseTokenEvent =
-    createEvent<SPMRepayWithBaseTokenEvent>(event);
-  repayWithBaseTokenEvent.sender = event.params.sender.toHexString();
-  repayWithBaseTokenEvent.baseToken = event.params.baseToken;
-  repayWithBaseTokenEvent.amount = event.params.amount;
-  repayWithBaseTokenEvent.recipient = event.params.recipient.toHexString();
-  repayWithBaseTokenEvent.credit = event.params.credit;
-  repayWithBaseTokenEvent.save();
-  return repayWithBaseTokenEvent;
+  event: RepayWithBaseTokenEvent
+): RepayEntity {
+  const repayEntity =
+    createEvent<RepayEntity>(event);
+
+  repayEntity.repayer = event.params.sender;
+  repayEntity.repayWith = "BaseToken";
+  repayEntity.repayToken = event.params.baseToken;
+  repayEntity.repayTokenAmount = event.params.amount;
+  repayEntity.credit = event.params.credit;
+  repayEntity.recipient = event.params.recipient;
+  repayEntity.save();
+  return repayEntity;
 }
 
 export function createRepayWithCollateralEvent(
-  event: RepayWithCollateral
-): SPMRepayWithCollateralEvent {
-  const repayWithCollateralEvent =
-    createEvent<SPMRepayWithCollateralEvent>(event);
-  repayWithCollateralEvent.owner = event.params.owner.toHexString();
-  repayWithCollateralEvent.yieldToken = event.params.yieldToken;
-  repayWithCollateralEvent.baseToken = event.params.baseToken;
-  repayWithCollateralEvent.shares = event.params.shares;
-  repayWithCollateralEvent.credit = event.params.credit;
-  repayWithCollateralEvent.save();
-  return repayWithCollateralEvent;
+  event: RepayWithCollateralEvent
+): RepayEntity {
+  const repayEntity =
+    createEvent<RepayEntity>(event);
+
+  repayEntity.repayer = event.params.owner;
+  repayEntity.repayWith = "Collateral";
+  repayEntity.repayToken = event.params.yieldToken;
+  repayEntity.repayTokenAmount = event.params.shares;  // It must be calculated in amount from shares 
+  repayEntity.credit = event.params.credit;
+  repayEntity.recipient = event.params.owner;
+  repayEntity.save();
+  return repayEntity;
 }

@@ -12,7 +12,7 @@ type Block @entity {
   timestamp: BigInt!
 
   " List of events related to this block "
-  events: [Event!]!
+  events: [Event!]! @derivedFrom(field: "block")
 
   " List of transactions in this block "
   transactions: [Transaction!]! @derivedFrom(field: "block")
@@ -41,7 +41,7 @@ type Transaction @entity {
   timestamp: BigInt!
 
   " List of events emitted by this transaction "
-  events: [Event!]!
+  events: [Event!]! @derivedFrom(field: "transaction")
 }
 
 """
@@ -99,8 +99,8 @@ type Deposit implements Event @entity(immutable: true) {
   " Timestamp of this event "
   timestamp: BigInt!
 
-  depositor: Bytes! # address
-  yieldToken: Token!
+  sender: Bytes! # address
+  yieldToken: Bytes! # address
   amount: BigInt!
   recipient: Bytes! # address
 }
@@ -121,7 +121,7 @@ type Borrow implements Event @entity(immutable: true) {
   " Timestamp of this event "
   timestamp: BigInt!
 
-  borrower: Bytes! # address
+  owner: Bytes! # address
   amount: BigInt!
   recipient: Bytes! # address
 }
@@ -166,8 +166,8 @@ type Withdraw implements Event @entity(immutable: true) {
   " Timestamp of this event "
   timestamp: BigInt!
 
-  withdrawer: Bytes! # address
+  owner: Bytes! # address
   yieldToken: Bytes! # address
-  yieldTokenAmount: BigInt!
+  shares: BigInt!
   recipient: Bytes! # address
 }

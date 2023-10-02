@@ -1,4 +1,4 @@
-export const MANIFEST_PATH_TO_ROOT = "../../";
+export const MANIFEST_PATH_TO_ROOT = "./";
 
 export type Manifest = any;
 

@@ -23,11 +23,11 @@ const abiToFunctionMap: Record<
   SavvyBooster: createSavvyBoosterDataSource
 };
 
-function initializeManifest() {
+function initializeManifest(manifestPathToRoot) {
   return {
     specVersion: "0.0.5",
     schema: {
-      file: `${MANIFEST_PATH_TO_ROOT}schema.graphql`,
+      file: `${manifestPathToRoot}schema.graphql`,
     },
     dataSources: [],
   };
@@ -61,9 +61,8 @@ function populateManifest(manifest: Manifest, config: NetworkConfig) {
   return manifest;
 }
 
-async function writeManifestToFile(network: string, manifest: Manifest) {
+async function writeManifestToFile(network: string, manifest: Manifest, path: string) {
   try {
-    const path = `./setup/manifest/subgraph.${network}.yaml`;
     await writeYamlFile(path, manifest);
     console.log(
       `${chalk.green(
@@ -77,14 +76,16 @@ async function writeManifestToFile(network: string, manifest: Manifest) {
 }
 
 async function main(network: string) {
-  const manifest = initializeManifest();
+  const manifest = initializeManifest(MANIFEST_PATH_TO_ROOT);
   const config = await getNetworkConfig(network);
   populateManifest(manifest, config);
-  await writeManifestToFile(network, manifest);
+  await writeManifestToFile(network, manifest, `./setup/manifest/subgraph.${network}.yaml`);
 
-  const manifest1 = initializeManifest();
+  const manifest1 = initializeManifest(MANIFEST_PATH_TO_ROOT);
+  console.log("\ncrypto:", manifest1);
+  console.log("crypto:", config);
   populateManifest(manifest1, config);
-  await writeManifestToFile(network, manifest1);
+  await writeManifestToFile(network, manifest1, `./subgraph.yaml`);
 }
 
 main(process.argv.slice(2)[0])

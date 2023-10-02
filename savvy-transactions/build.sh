@@ -14,4 +14,7 @@ yarn build:manifest "$NETWORK"
 yarn build:schema
 
 # Run yarn build:subgraph with the specified subgraph YAML file
-yarn build:subgraph "./setup/manifest/subgraph.$NETWORK.yaml"
+# yarn build:subgraph "./setup/manifest/subgraph.$NETWORK.yaml"
+
+# Run yarn build:subgraph with the specified subgraph YAML file
+yarn build:subgraph

@@ -1,6 +1,6 @@
 specVersion: 0.0.5
 schema:
-  file: ../../schema.graphql
+  file: ./schema.graphql
 dataSources:
   - kind: ethereum/contract
     name: SavvyPositionManagerBTC
@@ -16,9 +16,9 @@ dataSources:
       entities: []
       abis:
         - name: SavvyPositionManager
-          file: ../../abis/SavvyPositionManager.json
+          file: ./abis/SavvyPositionManager.json
         - name: SavvyFrontendInfoAggregator
-          file: ../../abis/SavvyFrontendInfoAggregator.json
+          file: ./abis/SavvyFrontendInfoAggregator.json
       eventHandlers:
         - event: DepositYieldToken(indexed address,indexed address,uint256,address)
           handler: handleDepositYieldToken
@@ -36,7 +36,7 @@ dataSources:
             RepayWithCollateral(indexed address,indexed address,indexed
             address,uint256,uint256)
           handler: handleRepayWithCollateral
-      file: ../../src/mappings/savvy-position-manager.ts
+      file: ./src/mappings/savvy-position-manager.ts
   - kind: ethereum/contract
     name: SavvyPositionManagerETH
     network: arbitrum-one
@@ -51,9 +51,9 @@ dataSources:
       entities: []
       abis:
         - name: SavvyPositionManager
-          file: ../../abis/SavvyPositionManager.json
+          file: ./abis/SavvyPositionManager.json
         - name: SavvyFrontendInfoAggregator
-          file: ../../abis/SavvyFrontendInfoAggregator.json
+          file: ./abis/SavvyFrontendInfoAggregator.json
       eventHandlers:
         - event: DepositYieldToken(indexed address,indexed address,uint256,address)
           handler: handleDepositYieldToken
@@ -71,7 +71,7 @@ dataSources:
             RepayWithCollateral(indexed address,indexed address,indexed
             address,uint256,uint256)
           handler: handleRepayWithCollateral
-      file: ../../src/mappings/savvy-position-manager.ts
+      file: ./src/mappings/savvy-position-manager.ts
   - kind: ethereum/contract
     name: SavvyPositionManagerUSD
     network: arbitrum-one
@@ -86,9 +86,9 @@ dataSources:
       entities: []
       abis:
         - name: SavvyPositionManager
-          file: ../../abis/SavvyPositionManager.json
+          file: ./abis/SavvyPositionManager.json
         - name: SavvyFrontendInfoAggregator
-          file: ../../abis/SavvyFrontendInfoAggregator.json
+          file: ./abis/SavvyFrontendInfoAggregator.json
       eventHandlers:
         - event: DepositYieldToken(indexed address,indexed address,uint256,address)
           handler: handleDepositYieldToken
@@ -106,7 +106,7 @@ dataSources:
             RepayWithCollateral(indexed address,indexed address,indexed
             address,uint256,uint256)
           handler: handleRepayWithCollateral
-      file: ../../src/mappings/savvy-position-manager.ts
+      file: ./src/mappings/savvy-position-manager.ts
   - kind: ethereum/contract
     name: SavvySwapBTC
     network: arbitrum-one
@@ -121,9 +121,9 @@ dataSources:
       entities: []
       abis:
         - name: SavvySwap
-          file: ../../abis/SavvySwap.json
+          file: ./abis/SavvySwap.json
         - name: SavvyFrontendInfoAggregator
-          file: ../../abis/SavvyFrontendInfoAggregator.json
+          file: ./abis/SavvyFrontendInfoAggregator.json
       eventHandlers:
         - event: Deposit(indexed address,indexed address,uint256)
           handler: handleDeposit
@@ -133,7 +133,7 @@ dataSources:
           handler: handleClaim
         - event: Swap(indexed address,uint256)
           handler: handleSwap
-      file: ../../src/mappings/savvy-swap.ts
+      file: ./src/mappings/savvy-swap.ts
   - kind: ethereum/contract
     name: SavvyVeSVY
     network: arbitrum-one
@@ -148,9 +148,9 @@ dataSources:
       entities: []
       abis:
         - name: VeSVY
-          file: ../../abis/SavvyVeSvy.json
+          file: ./abis/SavvyVeSvy.json
         - name: SavvyFrontendInfoAggregator
-          file: ../../abis/SavvyFrontendInfoAggregator.json
+          file: ./abis/SavvyFrontendInfoAggregator.json
       eventHandlers:
         - event: Staked(indexed address,indexed address,indexed uint256)
           handler: handleStaked
@@ -158,7 +158,7 @@ dataSources:
           handler: handleUnstaked
         - event: Claimed(indexed address,indexed uint256)
           handler: handleClaimed
-      file: ../../src/mappings/savvy-ve-svy.ts
+      file: ./src/mappings/savvy-ve-svy.ts
   - kind: ethereum/contract
     name: SavvyBooster
     network: arbitrum-one
@@ -173,9 +173,9 @@ dataSources:
       entities: []
       abis:
         - name: SavvyBooster
-          file: ../../abis/SavvyBooster.json
+          file: ./abis/SavvyBooster.json
         - name: SavvyFrontendInfoAggregator
-          file: ../../abis/SavvyFrontendInfoAggregator.json
+          file: ./abis/SavvyFrontendInfoAggregator.json
       eventHandlers:
         - event: Deposit(uint256,uint256)
           handler: handleDeposit
@@ -183,4 +183,4 @@ dataSources:
           handler: handleWithdraw
         - event: Claim(indexed address,uint256,uint256)
           handler: handleClaim
-      file: ../../src/mappings/savvy-booster.ts
+      file: ./src/mappings/savvy-booster.ts

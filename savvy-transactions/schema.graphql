@@ -318,3 +318,64 @@ type VeSClaimed implements Event @entity(immutable: true) {
   user: Bytes! # address
   amount: BigInt!
 }
+
+" for SavvyBooster "
+type SBDeposit implements Event @entity(immutable: true) {
+  " { Transaction hash }-{ Log index } "
+  id: ID!
+
+  " Transaction hash of the transaction that emitted this event "
+  transaction: Transaction!
+
+  " Event log index. For transactions that don't emit event, create arbitrary index starting from 0 "
+  logIndex: Int!
+
+  " Block number of this event "
+  block: Block!
+
+  " Timestamp of this event "
+  timestamp: BigInt!
+
+  amount: BigInt!
+  poolId: BigInt! # address
+}
+
+type SBWithdraw implements Event @entity(immutable: true) {
+  " { Transaction hash }-{ Log index } "
+  id: ID!
+
+  " Transaction hash of the transaction that emitted this event "
+  transaction: Transaction!
+
+  " Event log index. For transactions that don't emit event, create arbitrary index starting from 0 "
+  logIndex: Int!
+
+  " Block number of this event "
+  block: Block!
+
+  " Timestamp of this event "
+  timestamp: BigInt!
+
+  amount: BigInt!
+}
+
+type SBClaim implements Event @entity(immutable: true) {
+  " { Transaction hash }-{ Log index } "
+  id: ID!
+
+  " Transaction hash of the transaction that emitted this event "
+  transaction: Transaction!
+
+  " Event log index. For transactions that don't emit event, create arbitrary index starting from 0 "
+  logIndex: Int!
+
+  " Block number of this event "
+  block: Block!
+
+  " Timestamp of this event "
+  timestamp: BigInt!
+
+  user: Bytes! # address
+  rewardAmount: BigInt!
+  pendingAmount: BigInt!
+}

@@ -57,7 +57,7 @@ export function createRepayWithDebtTokenEvent(
 
   repayEntity.repayer = event.params.sender;
   repayEntity.repayWith = "DebtToken";
-  repayEntity.repayToken = event.params.recipient;  // It must be debt token of SPM
+  repayEntity.repayToken = event.params.recipient;  // It must be debt token of SPM (Need analyze tx and store tokens)
   repayEntity.repayTokenAmount = event.params.amount;
   repayEntity.credit = event.params.amount;
   repayEntity.recipient = event.params.recipient;
@@ -90,7 +90,7 @@ export function createRepayWithCollateralEvent(
   repayEntity.repayer = event.params.owner;
   repayEntity.repayWith = "Collateral";
   repayEntity.repayToken = event.params.yieldToken;
-  repayEntity.repayTokenAmount = event.params.shares;  // It must be calculated in amount from shares 
+  repayEntity.repayTokenAmount = event.params.shares;  // It must be calculated in amount from shares (Need analyze tx data and stored yieldToken)
   repayEntity.credit = event.params.credit;
   repayEntity.recipient = event.params.owner;
   repayEntity.save();

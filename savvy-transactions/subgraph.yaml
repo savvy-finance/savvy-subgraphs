@@ -81,3 +81,27 @@ dataSources:
         - event: Claimed(indexed address,indexed uint256)
           handler: handleClaimed
       file: ./src/savvy-ve-svy.ts
+
+  - kind: ethereum
+    name: SavvyBooster
+    network: arbitrum-one
+    source:
+      address: "0xbf837f2C7894cfF859a01d078d7AAa8c47221a2F"
+      abi: SavvyBooster
+      startBlock: 96798714
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities: []
+      abis:
+        - name: SavvyBooster
+          file: ./abis/SavvyBooster.json
+      eventHandlers:
+        - event: Deposit(uint256,uint256)
+          handler: handleDeposit
+        - event: Withdraw(uint256)
+          handler: handleWithdraw
+        - event: Claim(indexed address,uint256,uint256)
+          handler: handleClaim
+      file: ./src/savvy-booster.ts

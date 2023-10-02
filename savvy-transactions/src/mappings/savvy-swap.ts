@@ -2,12 +2,14 @@ import {
   Deposit,
   Withdraw,
   Claim,
-} from "../generated/SavvyBooster/SavvyBooster"
+  Swap
+} from "../../generated/SavvySwapBTC/SavvySwap"
 import {
   createDepositEvent,
   createWithdrawEvent,
   createClaimEvent,
-} from "./helpers/savvyBooster";
+  createSwapEvent
+} from "../helpers/savvySwap";
 
 export function handleDeposit(event: Deposit): void {
   createDepositEvent(event);
@@ -19,4 +21,8 @@ export function handleWithdraw(event: Withdraw): void {
 
 export function handleClaim(event: Claim): void {
   createClaimEvent(event);
+}
+
+export function handleSwap(event: Swap): void {
+  createSwapEvent(event);
 }

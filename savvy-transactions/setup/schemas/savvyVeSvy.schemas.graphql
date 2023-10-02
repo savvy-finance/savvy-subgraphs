@@ -1,0 +1,64 @@
+################
+## Savvy VeSVY ##
+################
+
+type VeSStaked implements Event @entity(immutable: true) {
+  " { Transaction hash }-{ Log index } "
+  id: ID!
+
+  " Transaction hash of the transaction that emitted this event "
+  transaction: Transaction!
+
+  " Event log index. For transactions that don't emit event, create arbitrary index starting from 0 "
+  logIndex: Int!
+
+  " Block number of this event "
+  block: Block!
+
+  " Timestamp of this event "
+  timestamp: BigInt!
+
+  sender: Bytes! # address
+  user: Bytes! # address
+  amount: BigInt!
+}
+
+type VeSUnstaked implements Event @entity(immutable: true) {
+  " { Transaction hash }-{ Log index } "
+  id: ID!
+
+  " Transaction hash of the transaction that emitted this event "
+  transaction: Transaction!
+
+  " Event log index. For transactions that don't emit event, create arbitrary index starting from 0 "
+  logIndex: Int!
+
+  " Block number of this event "
+  block: Block!
+
+  " Timestamp of this event "
+  timestamp: BigInt!
+
+  user: Bytes! # address
+  amount: BigInt!
+}
+
+type VeSClaimed implements Event @entity(immutable: true) {
+  " { Transaction hash }-{ Log index } "
+  id: ID!
+
+  " Transaction hash of the transaction that emitted this event "
+  transaction: Transaction!
+
+  " Event log index. For transactions that don't emit event, create arbitrary index starting from 0 "
+  logIndex: Int!
+
+  " Block number of this event "
+  block: Block!
+
+  " Timestamp of this event "
+  timestamp: BigInt!
+
+  user: Bytes! # address
+  amount: BigInt!
+}

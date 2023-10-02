@@ -2,12 +2,12 @@ import {
   Staked,
   Unstaked,
   Claimed,
-} from "../generated/VeSVY/VeSVY"
+} from "../../generated/VeSVY/VeSVY"
 import {
   createStakedEvent,
   createUnstakedEvent,
   createClaimedEvent,
-} from "./helpers/savvyVeSvy";
+} from "../helpers/savvyVeSvy";
 
 export function handleStaked(event: Staked): void {
   createStakedEvent(event);

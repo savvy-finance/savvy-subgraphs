@@ -1,12 +1,35 @@
 [
-  { "inputs": [], "stateMutability": "nonpayable", "type": "constructor" },
-  { "inputs": [], "name": "LockAlreadyClaimed", "type": "error" },
+  {
+    "inputs": [],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "inputs": [],
+    "name": "LockAlreadyClaimed",
+    "type": "error"
+  },
   {
     "anonymous": false,
     "inputs": [
-      { "indexed": true, "internalType": "address", "name": "user", "type": "address" },
-      { "indexed": false, "internalType": "uint256", "name": "rewardAmount", "type": "uint256" },
-      { "indexed": false, "internalType": "uint256", "name": "pendingAmount", "type": "uint256" }
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "rewardAmount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "pendingAmount",
+        "type": "uint256"
+      }
     ],
     "name": "Claim",
     "type": "event"
@@ -14,23 +37,50 @@
   {
     "anonymous": false,
     "inputs": [
-      { "indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256" },
-      { "indexed": false, "internalType": "uint256", "name": "poolId", "type": "uint256" }
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "poolId",
+        "type": "uint256"
+      }
     ],
     "name": "Deposit",
     "type": "event"
   },
   {
     "anonymous": false,
-    "inputs": [{ "indexed": false, "internalType": "uint8", "name": "version", "type": "uint8" }],
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint8",
+        "name": "version",
+        "type": "uint8"
+      }
+    ],
     "name": "Initialized",
     "type": "event"
   },
   {
     "anonymous": false,
     "inputs": [
-      { "indexed": true, "internalType": "address", "name": "previousOwner", "type": "address" },
-      { "indexed": true, "internalType": "address", "name": "newOwner", "type": "address" }
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "previousOwner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
     ],
     "name": "OwnershipTransferStarted",
     "type": "event"
@@ -38,8 +88,18 @@
   {
     "anonymous": false,
     "inputs": [
-      { "indexed": true, "internalType": "address", "name": "previousOwner", "type": "address" },
-      { "indexed": true, "internalType": "address", "name": "newOwner", "type": "address" }
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "previousOwner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
     ],
     "name": "OwnershipTransferred",
     "type": "event"
@@ -47,7 +107,12 @@
   {
     "anonymous": false,
     "inputs": [
-      { "indexed": false, "internalType": "address", "name": "account", "type": "address" }
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
     ],
     "name": "Paused",
     "type": "event"
@@ -55,7 +120,12 @@
   {
     "anonymous": false,
     "inputs": [
-      { "indexed": false, "internalType": "address", "name": "account", "type": "address" }
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
     ],
     "name": "Unpaused",
     "type": "event"
@@ -63,7 +133,12 @@
   {
     "anonymous": false,
     "inputs": [
-      { "indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256" }
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
     ],
     "name": "Withdraw",
     "type": "event"
@@ -71,14 +146,26 @@
   {
     "inputs": [],
     "name": "BPS",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [],
     "name": "FIXED_POINT_SCALAR",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
@@ -91,8 +178,16 @@
   },
   {
     "inputs": [
-      { "internalType": "uint256", "name": "amount_", "type": "uint256" },
-      { "internalType": "uint256", "name": "duration_", "type": "uint256" }
+      {
+        "internalType": "uint256",
+        "name": "amount_",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "duration_",
+        "type": "uint256"
+      }
     ],
     "name": "addPool",
     "outputs": [],
@@ -115,14 +210,32 @@
   {
     "inputs": [],
     "name": "claimSvyRewards",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "address", "name": "user_", "type": "address" }],
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "user_",
+        "type": "address"
+      }
+    ],
     "name": "getClaimableRewards",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
@@ -132,12 +245,36 @@
     "outputs": [
       {
         "components": [
-          { "internalType": "uint256", "name": "remainingEmissions", "type": "uint256" },
-          { "internalType": "uint256", "name": "emissionRatio", "type": "uint256" },
-          { "internalType": "uint256", "name": "duration", "type": "uint256" },
-          { "internalType": "uint256", "name": "startTime", "type": "uint256" },
-          { "internalType": "uint256", "name": "totalDebtBalance", "type": "uint256" },
-          { "internalType": "uint256", "name": "totalVeSvyBalance", "type": "uint256" }
+          {
+            "internalType": "uint256",
+            "name": "remainingEmissions",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "emissionRatio",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "duration",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "startTime",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "totalDebtBalance",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "totalVeSvyBalance",
+            "type": "uint256"
+          }
         ],
         "internalType": "struct ISavvyBooster.PoolInfo[]",
         "name": "",
@@ -148,23 +285,61 @@
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "address", "name": "user_", "type": "address" }],
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "user_",
+        "type": "address"
+      }
+    ],
     "name": "getSvyEarnRate",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "address", "name": "user", "type": "address" }],
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      }
+    ],
     "name": "getUserInfo",
     "outputs": [
       {
         "components": [
-          { "internalType": "uint256", "name": "pendingRewards", "type": "uint256" },
-          { "internalType": "uint256", "name": "lastUpdateTime", "type": "uint256" },
-          { "internalType": "uint256", "name": "lastUpdatePool", "type": "uint256" },
-          { "internalType": "uint256", "name": "debtBalance", "type": "uint256" },
-          { "internalType": "uint256", "name": "veSvyBalance", "type": "uint256" }
+          {
+            "internalType": "uint256",
+            "name": "pendingRewards",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "lastUpdateTime",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "lastUpdatePool",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "debtBalance",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "veSvyBalance",
+            "type": "uint256"
+          }
         ],
         "internalType": "struct ISavvyBooster.UserInfo",
         "name": "",
@@ -176,8 +351,16 @@
   },
   {
     "inputs": [
-      { "internalType": "contract IERC20", "name": "svyToken_", "type": "address" },
-      { "internalType": "contract IERC20", "name": "veSvyToken_", "type": "address" }
+      {
+        "internalType": "contract IERC20",
+        "name": "svyToken_",
+        "type": "address"
+      },
+      {
+        "internalType": "contract IERC20",
+        "name": "veSvyToken_",
+        "type": "address"
+      }
     ],
     "name": "initialize",
     "outputs": [],
@@ -187,7 +370,13 @@
   {
     "inputs": [],
     "name": "owner",
-    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
@@ -201,19 +390,37 @@
   {
     "inputs": [],
     "name": "paused",
-    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [],
     "name": "pendingOwner",
-    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "uint256", "name": "period_", "type": "uint256" }],
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "period_",
+        "type": "uint256"
+      }
+    ],
     "name": "removePool",
     "outputs": [],
     "stateMutability": "nonpayable",
@@ -227,7 +434,13 @@
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "address", "name": "newOwner", "type": "address" }],
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
     "name": "transferOwnership",
     "outputs": [],
     "stateMutability": "nonpayable",
@@ -242,9 +455,21 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "user_", "type": "address" },
-      { "internalType": "uint256", "name": "userDebtSavvy_", "type": "uint256" },
-      { "internalType": "uint256", "name": "totalDebtSavvy_", "type": "uint256" }
+      {
+        "internalType": "address",
+        "name": "user_",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "userDebtSavvy_",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "totalDebtSavvy_",
+        "type": "uint256"
+      }
     ],
     "name": "updatePendingRewardsWithDebt",
     "outputs": [],
@@ -253,9 +478,21 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "user_", "type": "address" },
-      { "internalType": "uint256", "name": "userVeSvyBalance_", "type": "uint256" },
-      { "internalType": "uint256", "name": "totalVeSvyBalance_", "type": "uint256" }
+      {
+        "internalType": "address",
+        "name": "user_",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "userVeSvyBalance_",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "totalVeSvyBalance_",
+        "type": "uint256"
+      }
     ],
     "name": "updatePendingRewardsWithVeSvy",
     "outputs": [],

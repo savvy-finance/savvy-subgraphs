@@ -8,13 +8,19 @@
     "anonymous": false,
     "inputs": [
       {
-        "indexed": false,
+        "indexed": true,
         "internalType": "address",
-        "name": "admin",
+        "name": "account",
         "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "value",
+        "type": "uint256"
       }
     ],
-    "name": "AdminUpdated",
+    "name": "Burn",
     "type": "event"
   },
   {
@@ -23,48 +29,17 @@
       {
         "indexed": true,
         "internalType": "address",
-        "name": "sender",
+        "name": "user",
         "type": "address"
       },
       {
         "indexed": true,
-        "internalType": "address",
-        "name": "recipient",
-        "type": "address"
-      },
-      {
-        "indexed": false,
         "internalType": "uint256",
         "name": "amount",
         "type": "uint256"
       }
     ],
-    "name": "Claim",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "sender",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "owner",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "Deposit",
+    "name": "Claimed",
     "type": "event"
   },
   {
@@ -84,10 +59,67 @@
     "anonymous": false,
     "inputs": [
       {
+        "indexed": true,
+        "internalType": "address",
+        "name": "beneficiary",
+        "type": "address"
+      },
+      {
         "indexed": false,
-        "internalType": "bool",
-        "name": "flag",
-        "type": "bool"
+        "internalType": "uint256",
+        "name": "value",
+        "type": "uint256"
+      }
+    ],
+    "name": "Mint",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "previousOwner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "OwnershipTransferStarted",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "previousOwner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "OwnershipTransferred",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
       }
     ],
     "name": "Paused",
@@ -97,107 +129,38 @@
     "anonymous": false,
     "inputs": [
       {
-        "indexed": false,
-        "internalType": "address",
-        "name": "pendingAdmin",
-        "type": "address"
-      }
-    ],
-    "name": "PendingAdminUpdated",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "bytes32",
-        "name": "role",
-        "type": "bytes32"
-      },
-      {
-        "indexed": true,
-        "internalType": "bytes32",
-        "name": "previousAdminRole",
-        "type": "bytes32"
-      },
-      {
-        "indexed": true,
-        "internalType": "bytes32",
-        "name": "newAdminRole",
-        "type": "bytes32"
-      }
-    ],
-    "name": "RoleAdminChanged",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "bytes32",
-        "name": "role",
-        "type": "bytes32"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "sender",
-        "type": "address"
-      }
-    ],
-    "name": "RoleGranted",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "bytes32",
-        "name": "role",
-        "type": "bytes32"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "sender",
-        "type": "address"
-      }
-    ],
-    "name": "RoleRevoked",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
         "indexed": true,
         "internalType": "address",
         "name": "sender",
         "type": "address"
       },
       {
-        "indexed": false,
+        "indexed": true,
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "indexed": true,
         "internalType": "uint256",
         "name": "amount",
         "type": "uint256"
       }
     ],
-    "name": "Swap",
+    "name": "Staked",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "Unpaused",
     "type": "event"
   },
   {
@@ -206,75 +169,24 @@
       {
         "indexed": true,
         "internalType": "address",
-        "name": "sender",
+        "name": "user",
         "type": "address"
       },
       {
         "indexed": true,
-        "internalType": "address",
-        "name": "recipient",
-        "type": "address"
-      },
-      {
-        "indexed": false,
         "internalType": "uint256",
         "name": "amount",
         "type": "uint256"
       }
     ],
-    "name": "Withdraw",
+    "name": "Unstaked",
     "type": "event"
   },
   {
     "inputs": [],
-    "name": "ADMIN",
-    "outputs": [
-      {
-        "internalType": "bytes32",
-        "name": "",
-        "type": "bytes32"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "DEFAULT_ADMIN_ROLE",
-    "outputs": [
-      {
-        "internalType": "bytes32",
-        "name": "",
-        "type": "bytes32"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "SENTINEL",
-    "outputs": [
-      {
-        "internalType": "bytes32",
-        "name": "",
-        "type": "bytes32"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "ZERO_ADDRESS",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
+    "name": "acceptOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -282,33 +194,7 @@
     "name": "allowlist",
     "outputs": [
       {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "baseToken",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "buffer",
-    "outputs": [
-      {
-        "internalType": "address",
+        "internalType": "contract IAllowlist",
         "name": "",
         "type": "address"
       }
@@ -319,24 +205,64 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      },
-      {
         "internalType": "address",
-        "name": "recipient",
+        "name": "account",
         "type": "address"
       }
     ],
+    "name": "balanceOf",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "claim",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_addr",
+        "type": "address"
+      }
+    ],
+    "name": "claimable",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [],
-    "name": "conversionFactor",
+    "name": "decimals",
+    "outputs": [
+      {
+        "internalType": "uint8",
+        "name": "",
+        "type": "uint8"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "generationRate",
     "outputs": [
       {
         "internalType": "uint256",
@@ -350,34 +276,16 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      },
-      {
         "internalType": "address",
-        "name": "owner",
+        "name": "_addr",
         "type": "address"
       }
     ],
-    "name": "deposit",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "owner",
-        "type": "address"
-      }
-    ],
-    "name": "getClaimableBalance",
+    "name": "getMaxVeSVYEarnable",
     "outputs": [
       {
         "internalType": "uint256",
-        "name": "claimableBalance",
+        "name": "maxVeSVYEarnable",
         "type": "uint256"
       }
     ],
@@ -387,35 +295,16 @@
   {
     "inputs": [
       {
-        "internalType": "bytes32",
-        "name": "role",
-        "type": "bytes32"
+        "internalType": "address",
+        "name": "_addr",
+        "type": "address"
       }
     ],
-    "name": "getRoleAdmin",
+    "name": "getStakedSvy",
     "outputs": [
       {
-        "internalType": "bytes32",
+        "internalType": "uint256",
         "name": "",
-        "type": "bytes32"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "owner",
-        "type": "address"
-      }
-    ],
-    "name": "getSwappedBalance",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "swappedBalance",
         "type": "uint256"
       }
     ],
@@ -426,15 +315,15 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "owner",
+        "name": "_addr",
         "type": "address"
       }
     ],
-    "name": "getUnswappedBalance",
+    "name": "getVeSVYEarnRatePerSec",
     "outputs": [
       {
         "internalType": "uint256",
-        "name": "unswappedBalance",
+        "name": "veSVYEarnRatePerSec",
         "type": "uint256"
       }
     ],
@@ -444,40 +333,17 @@
   {
     "inputs": [
       {
-        "internalType": "bytes32",
-        "name": "role",
-        "type": "bytes32"
-      },
-      {
         "internalType": "address",
-        "name": "account",
+        "name": "_account",
         "type": "address"
       }
     ],
-    "name": "grantRole",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "bytes32",
-        "name": "role",
-        "type": "bytes32"
-      },
-      {
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      }
-    ],
-    "name": "hasRole",
+    "name": "getVotes",
     "outputs": [
       {
-        "internalType": "bool",
+        "internalType": "uint256",
         "name": "",
-        "type": "bool"
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -486,24 +352,14 @@
   {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "_syntheticToken",
+        "internalType": "contract IERC20",
+        "name": "_svy",
         "type": "address"
       },
       {
-        "internalType": "address",
-        "name": "_baseToken",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_buffer",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_allowlist",
-        "type": "address"
+        "internalType": "uint256",
+        "name": "_veSVYAccrueStartTime",
+        "type": "uint256"
       }
     ],
     "name": "initialize",
@@ -513,119 +369,31 @@
   },
   {
     "inputs": [],
-    "name": "isPaused",
+    "name": "invVoteThreshold",
     "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "bytes32",
-        "name": "role",
-        "type": "bytes32"
-      },
-      {
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      }
-    ],
-    "name": "renounceRole",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "bytes32",
-        "name": "role",
-        "type": "bytes32"
-      },
-      {
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      }
-    ],
-    "name": "revokeRole",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_newCollateralSource",
-        "type": "address"
-      }
-    ],
-    "name": "setCollateralSource",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "bool",
-        "name": "pauseState",
-        "type": "bool"
-      }
-    ],
-    "name": "setPause",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "bytes4",
-        "name": "interfaceId",
-        "type": "bytes4"
-      }
-    ],
-    "name": "supportsInterface",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
       {
         "internalType": "uint256",
-        "name": "amount",
+        "name": "",
         "type": "uint256"
       }
     ],
-    "name": "swap",
-    "outputs": [],
-    "stateMutability": "nonpayable",
+    "stateMutability": "view",
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "syntheticToken",
-    "outputs": [
+    "inputs": [
       {
         "internalType": "address",
-        "name": "",
+        "name": "_addr",
         "type": "address"
+      }
+    ],
+    "name": "isUser",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
       }
     ],
     "stateMutability": "view",
@@ -633,7 +401,7 @@
   },
   {
     "inputs": [],
-    "name": "totalBuffered",
+    "name": "maxCap",
     "outputs": [
       {
         "internalType": "uint256",
@@ -646,20 +414,7 @@
   },
   {
     "inputs": [],
-    "name": "totalUnswapped",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "version",
+    "name": "name",
     "outputs": [
       {
         "internalType": "string",
@@ -671,21 +426,287 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "owner",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "pause",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "paused",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "pendingOwner",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "renounceOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "savvyBooster",
+    "outputs": [
+      {
+        "internalType": "contract ISavvyBooster",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
+      {
+        "internalType": "contract IAllowlist",
+        "name": "_allowlist",
+        "type": "address"
+      }
+    ],
+    "name": "setAllowlist",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_generationRate",
+        "type": "uint256"
+      }
+    ],
+    "name": "setGenerationRate",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_invVoteThreshold",
+        "type": "uint256"
+      }
+    ],
+    "name": "setInvVoteThreshold",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_maxCap",
+        "type": "uint256"
+      }
+    ],
+    "name": "setMaxCap",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract ISavvyBooster",
+        "name": "savvyBooster_",
+        "type": "address"
+      }
+    ],
+    "name": "setSavvyBooster",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_veSVYAccrueStartTime",
+        "type": "uint256"
+      }
+    ],
+    "name": "setVeSVYAccrueStartTime",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "stake",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_recipient",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "stakeFor",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "svy",
+    "outputs": [
+      {
+        "internalType": "contract IERC20",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "symbol",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "totalSupply",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "transferOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "unpause",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "unstake",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "users",
+    "outputs": [
       {
         "internalType": "uint256",
         "name": "amount",
         "type": "uint256"
       },
       {
-        "internalType": "address",
-        "name": "recipient",
-        "type": "address"
+        "internalType": "uint256",
+        "name": "lastRelease",
+        "type": "uint256"
       }
     ],
-    "name": "withdraw",
-    "outputs": [],
-    "stateMutability": "nonpayable",
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "veSVYAccrueStartTime",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   }
 ]

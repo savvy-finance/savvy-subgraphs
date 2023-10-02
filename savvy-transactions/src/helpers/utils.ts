@@ -1,5 +1,6 @@
 import { Entity, ethereum } from "@graphprotocol/graph-ts";
 import { Block, Transaction } from "../../generated/schema";
+import { PROTOCOL_NAME } from "../common/constants";
 
 export function getOrCreateBlock(rawBlock: ethereum.Block): Block {
   const id = rawBlock.hash.toHex();

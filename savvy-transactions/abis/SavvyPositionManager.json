@@ -1,81 +1,182 @@
 [
-  { "inputs": [], "stateMutability": "nonpayable", "type": "constructor" },
+  {
+    "inputs": [],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
   {
     "inputs": [
-      { "internalType": "uint256", "name": "amount", "type": "uint256" },
-      { "internalType": "uint256", "name": "available", "type": "uint256" }
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "available",
+        "type": "uint256"
+      }
     ],
     "name": "BorrowingLimitExceeded",
     "type": "error"
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "yieldToken", "type": "address" },
-      { "internalType": "uint256", "name": "expectedValue", "type": "uint256" },
-      { "internalType": "uint256", "name": "maximumExpectedValue", "type": "uint256" }
+      {
+        "internalType": "address",
+        "name": "yieldToken",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "expectedValue",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "maximumExpectedValue",
+        "type": "uint256"
+      }
     ],
     "name": "ExpectedValueExceeded",
     "type": "error"
   },
-  { "inputs": [], "name": "LockAlreadyClaimed", "type": "error" },
+  {
+    "inputs": [],
+    "name": "LockAlreadyClaimed",
+    "type": "error"
+  },
   {
     "inputs": [
-      { "internalType": "address", "name": "yieldToken", "type": "address" },
-      { "internalType": "uint256", "name": "loss", "type": "uint256" },
-      { "internalType": "uint256", "name": "maximumLoss", "type": "uint256" }
+      {
+        "internalType": "address",
+        "name": "yieldToken",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "loss",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "maximumLoss",
+        "type": "uint256"
+      }
     ],
     "name": "LossExceeded",
     "type": "error"
   },
   {
     "inputs": [
-      { "internalType": "bytes", "name": "data", "type": "bytes" },
-      { "internalType": "bytes", "name": "result", "type": "bytes" }
+      {
+        "internalType": "bytes",
+        "name": "data",
+        "type": "bytes"
+      },
+      {
+        "internalType": "bytes",
+        "name": "result",
+        "type": "bytes"
+      }
     ],
     "name": "MulticallFailed",
     "type": "error"
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "baseToken", "type": "address" },
-      { "internalType": "uint256", "name": "amount", "type": "uint256" },
-      { "internalType": "uint256", "name": "available", "type": "uint256" }
+      {
+        "internalType": "address",
+        "name": "baseToken",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "available",
+        "type": "uint256"
+      }
     ],
     "name": "RepayLimitExceeded",
     "type": "error"
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "baseToken", "type": "address" },
-      { "internalType": "uint256", "name": "amount", "type": "uint256" },
-      { "internalType": "uint256", "name": "available", "type": "uint256" }
+      {
+        "internalType": "address",
+        "name": "baseToken",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "available",
+        "type": "uint256"
+      }
     ],
     "name": "RepayWithCollateralLimitExceeded",
     "type": "error"
   },
   {
     "inputs": [
-      { "internalType": "uint256", "name": "amount", "type": "uint256" },
-      { "internalType": "uint256", "name": "minimumAmountOut", "type": "uint256" }
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "minimumAmountOut",
+        "type": "uint256"
+      }
     ],
     "name": "SlippageExceeded",
     "type": "error"
   },
   {
-    "inputs": [{ "internalType": "address", "name": "token", "type": "address" }],
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      }
+    ],
     "name": "TokenDisabled",
     "type": "error"
   },
-  { "inputs": [], "name": "Undercollateralized", "type": "error" },
   {
-    "inputs": [{ "internalType": "address", "name": "token", "type": "address" }],
+    "inputs": [],
+    "name": "Undercollateralized",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      }
+    ],
     "name": "UnsupportedToken",
     "type": "error"
   },
   {
     "anonymous": false,
     "inputs": [
-      { "indexed": true, "internalType": "address", "name": "baseToken", "type": "address" }
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "baseToken",
+        "type": "address"
+      }
     ],
     "name": "AddBaseToken",
     "type": "event"
@@ -83,23 +184,50 @@
   {
     "anonymous": false,
     "inputs": [
-      { "indexed": true, "internalType": "address", "name": "yieldToken", "type": "address" }
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "yieldToken",
+        "type": "address"
+      }
     ],
     "name": "AddYieldToken",
     "type": "event"
   },
   {
     "anonymous": false,
-    "inputs": [{ "indexed": false, "internalType": "address", "name": "admin", "type": "address" }],
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "admin",
+        "type": "address"
+      }
+    ],
     "name": "AdminUpdated",
     "type": "event"
   },
   {
     "anonymous": false,
     "inputs": [
-      { "indexed": true, "internalType": "address", "name": "owner", "type": "address" },
-      { "indexed": true, "internalType": "address", "name": "spender", "type": "address" },
-      { "indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256" }
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "spender",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
     ],
     "name": "ApproveBorrow",
     "type": "event"
@@ -107,10 +235,30 @@
   {
     "anonymous": false,
     "inputs": [
-      { "indexed": true, "internalType": "address", "name": "owner", "type": "address" },
-      { "indexed": true, "internalType": "address", "name": "spender", "type": "address" },
-      { "indexed": true, "internalType": "address", "name": "yieldToken", "type": "address" },
-      { "indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256" }
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "spender",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "yieldToken",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
     ],
     "name": "ApproveWithdraw",
     "type": "event"
@@ -118,8 +266,18 @@
   {
     "anonymous": false,
     "inputs": [
-      { "indexed": true, "internalType": "address", "name": "baseToken", "type": "address" },
-      { "indexed": false, "internalType": "bool", "name": "enabled", "type": "bool" }
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "baseToken",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "enabled",
+        "type": "bool"
+      }
     ],
     "name": "BaseTokenEnabled",
     "type": "event"
@@ -127,9 +285,24 @@
   {
     "anonymous": false,
     "inputs": [
-      { "indexed": true, "internalType": "address", "name": "owner", "type": "address" },
-      { "indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256" },
-      { "indexed": false, "internalType": "address", "name": "recipient", "type": "address" }
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "recipient",
+        "type": "address"
+      }
     ],
     "name": "Borrow",
     "type": "event"
@@ -137,8 +310,18 @@
   {
     "anonymous": false,
     "inputs": [
-      { "indexed": false, "internalType": "uint256", "name": "maximum", "type": "uint256" },
-      { "indexed": false, "internalType": "uint256", "name": "blocks", "type": "uint256" }
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "maximum",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "blocks",
+        "type": "uint256"
+      }
     ],
     "name": "BorrowingLimitUpdated",
     "type": "event"
@@ -146,8 +329,18 @@
   {
     "anonymous": false,
     "inputs": [
-      { "indexed": false, "internalType": "address", "name": "yieldToken", "type": "address" },
-      { "indexed": false, "internalType": "uint256", "name": "blocks", "type": "uint256" }
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "yieldToken",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "blocks",
+        "type": "uint256"
+      }
     ],
     "name": "CreditUnlockRateUpdated",
     "type": "event"
@@ -155,10 +348,30 @@
   {
     "anonymous": false,
     "inputs": [
-      { "indexed": true, "internalType": "address", "name": "sender", "type": "address" },
-      { "indexed": true, "internalType": "address", "name": "yieldToken", "type": "address" },
-      { "indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256" },
-      { "indexed": false, "internalType": "address", "name": "recipient", "type": "address" }
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "sender",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "yieldToken",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "recipient",
+        "type": "address"
+      }
     ],
     "name": "DepositYieldToken",
     "type": "event"
@@ -166,9 +379,24 @@
   {
     "anonymous": false,
     "inputs": [
-      { "indexed": true, "internalType": "address", "name": "sender", "type": "address" },
-      { "indexed": true, "internalType": "address", "name": "yieldToken", "type": "address" },
-      { "indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256" }
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "sender",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "yieldToken",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
     ],
     "name": "Donate",
     "type": "event"
@@ -176,15 +404,30 @@
   {
     "anonymous": false,
     "inputs": [
-      { "indexed": true, "internalType": "address", "name": "yieldToken", "type": "address" },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "yieldToken",
+        "type": "address"
+      },
       {
         "indexed": false,
         "internalType": "uint256",
         "name": "minimumAmountOut",
         "type": "uint256"
       },
-      { "indexed": false, "internalType": "uint256", "name": "totalHarvested", "type": "uint256" },
-      { "indexed": false, "internalType": "uint256", "name": "credit", "type": "uint256" }
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "totalHarvested",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "credit",
+        "type": "uint256"
+      }
     ],
     "name": "Harvest",
     "type": "event"
@@ -192,24 +435,56 @@
   {
     "anonymous": false,
     "inputs": [
-      { "indexed": true, "internalType": "address", "name": "yieldToken", "type": "address" },
-      { "indexed": false, "internalType": "uint256", "name": "currentValue", "type": "uint256" },
-      { "indexed": false, "internalType": "uint256", "name": "expectedValue", "type": "uint256" }
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "yieldToken",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "currentValue",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "expectedValue",
+        "type": "uint256"
+      }
     ],
     "name": "HarvestExceedsOffset",
     "type": "event"
   },
   {
     "anonymous": false,
-    "inputs": [{ "indexed": false, "internalType": "uint8", "name": "version", "type": "uint8" }],
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint8",
+        "name": "version",
+        "type": "uint8"
+      }
+    ],
     "name": "Initialized",
     "type": "event"
   },
   {
     "anonymous": false,
     "inputs": [
-      { "indexed": false, "internalType": "address", "name": "sentinel", "type": "address" },
-      { "indexed": false, "internalType": "bool", "name": "flag", "type": "bool" }
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "sentinel",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "flag",
+        "type": "bool"
+      }
     ],
     "name": "KeeperSet",
     "type": "event"
@@ -217,7 +492,12 @@
   {
     "anonymous": false,
     "inputs": [
-      { "indexed": true, "internalType": "address", "name": "yieldToken", "type": "address" },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "yieldToken",
+        "type": "address"
+      },
       {
         "indexed": false,
         "internalType": "uint256",
@@ -231,8 +511,18 @@
   {
     "anonymous": false,
     "inputs": [
-      { "indexed": true, "internalType": "address", "name": "yieldToken", "type": "address" },
-      { "indexed": false, "internalType": "uint256", "name": "maximumLoss", "type": "uint256" }
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "yieldToken",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "maximumLoss",
+        "type": "uint256"
+      }
     ],
     "name": "MaximumLossUpdated",
     "type": "event"
@@ -253,7 +543,12 @@
   {
     "anonymous": false,
     "inputs": [
-      { "indexed": false, "internalType": "address", "name": "pendingAdmin", "type": "address" }
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "pendingAdmin",
+        "type": "address"
+      }
     ],
     "name": "PendingAdminUpdated",
     "type": "event"
@@ -274,29 +569,63 @@
   {
     "anonymous": false,
     "inputs": [
-      { "indexed": false, "internalType": "uint256", "name": "protocolFee", "type": "uint256" }
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "protocolFee",
+        "type": "uint256"
+      }
     ],
     "name": "ProtocolFeeUpdated",
     "type": "event"
   },
   {
     "anonymous": false,
-    "inputs": [{ "indexed": false, "internalType": "bool", "name": "flag", "type": "bool" }],
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "flag",
+        "type": "bool"
+      }
+    ],
     "name": "ProtocolTokenRequiredActiveUpdated",
     "type": "event"
   },
   {
     "anonymous": false,
-    "inputs": [{ "indexed": false, "internalType": "bool", "name": "flag", "type": "bool" }],
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "flag",
+        "type": "bool"
+      }
+    ],
     "name": "RedlistActiveUpdated",
     "type": "event"
   },
   {
     "anonymous": false,
     "inputs": [
-      { "indexed": true, "internalType": "address", "name": "baseToken", "type": "address" },
-      { "indexed": false, "internalType": "uint256", "name": "maximum", "type": "uint256" },
-      { "indexed": false, "internalType": "uint256", "name": "blocks", "type": "uint256" }
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "baseToken",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "maximum",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "blocks",
+        "type": "uint256"
+      }
     ],
     "name": "RepayLimitUpdated",
     "type": "event"
@@ -304,11 +633,36 @@
   {
     "anonymous": false,
     "inputs": [
-      { "indexed": true, "internalType": "address", "name": "sender", "type": "address" },
-      { "indexed": true, "internalType": "address", "name": "baseToken", "type": "address" },
-      { "indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256" },
-      { "indexed": false, "internalType": "address", "name": "recipient", "type": "address" },
-      { "indexed": false, "internalType": "uint256", "name": "credit", "type": "uint256" }
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "sender",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "baseToken",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "recipient",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "credit",
+        "type": "uint256"
+      }
     ],
     "name": "RepayWithBaseToken",
     "type": "event"
@@ -316,11 +670,36 @@
   {
     "anonymous": false,
     "inputs": [
-      { "indexed": true, "internalType": "address", "name": "owner", "type": "address" },
-      { "indexed": true, "internalType": "address", "name": "yieldToken", "type": "address" },
-      { "indexed": true, "internalType": "address", "name": "baseToken", "type": "address" },
-      { "indexed": false, "internalType": "uint256", "name": "shares", "type": "uint256" },
-      { "indexed": false, "internalType": "uint256", "name": "credit", "type": "uint256" }
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "yieldToken",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "baseToken",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "shares",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "credit",
+        "type": "uint256"
+      }
     ],
     "name": "RepayWithCollateral",
     "type": "event"
@@ -328,9 +707,24 @@
   {
     "anonymous": false,
     "inputs": [
-      { "indexed": true, "internalType": "address", "name": "baseToken", "type": "address" },
-      { "indexed": false, "internalType": "uint256", "name": "maximum", "type": "uint256" },
-      { "indexed": false, "internalType": "uint256", "name": "blocks", "type": "uint256" }
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "baseToken",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "maximum",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "blocks",
+        "type": "uint256"
+      }
     ],
     "name": "RepayWithCollateralLimitUpdated",
     "type": "event"
@@ -338,9 +732,24 @@
   {
     "anonymous": false,
     "inputs": [
-      { "indexed": true, "internalType": "address", "name": "sender", "type": "address" },
-      { "indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256" },
-      { "indexed": false, "internalType": "address", "name": "recipient", "type": "address" }
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "sender",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "recipient",
+        "type": "address"
+      }
     ],
     "name": "RepayWithDebtToken",
     "type": "event"
@@ -348,7 +757,12 @@
   {
     "anonymous": false,
     "inputs": [
-      { "indexed": false, "internalType": "address", "name": "savvySage", "type": "address" }
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "savvySage",
+        "type": "address"
+      }
     ],
     "name": "SavvySageUpdated",
     "type": "event"
@@ -356,8 +770,18 @@
   {
     "anonymous": false,
     "inputs": [
-      { "indexed": false, "internalType": "address", "name": "sentinel", "type": "address" },
-      { "indexed": false, "internalType": "bool", "name": "flag", "type": "bool" }
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "sentinel",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "flag",
+        "type": "bool"
+      }
     ],
     "name": "SentinelSet",
     "type": "event"
@@ -365,8 +789,18 @@
   {
     "anonymous": false,
     "inputs": [
-      { "indexed": true, "internalType": "address", "name": "yieldToken", "type": "address" },
-      { "indexed": false, "internalType": "uint256", "name": "expectedValue", "type": "uint256" }
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "yieldToken",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "expectedValue",
+        "type": "uint256"
+      }
     ],
     "name": "Snap",
     "type": "event"
@@ -374,8 +808,18 @@
   {
     "anonymous": false,
     "inputs": [
-      { "indexed": true, "internalType": "address", "name": "rewardToken", "type": "address" },
-      { "indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256" }
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "rewardToken",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
     ],
     "name": "SweepTokens",
     "type": "event"
@@ -383,8 +827,18 @@
   {
     "anonymous": false,
     "inputs": [
-      { "indexed": false, "internalType": "address", "name": "yieldToken", "type": "address" },
-      { "indexed": false, "internalType": "address", "name": "tokenAdapter", "type": "address" }
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "yieldToken",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "tokenAdapter",
+        "type": "address"
+      }
     ],
     "name": "TokenAdapterUpdated",
     "type": "event"
@@ -392,10 +846,30 @@
   {
     "anonymous": false,
     "inputs": [
-      { "indexed": true, "internalType": "address", "name": "owner", "type": "address" },
-      { "indexed": true, "internalType": "address", "name": "yieldToken", "type": "address" },
-      { "indexed": false, "internalType": "uint256", "name": "shares", "type": "uint256" },
-      { "indexed": false, "internalType": "address", "name": "recipient", "type": "address" }
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "yieldToken",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "shares",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "recipient",
+        "type": "address"
+      }
     ],
     "name": "WithdrawYieldToken",
     "type": "event"
@@ -403,8 +877,18 @@
   {
     "anonymous": false,
     "inputs": [
-      { "indexed": true, "internalType": "address", "name": "yieldToken", "type": "address" },
-      { "indexed": false, "internalType": "bool", "name": "enabled", "type": "bool" }
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "yieldToken",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "enabled",
+        "type": "bool"
+      }
     ],
     "name": "YieldTokenEnabled",
     "type": "event"
@@ -412,14 +896,26 @@
   {
     "inputs": [],
     "name": "BPS",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [],
     "name": "FIXED_POINT_SCALAR",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
@@ -427,7 +923,11 @@
     "inputs": [],
     "name": "_yieldStrategyManager",
     "outputs": [
-      { "internalType": "contract IYieldStrategyManager", "name": "", "type": "address" }
+      {
+        "internalType": "contract IYieldStrategyManager",
+        "name": "",
+        "type": "address"
+      }
     ],
     "stateMutability": "view",
     "type": "function"
@@ -440,23 +940,53 @@
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "address", "name": "owner", "type": "address" }],
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      }
+    ],
     "name": "accounts",
     "outputs": [
-      { "internalType": "int256", "name": "debt", "type": "int256" },
-      { "internalType": "address[]", "name": "depositedTokens", "type": "address[]" }
+      {
+        "internalType": "int256",
+        "name": "debt",
+        "type": "int256"
+      },
+      {
+        "internalType": "address[]",
+        "name": "depositedTokens",
+        "type": "address[]"
+      }
     ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "baseToken_", "type": "address" },
+      {
+        "internalType": "address",
+        "name": "baseToken_",
+        "type": "address"
+      },
       {
         "components": [
-          { "internalType": "uint256", "name": "repayLimitMinimum", "type": "uint256" },
-          { "internalType": "uint256", "name": "repayLimitMaximum", "type": "uint256" },
-          { "internalType": "uint256", "name": "repayLimitBlocks", "type": "uint256" },
+          {
+            "internalType": "uint256",
+            "name": "repayLimitMinimum",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "repayLimitMaximum",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "repayLimitBlocks",
+            "type": "uint256"
+          },
           {
             "internalType": "uint256",
             "name": "repayWithCollateralLimitMinimum",
@@ -467,7 +997,11 @@
             "name": "repayWithCollateralLimitMaximum",
             "type": "uint256"
           },
-          { "internalType": "uint256", "name": "repayWithCollateralLimitBlocks", "type": "uint256" }
+          {
+            "internalType": "uint256",
+            "name": "repayWithCollateralLimitBlocks",
+            "type": "uint256"
+          }
         ],
         "internalType": "struct ISavvyAdminActions.BaseTokenConfig",
         "name": "config",
@@ -481,13 +1015,33 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "yieldToken", "type": "address" },
+      {
+        "internalType": "address",
+        "name": "yieldToken",
+        "type": "address"
+      },
       {
         "components": [
-          { "internalType": "address", "name": "adapter", "type": "address" },
-          { "internalType": "uint256", "name": "maximumLoss", "type": "uint256" },
-          { "internalType": "uint256", "name": "maximumExpectedValue", "type": "uint256" },
-          { "internalType": "uint256", "name": "creditUnlockBlocks", "type": "uint256" }
+          {
+            "internalType": "address",
+            "name": "adapter",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "maximumLoss",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "maximumExpectedValue",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "creditUnlockBlocks",
+            "type": "uint256"
+          }
         ],
         "internalType": "struct ISavvyAdminActions.YieldTokenConfig",
         "name": "config",
@@ -502,21 +1056,41 @@
   {
     "inputs": [],
     "name": "admin",
-    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [],
     "name": "allowlist",
-    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "spender", "type": "address" },
-      { "internalType": "uint256", "name": "amount", "type": "uint256" }
+      {
+        "internalType": "address",
+        "name": "spender",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
     ],
     "name": "approveBorrow",
     "outputs": [],
@@ -525,9 +1099,21 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "spender", "type": "address" },
-      { "internalType": "address", "name": "yieldToken", "type": "address" },
-      { "internalType": "uint256", "name": "shares", "type": "uint256" }
+      {
+        "internalType": "address",
+        "name": "spender",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "yieldToken",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "shares",
+        "type": "uint256"
+      }
     ],
     "name": "approveWithdraw",
     "outputs": [],
@@ -536,18 +1122,40 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "owner", "type": "address" },
-      { "internalType": "address", "name": "spender", "type": "address" }
+      {
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "spender",
+        "type": "address"
+      }
     ],
     "name": "borrowAllowance",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "uint256", "name": "amount", "type": "uint256" },
-      { "internalType": "address", "name": "recipient", "type": "address" }
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "recipient",
+        "type": "address"
+      }
     ],
     "name": "borrowCredit",
     "outputs": [],
@@ -556,9 +1164,21 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "owner", "type": "address" },
-      { "internalType": "uint256", "name": "amount", "type": "uint256" },
-      { "internalType": "address", "name": "recipient", "type": "address" }
+      {
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "recipient",
+        "type": "address"
+      }
     ],
     "name": "borrowCreditFrom",
     "outputs": [],
@@ -567,8 +1187,16 @@
   },
   {
     "inputs": [
-      { "internalType": "uint256", "name": "maximum", "type": "uint256" },
-      { "internalType": "uint256", "name": "blocks", "type": "uint256" }
+      {
+        "internalType": "uint256",
+        "name": "maximum",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "blocks",
+        "type": "uint256"
+      }
     ],
     "name": "configureBorrowingLimit",
     "outputs": [],
@@ -577,8 +1205,16 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "yieldToken", "type": "address" },
-      { "internalType": "uint256", "name": "blocks", "type": "uint256" }
+      {
+        "internalType": "address",
+        "name": "yieldToken",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "blocks",
+        "type": "uint256"
+      }
     ],
     "name": "configureCreditUnlockRate",
     "outputs": [],
@@ -587,9 +1223,21 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "baseToken_", "type": "address" },
-      { "internalType": "uint256", "name": "maximum", "type": "uint256" },
-      { "internalType": "uint256", "name": "blocks", "type": "uint256" }
+      {
+        "internalType": "address",
+        "name": "baseToken_",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "maximum",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "blocks",
+        "type": "uint256"
+      }
     ],
     "name": "configureRepayLimit",
     "outputs": [],
@@ -598,9 +1246,21 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "baseToken_", "type": "address" },
-      { "internalType": "uint256", "name": "maximum", "type": "uint256" },
-      { "internalType": "uint256", "name": "blocks", "type": "uint256" }
+      {
+        "internalType": "address",
+        "name": "baseToken_",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "maximum",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "blocks",
+        "type": "uint256"
+      }
     ],
     "name": "configureRepayWithCollateralLimit",
     "outputs": [],
@@ -610,37 +1270,91 @@
   {
     "inputs": [],
     "name": "debtToken",
-    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "yieldToken", "type": "address" },
-      { "internalType": "uint256", "name": "amount", "type": "uint256" },
-      { "internalType": "address", "name": "recipient", "type": "address" },
-      { "internalType": "uint256", "name": "minimumAmountOut", "type": "uint256" }
+      {
+        "internalType": "address",
+        "name": "yieldToken",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "recipient",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "minimumAmountOut",
+        "type": "uint256"
+      }
     ],
     "name": "depositBaseToken",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "yieldToken", "type": "address" },
-      { "internalType": "uint256", "name": "amount", "type": "uint256" },
-      { "internalType": "address", "name": "recipient", "type": "address" }
+      {
+        "internalType": "address",
+        "name": "yieldToken",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "recipient",
+        "type": "address"
+      }
     ],
     "name": "depositYieldToken",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "yieldToken", "type": "address" },
-      { "internalType": "uint256", "name": "amount", "type": "uint256" }
+      {
+        "internalType": "address",
+        "name": "yieldToken",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
     ],
     "name": "donate",
     "outputs": [],
@@ -649,8 +1363,16 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "yieldToken", "type": "address" },
-      { "internalType": "uint256", "name": "minimumAmountOut", "type": "uint256" }
+      {
+        "internalType": "address",
+        "name": "yieldToken",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "minimumAmountOut",
+        "type": "uint256"
+      }
     ],
     "name": "harvest",
     "outputs": [],
@@ -661,23 +1383,91 @@
     "inputs": [
       {
         "components": [
-          { "internalType": "address", "name": "admin", "type": "address" },
-          { "internalType": "address", "name": "debtToken", "type": "address" },
-          { "internalType": "address", "name": "savvySage", "type": "address" },
-          { "internalType": "address", "name": "svyBooster", "type": "address" },
-          { "internalType": "address", "name": "svyPriceFeed", "type": "address" },
-          { "internalType": "bool", "name": "redlistActive", "type": "bool" },
-          { "internalType": "address", "name": "savvyRedlist", "type": "address" },
-          { "internalType": "address", "name": "yieldStrategyManager", "type": "address" },
-          { "internalType": "uint256", "name": "minimumCollateralization", "type": "uint256" },
-          { "internalType": "uint256", "name": "protocolFee", "type": "uint256" },
-          { "internalType": "address", "name": "protocolFeeReceiver", "type": "address" },
-          { "internalType": "uint256", "name": "borrowingLimitMinimum", "type": "uint256" },
-          { "internalType": "uint256", "name": "borrowingLimitMaximum", "type": "uint256" },
-          { "internalType": "uint256", "name": "borrowingLimitBlocks", "type": "uint256" },
-          { "internalType": "address", "name": "allowlist", "type": "address" },
-          { "internalType": "address", "name": "baseToken", "type": "address" },
-          { "internalType": "address", "name": "wrapTokenGateway", "type": "address" }
+          {
+            "internalType": "address",
+            "name": "admin",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "debtToken",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "savvySage",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "svyBooster",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "svyPriceFeed",
+            "type": "address"
+          },
+          {
+            "internalType": "bool",
+            "name": "redlistActive",
+            "type": "bool"
+          },
+          {
+            "internalType": "address",
+            "name": "savvyRedlist",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "yieldStrategyManager",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "minimumCollateralization",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "protocolFee",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "protocolFeeReceiver",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "borrowingLimitMinimum",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "borrowingLimitMaximum",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "borrowingLimitBlocks",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "allowlist",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "baseToken",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "wrapTokenGateway",
+            "type": "address"
+          }
         ],
         "internalType": "struct ISavvyAdminActions.InitializationParams",
         "name": "params",
@@ -690,43 +1480,99 @@
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
     "name": "keepers",
-    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [],
     "name": "minimumCollateralization",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "bytes[]", "name": "data", "type": "bytes[]" }],
+    "inputs": [
+      {
+        "internalType": "bytes[]",
+        "name": "data",
+        "type": "bytes[]"
+      }
+    ],
     "name": "multicall",
-    "outputs": [{ "internalType": "bytes[]", "name": "results", "type": "bytes[]" }],
+    "outputs": [
+      {
+        "internalType": "bytes[]",
+        "name": "results",
+        "type": "bytes[]"
+      }
+    ],
     "stateMutability": "payable",
     "type": "function"
   },
   {
     "inputs": [],
     "name": "pendingAdmin",
-    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "owner", "type": "address" },
-      { "internalType": "address", "name": "yieldToken", "type": "address" }
+      {
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "yieldToken",
+        "type": "address"
+      }
     ],
     "name": "positions",
     "outputs": [
-      { "internalType": "uint256", "name": "shares", "type": "uint256" },
-      { "internalType": "uint256", "name": "harvestedYield", "type": "uint256" },
-      { "internalType": "uint256", "name": "lastAccruedWeight", "type": "uint256" }
+      {
+        "internalType": "uint256",
+        "name": "shares",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "harvestedYield",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "lastAccruedWeight",
+        "type": "uint256"
+      }
     ],
     "stateMutability": "view",
     "type": "function"
@@ -734,88 +1580,194 @@
   {
     "inputs": [],
     "name": "protocolFee",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [],
     "name": "protocolFeeReceiver",
-    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [],
     "name": "protocolTokenRequired",
-    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [],
     "name": "redlistActive",
-    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "baseToken_", "type": "address" },
-      { "internalType": "uint256", "name": "amount", "type": "uint256" },
-      { "internalType": "address", "name": "recipient", "type": "address" }
+      {
+        "internalType": "address",
+        "name": "baseToken_",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "recipient",
+        "type": "address"
+      }
     ],
     "name": "repayWithBaseToken",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "yieldToken", "type": "address" },
-      { "internalType": "uint256", "name": "shares", "type": "uint256" },
-      { "internalType": "uint256", "name": "minimumAmountOut", "type": "uint256" }
+      {
+        "internalType": "address",
+        "name": "yieldToken",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "shares",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "minimumAmountOut",
+        "type": "uint256"
+      }
     ],
     "name": "repayWithCollateral",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "uint256", "name": "amount", "type": "uint256" },
-      { "internalType": "address", "name": "recipient", "type": "address" }
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "recipient",
+        "type": "address"
+      }
     ],
     "name": "repayWithDebtToken",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "inputs": [],
     "name": "savvyRedlist",
-    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [],
     "name": "savvySage",
-    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
-    "name": "sentinels",
-    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "baseToken_", "type": "address" },
-      { "internalType": "bool", "name": "enabled", "type": "bool" }
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "sentinels",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "baseToken_",
+        "type": "address"
+      },
+      {
+        "internalType": "bool",
+        "name": "enabled",
+        "type": "bool"
+      }
     ],
     "name": "setBaseTokenEnabled",
     "outputs": [],
@@ -824,8 +1776,16 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "keeper", "type": "address" },
-      { "internalType": "bool", "name": "flag", "type": "bool" }
+      {
+        "internalType": "address",
+        "name": "keeper",
+        "type": "address"
+      },
+      {
+        "internalType": "bool",
+        "name": "flag",
+        "type": "bool"
+      }
     ],
     "name": "setKeeper",
     "outputs": [],
@@ -834,8 +1794,16 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "yieldToken", "type": "address" },
-      { "internalType": "uint256", "name": "value", "type": "uint256" }
+      {
+        "internalType": "address",
+        "name": "yieldToken",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "value",
+        "type": "uint256"
+      }
     ],
     "name": "setMaximumExpectedValue",
     "outputs": [],
@@ -844,8 +1812,16 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "yieldToken", "type": "address" },
-      { "internalType": "uint256", "name": "value", "type": "uint256" }
+      {
+        "internalType": "address",
+        "name": "yieldToken",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "value",
+        "type": "uint256"
+      }
     ],
     "name": "setMaximumLoss",
     "outputs": [],
@@ -853,49 +1829,91 @@
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "uint256", "name": "value", "type": "uint256" }],
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "value",
+        "type": "uint256"
+      }
+    ],
     "name": "setMinimumCollateralization",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "address", "name": "value", "type": "address" }],
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "value",
+        "type": "address"
+      }
+    ],
     "name": "setPendingAdmin",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "uint256", "name": "value", "type": "uint256" }],
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "value",
+        "type": "uint256"
+      }
+    ],
     "name": "setProtocolFee",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "address", "name": "value", "type": "address" }],
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "value",
+        "type": "address"
+      }
+    ],
     "name": "setProtocolFeeReceiver",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "bool", "name": "flag", "type": "bool" }],
+    "inputs": [
+      {
+        "internalType": "bool",
+        "name": "flag",
+        "type": "bool"
+      }
+    ],
     "name": "setProtocolTokenRequiredActive",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "bool", "name": "flag", "type": "bool" }],
+    "inputs": [
+      {
+        "internalType": "bool",
+        "name": "flag",
+        "type": "bool"
+      }
+    ],
     "name": "setRedlistActive",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "address", "name": "_savvySage", "type": "address" }],
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_savvySage",
+        "type": "address"
+      }
+    ],
     "name": "setSavvySage",
     "outputs": [],
     "stateMutability": "nonpayable",
@@ -903,8 +1921,16 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "sentinel", "type": "address" },
-      { "internalType": "bool", "name": "flag", "type": "bool" }
+      {
+        "internalType": "address",
+        "name": "sentinel",
+        "type": "address"
+      },
+      {
+        "internalType": "bool",
+        "name": "flag",
+        "type": "bool"
+      }
     ],
     "name": "setSentinel",
     "outputs": [],
@@ -913,8 +1939,16 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "yieldToken", "type": "address" },
-      { "internalType": "address", "name": "adapter", "type": "address" }
+      {
+        "internalType": "address",
+        "name": "yieldToken",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "adapter",
+        "type": "address"
+      }
     ],
     "name": "setTokenAdapter",
     "outputs": [],
@@ -923,8 +1957,16 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "yieldToken", "type": "address" },
-      { "internalType": "bool", "name": "enabled", "type": "bool" }
+      {
+        "internalType": "address",
+        "name": "yieldToken",
+        "type": "address"
+      },
+      {
+        "internalType": "bool",
+        "name": "enabled",
+        "type": "bool"
+      }
     ],
     "name": "setYieldTokenEnabled",
     "outputs": [],
@@ -932,30 +1974,62 @@
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "address", "name": "yieldToken", "type": "address" }],
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "yieldToken",
+        "type": "address"
+      }
+    ],
     "name": "snap",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "bytes4", "name": "_interfaceId", "type": "bytes4" }],
+    "inputs": [
+      {
+        "internalType": "bytes4",
+        "name": "_interfaceId",
+        "type": "bytes4"
+      }
+    ],
     "name": "supportInterface",
-    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
     "stateMutability": "pure",
     "type": "function"
   },
   {
     "inputs": [],
     "name": "svyBooster",
-    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "rewardToken", "type": "address" },
-      { "internalType": "uint256", "name": "amount", "type": "uint256" }
+      {
+        "internalType": "address",
+        "name": "rewardToken",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
     ],
     "name": "sweepTokens",
     "outputs": [],
@@ -963,7 +2037,13 @@
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "address", "name": "owner", "type": "address" }],
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      }
+    ],
     "name": "syncAccount",
     "outputs": [],
     "stateMutability": "nonpayable",
@@ -972,87 +2052,217 @@
   {
     "inputs": [],
     "name": "totalDebt",
-    "outputs": [{ "internalType": "int256", "name": "", "type": "int256" }],
+    "outputs": [
+      {
+        "internalType": "int256",
+        "name": "",
+        "type": "int256"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [],
     "name": "totalDebtBalance",
-    "outputs": [{ "internalType": "int256", "name": "", "type": "int256" }],
+    "outputs": [
+      {
+        "internalType": "int256",
+        "name": "",
+        "type": "int256"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [],
     "name": "version",
-    "outputs": [{ "internalType": "string", "name": "", "type": "string" }],
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "owner", "type": "address" },
-      { "internalType": "address", "name": "spender", "type": "address" },
-      { "internalType": "address", "name": "yieldToken", "type": "address" }
+      {
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "spender",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "yieldToken",
+        "type": "address"
+      }
     ],
     "name": "withdrawAllowance",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "yieldToken", "type": "address" },
-      { "internalType": "uint256", "name": "shares", "type": "uint256" },
-      { "internalType": "address", "name": "recipient", "type": "address" },
-      { "internalType": "uint256", "name": "minimumAmountOut", "type": "uint256" }
+      {
+        "internalType": "address",
+        "name": "yieldToken",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "shares",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "recipient",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "minimumAmountOut",
+        "type": "uint256"
+      }
     ],
     "name": "withdrawBaseToken",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "owner", "type": "address" },
-      { "internalType": "address", "name": "yieldToken", "type": "address" },
-      { "internalType": "uint256", "name": "shares", "type": "uint256" },
-      { "internalType": "address", "name": "recipient", "type": "address" },
-      { "internalType": "uint256", "name": "minimumAmountOut", "type": "uint256" }
+      {
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "yieldToken",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "shares",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "recipient",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "minimumAmountOut",
+        "type": "uint256"
+      }
     ],
     "name": "withdrawBaseTokenFrom",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "yieldToken", "type": "address" },
-      { "internalType": "uint256", "name": "shares", "type": "uint256" },
-      { "internalType": "address", "name": "recipient", "type": "address" }
+      {
+        "internalType": "address",
+        "name": "yieldToken",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "shares",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "recipient",
+        "type": "address"
+      }
     ],
     "name": "withdrawYieldToken",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "owner", "type": "address" },
-      { "internalType": "address", "name": "yieldToken", "type": "address" },
-      { "internalType": "uint256", "name": "shares", "type": "uint256" },
-      { "internalType": "address", "name": "recipient", "type": "address" }
+      {
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "yieldToken",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "shares",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "recipient",
+        "type": "address"
+      }
     ],
     "name": "withdrawYieldTokenFrom",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "inputs": [],
     "name": "wrapTokenGateway",
-    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
@@ -1060,7 +2270,11 @@
     "inputs": [],
     "name": "yieldStrategyManager",
     "outputs": [
-      { "internalType": "contract IYieldStrategyManager", "name": "", "type": "address" }
+      {
+        "internalType": "contract IYieldStrategyManager",
+        "name": "",
+        "type": "address"
+      }
     ],
     "stateMutability": "view",
     "type": "function"

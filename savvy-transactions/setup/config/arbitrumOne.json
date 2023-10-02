@@ -1,0 +1,41 @@
+{
+  "network": "arbitrum-one",
+  "dataSources": [
+    {
+      "name": "SavvyPositionManagerBTC",
+      "abi": "SavvyPositionManager",
+      "address": "0x3204d81C73F8100766C1691A67078b16Ec7c142c",
+      "startBlock": 100300012
+    },
+    {
+      "name": "SavvyPositionManagerETH",
+      "abi": "SavvyPositionManager",
+      "address": "0x5c4eb1909fB21e39Fc45ee753420AeDeBA07F3EF",
+      "startBlock": 100302141
+    },
+    {
+      "name": "SavvyPositionManagerUSD",
+      "abi": "SavvyPositionManager",
+      "address": "0x36358A1597DB299033b16fda567010D53c0A4EdA",
+      "startBlock": 96806558
+    },
+    {
+      "name": "SavvySwapBTC",
+      "abi": "SavvySwap",
+      "address": "0x9A3A3ba687Fcb8AFE6367Eff3A5F5A11F51626DA",
+      "startBlock": 100300151
+    },
+    {
+      "name": "SavvyVeSVY",
+      "abi": "SavvyVeSvy",
+      "address": "0x9aEEe4656F67034B06D99294062feBA1015430ad",
+      "startBlock": 96792324
+    },
+    {
+      "name": "SavvyBooster",
+      "abi": "SavvyBooster",
+      "address": "0xbf837f2C7894cfF859a01d078d7AAa8c47221a2F",
+      "startBlock": 96798714
+    }
+  ]
+}

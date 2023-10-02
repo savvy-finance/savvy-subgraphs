@@ -5,7 +5,7 @@ import {
   RepayWithBaseToken as RepayWithBaseTokenEvent,
   RepayWithCollateral as RepayWithCollateralEvent,
   WithdrawYieldToken as WithdrawYieldTokenEvent,
-} from "../generated/SavvyPositionManagerBTC/SavvyPositionManager"
+} from "../../generated/SavvyPositionManagerBTC/SavvyPositionManager"
 import {
   createBorrowEvent,
   createDepositYieldTokenEvent,
@@ -13,7 +13,7 @@ import {
   createRepayWithCollateralEvent,
   createRepayWithDebtTokenEvent,
   createWithdrawYieldTokenEvent,
-} from "./helpers/savvyPositionManager";
+} from "../helpers/savvyPositionManager";
 
 export function handleDepositYieldToken(event: DepositYieldTokenEvent): void {
   createDepositYieldTokenEvent(event);

@@ -19,6 +19,8 @@ dataSources:
           file: ./abis/SavvyPositionManager.json
         - name: SavvyFrontendInfoAggregator
           file: ./abis/SavvyFrontendInfoAggregator.json
+        - name: YieldStrategyManager
+          file: ./abis/YieldStrategyManager.json
       eventHandlers:
         - event: DepositYieldToken(indexed address,indexed address,uint256,address)
           handler: handleDepositYieldToken
@@ -54,6 +56,8 @@ dataSources:
           file: ./abis/SavvyPositionManager.json
         - name: SavvyFrontendInfoAggregator
           file: ./abis/SavvyFrontendInfoAggregator.json
+        - name: YieldStrategyManager
+          file: ./abis/YieldStrategyManager.json
       eventHandlers:
         - event: DepositYieldToken(indexed address,indexed address,uint256,address)
           handler: handleDepositYieldToken
@@ -89,6 +93,8 @@ dataSources:
           file: ./abis/SavvyPositionManager.json
         - name: SavvyFrontendInfoAggregator
           file: ./abis/SavvyFrontendInfoAggregator.json
+        - name: YieldStrategyManager
+          file: ./abis/YieldStrategyManager.json
       eventHandlers:
         - event: DepositYieldToken(indexed address,indexed address,uint256,address)
           handler: handleDepositYieldToken

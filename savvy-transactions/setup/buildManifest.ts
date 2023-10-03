@@ -82,8 +82,6 @@ async function main(network: string) {
   await writeManifestToFile(network, manifest, `./setup/manifest/subgraph.${network}.yaml`);
 
   const manifest1 = initializeManifest(MANIFEST_PATH_TO_ROOT);
-  console.log("\ncrypto:", manifest1);
-  console.log("crypto:", config);
   populateManifest(manifest1, config);
   await writeManifestToFile(network, manifest1, `./subgraph.yaml`);
 }

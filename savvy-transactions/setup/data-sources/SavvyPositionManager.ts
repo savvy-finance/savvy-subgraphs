@@ -27,6 +27,10 @@ export function createSavvyPositionManagerDataSource(
           name: "SavvyFrontendInfoAggregator",
           file: `${MANIFEST_PATH_TO_ROOT}abis/SavvyFrontendInfoAggregator.json`,
         },
+        {
+          name: "YieldStrategyManager",
+          file: `${MANIFEST_PATH_TO_ROOT}abis/YieldStrategyManager.json`,
+        },
       ],
       eventHandlers: [
         {

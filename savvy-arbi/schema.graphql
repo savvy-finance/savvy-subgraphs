@@ -1,0 +1,7 @@
+type User @entity {
+  id: ID!
+  everHeldSVY: Boolean!
+  everHeldSVUSD: Boolean!
+  everHeldSVETH: Boolean!
+  everHeldSVBTC: Boolean!
+}

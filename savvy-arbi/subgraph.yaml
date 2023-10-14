@@ -1,0 +1,84 @@
+specVersion: 0.0.5
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: SVY
+    network: arbitrum-one
+    source:
+      address: "0x43aB8f7d2A8Dd4102cCEA6b438F6d747b1B9F034"
+      abi: SVY
+      startBlock: 100221044
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+      abis:
+        - name: SVY
+          file: ./abis/ERC20.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransferSVY
+      file: ./src/tokens.ts
+  - kind: ethereum
+    name: SVUSD
+    network: arbitrum-one
+    source:
+      address: "0xF202Ab403Cd7E90197ec0f010ee897E283037706"
+      abi: SVUSD
+      startBlock: 100221044
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+      abis:
+        - name: SVUSD
+          file: ./abis/ERC20.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransferSVUSD
+      file: ./src/tokens.ts
+  - kind: ethereum
+    name: SVETH
+    network: arbitrum-one
+    source:
+      address: "0xf7728582002ef82908c8242CF552E969BA863Ffa"
+      abi: SVETH
+      startBlock: 100221044
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+      abis:
+        - name: SVETH
+          file: ./abis/ERC20.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransferSVETH
+      file: ./src/tokens.ts
+  - kind: ethereum
+    name: SVBTC
+    network: arbitrum-one
+    source:
+      address: "0xeEE18334c414A47FB886a7317E1885b2Bfb8c2A6"
+      abi: SVBTC
+      startBlock: 100221044
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+      abis:
+        - name: SVBTC
+          file: ./abis/ERC20.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransferSVBTC
+      file: ./src/tokens.ts

@@ -1,0 +1,56 @@
+specVersion: 0.0.5
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: SavvyProtocolToken
+    network: arbitrum-one
+    source:
+      address: "0x43aB8f7d2A8Dd4102cCEA6b438F6d747b1B9F034"
+      abi: SavvyProtocolToken
+      startBlock: 96791462
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Account
+        - SVYSource
+        - Protocol
+      abis:
+        - name: SavvyProtocolToken
+          file: ./abis/SavvyProtocolToken.json
+        - name: SavvyFrontendInfoAggregator
+          file: ./abis/SavvyFrontendInfoAggregator.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+      file: ./src/handlers/svy.ts
+  - kind: ethereum
+    name: veSVY
+    network: arbitrum-one
+    source:
+      address: "0x9aEEe4656F67034B06D99294062feBA1015430ad"
+      abi: veSVY
+      startBlock: 96792324
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Account
+        - SVYSource
+        - Protocol
+      abis:
+        - name: veSVY
+          file: ./abis/veSVY.json
+        - name: SavvyFrontendInfoAggregator
+          file: ./abis/SavvyFrontendInfoAggregator.json
+      eventHandlers:
+        - event: Staked(indexed address,indexed address,indexed uint256)
+          handler: handleStaked
+        - event: Claimed(indexed address,indexed uint256)
+          handler: handleClaimed
+        - event: Unstaked(indexed address,indexed uint256)
+          handler: handleUnstaked
+      file: ./src/handlers/veSVY.ts

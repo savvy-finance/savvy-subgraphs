@@ -1,7 +1,17 @@
 import { Address, BigInt, ethereum } from "@graphprotocol/graph-ts";
 import { Protocol } from "../../generated/schema";
-import { BIGINT_ZERO, HEDGEY_CONFIGS, HOUR_IN_SECONDS, MULTISIG_CONFIGS, PROTOCOL_SLUG, TOTAL_SVY_SUPPLY } from "../constants";
-import { getArbiscanContractCall, getSVYBalance, hexToBigInt, padHexadecimal } from "../utils/base";
+import {
+  BIGINT_ZERO,
+  HOUR_IN_SECONDS,
+  MULTISIG_ADDRESSES,
+  PROTOCOL_SLUG,
+  SVYContract,
+  TOTAL_SVY_SUPPLY,
+  streamingHedgeysContract,
+  tokenLockupPlansContract,
+  tokenVestingPlansContract
+} from "../constants";
+import { createBigIntArray } from "../utils/base";
 import { createProtocolSnapshot } from "./protocol-snapshot";
 
 export function getOrCreateProtocol(): Protocol {
@@ -60,47 +70,47 @@ export function decrementVeSVYHolder(block: ethereum.Block): void {
   createProtocolSnapshot(block, protocol);
 }
 
-export async function getCirculatingSVY(block: ethereum.Block): Promise<BigInt> {
-  const timestampHex = block.timestamp.toHexString();
-  const lockedSVYArr: BigInt[] = [];
+export function getCirculatingSVY(block: ethereum.Block): BigInt {
+  const timestamp = block.timestamp;
+  let totalLockedSVY = BIGINT_ZERO;
 
-  for (const config of HEDGEY_CONFIGS) {
-    for (const id of config.ids) {
-      const idHex = id.toString(16);
-      const data = config.address === "0xd6e5E27F310C61633D331DBa585F7c55F579bbF6"
-        ? config.functionHandle + padHexadecimal(idHex) + idHex
-        : config.functionHandle
-        + padHexadecimal(idHex) + idHex
-        + padHexadecimal(timestampHex) + timestampHex
-        + padHexadecimal(timestampHex) + timestampHex;
-      const response = await getArbiscanContractCall(Address.fromHexString(config.address), data);
-      if (response) {
-        const lockedSVY = hexToBigInt(response.slice(67, 67 + 64));
-        lockedSVYArr.push(lockedSVY);
-      }
+  createBigIntArray(28, 29).map<void>((tokenId) => {
+    const response = streamingHedgeysContract.streamBalanceOf(tokenId);
+    if (response) {
+      totalLockedSVY = totalLockedSVY.plus(response.getRemainder());
     }
-  }
+  });
 
-  for (const config of MULTISIG_CONFIGS) {
-    const svyBalance = await getSVYBalance(Address.fromHexString(config.address));
+  createBigIntArray(5, 81).map<void>((planId: BigInt) => {
+    const response = tokenLockupPlansContract.planBalanceOf(planId, timestamp, timestamp);
+    if (response) {
+      totalLockedSVY = totalLockedSVY.plus(response.getRemainder());
+    }
+  });
+
+  createBigIntArray(6, 15).map<void>((planId: BigInt) => {
+    const response = tokenVestingPlansContract.planBalanceOf(planId, timestamp, timestamp);
+    if (response) {
+      totalLockedSVY = totalLockedSVY.plus(response.getRemainder());
+    }
+  });
+
+  MULTISIG_ADDRESSES.map<void>((multisigAddress: string) => {
+    const svyBalance = SVYContract.balanceOf(Address.fromString(multisigAddress));
     if (svyBalance) {
-      lockedSVYArr.push(svyBalance);
+      totalLockedSVY = totalLockedSVY.plus(svyBalance);
     }
-  }
-
-  const totalLockedSVY = lockedSVYArr.reduce((sum, lockedSVY) => {
-    return sum.plus(lockedSVY);
-  }, BIGINT_ZERO);
+  });
 
   return TOTAL_SVY_SUPPLY.minus(totalLockedSVY);
 }
 
-export async function updateCirculatingSVY(block: ethereum.Block): Promise<void> {
+export function updateCirculatingSVY(block: ethereum.Block): void {
   const protocol = getOrCreateProtocol();
 
   const elapsedSeconds = block.timestamp.minus(protocol.lastCirculatingSVYUpdatedTimestamp).toI32();
   if (elapsedSeconds > HOUR_IN_SECONDS / 2) {
-    protocol.circulatingSVY = await getCirculatingSVY(block);
+    protocol.circulatingSVY = getCirculatingSVY(block);
     protocol.lastCirculatingSVYUpdatedTimestamp = block.timestamp;
     protocol.save();
     createProtocolSnapshot(block, protocol);

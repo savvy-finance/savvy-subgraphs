@@ -74,33 +74,43 @@ export function getCirculatingSVY(block: ethereum.Block): BigInt {
   const timestamp = block.timestamp;
   let totalLockedSVY = BIGINT_ZERO;
 
-  createBigIntArray(28, 29).map<void>((tokenId) => {
-    const response = streamingHedgeysContract.streamBalanceOf(tokenId);
-    if (response) {
-      totalLockedSVY = totalLockedSVY.plus(response.getRemainder());
-    }
-  });
+  /**
+   * DEV: Closures (functions with a captured environment) are not yet supported.
+   * Learn more: https://www.assemblyscript.org/status.html#on-closures
+   */
 
-  createBigIntArray(5, 81).map<void>((planId: BigInt) => {
-    const response = tokenLockupPlansContract.planBalanceOf(planId, timestamp, timestamp);
-    if (response) {
-      totalLockedSVY = totalLockedSVY.plus(response.getRemainder());
-    }
-  });
+  const streamingHedgeysTokenIds = createBigIntArray(28, 29);
+  for (let index = 0; index < streamingHedgeysTokenIds.length; index++) {
+    totalLockedSVY = totalLockedSVY.plus(
+      streamingHedgeysContract.streamBalanceOf(streamingHedgeysTokenIds[index]).getRemainder()
+    );
+  };
 
-  createBigIntArray(6, 15).map<void>((planId: BigInt) => {
-    const response = tokenVestingPlansContract.planBalanceOf(planId, timestamp, timestamp);
-    if (response) {
-      totalLockedSVY = totalLockedSVY.plus(response.getRemainder());
-    }
-  });
+  const tokenLockupPlansPlanIds = createBigIntArray(5, 81);
+  for (let index = 0; index < tokenLockupPlansPlanIds.length; index++) {
+    totalLockedSVY = totalLockedSVY.plus(
+      tokenLockupPlansContract.planBalanceOf(
+        tokenLockupPlansPlanIds[index], timestamp, timestamp
+      ).getRemainder()
+    );
+  };
 
-  MULTISIG_ADDRESSES.map<void>((multisigAddress: string) => {
-    const svyBalance = SVYContract.balanceOf(Address.fromString(multisigAddress));
-    if (svyBalance) {
-      totalLockedSVY = totalLockedSVY.plus(svyBalance);
-    }
-  });
+  const tokenVestingPlansPlanIds = createBigIntArray(6, 15);
+  for (let index = 0; index < tokenVestingPlansPlanIds.length; index++) {
+    totalLockedSVY = totalLockedSVY.plus(
+      tokenVestingPlansContract.planBalanceOf(
+        tokenVestingPlansPlanIds[index], timestamp, timestamp
+      ).getRemainder()
+    );
+  };
+
+  for (let index = 0; index < MULTISIG_ADDRESSES.length; index++) {
+    totalLockedSVY = totalLockedSVY.plus(
+      SVYContract.balanceOf(
+        Address.fromString(MULTISIG_ADDRESSES[index])
+      )
+    );
+  };
 
   return TOTAL_SVY_SUPPLY.minus(totalLockedSVY);
 }

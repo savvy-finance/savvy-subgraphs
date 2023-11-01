@@ -43,8 +43,8 @@ export function hexToBigInt(hexString: string): BigInt {
  */
 export function createBigIntArray(start: number, end: number): BigInt[] {
   let arr: BigInt[] = [];
-  for (let idx = 0; idx < end - start + 1; ++idx) {
-    arr.push(new BigInt(start + idx));
+  for (let curr = start; curr <= end; ++curr) {
+    arr.push(new BigInt(curr as i32));
   }
   return arr;
 }

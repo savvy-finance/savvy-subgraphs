@@ -1,6 +1,11 @@
 import { Address, BigInt, TypedMap } from "@graphprotocol/graph-ts";
 import { SavvyFrontendInfoAggregator } from "../generated/veSVY/SavvyFrontendInfoAggregator";
 import { veSVY } from "../generated/veSVY/veSVY";
+import { createIntegerArray } from "./utils/base";
+
+/////////////////////////////
+/// Addresses & Contracts ///
+/////////////////////////////
 
 export const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 export const SAVVY_PRICE_FEED = "0xbCDaB0382C17F58b828DB3AD840F0140C4f00156";
@@ -23,12 +28,51 @@ CONTRACT_TO_NAME_MAP.set("0x7754b5ccd22261c651f926b9eb8ee286f836cdd2", "savvy-pe
 export const veSVYContract = veSVY.bind(Address.fromString(VESVY_CONTRACT_ADDRESS));
 export const SFIAContract = SavvyFrontendInfoAggregator.bind(Address.fromString(SFIA_CONTRACT_ADDRESS));
 
+export const HEDGEY_CONFIGS = [
+  {
+    description: "HedgeyTimeLocked (TLTOKEN) streamBalanceOf(tokenId)",
+    address: "0xd6e5E27F310C61633D331DBa585F7c55F579bbF6",
+    ids: [28, 29],
+    functionHandle: "25958d8f"
+  },
+  {
+    description: "TokenLockupPlans (TLP) planBalanceOf(planId, timeStamp, redemptionTime)",
+    address: "0x1B24CAe1De08ec8b3Ce0C55F9eE30Db747fd72aE",
+    ids: createIntegerArray(5, 81),
+    functionHandle: "c7d74fa7"
+  },
+  {
+    description: "TokenVestingPlans (TVP) planBalanceOf(planId, timeStamp, redemptionTime)",
+    address: "0xd240f76C57fB18196A864B8b06E9b168C98c4524",
+    ids: createIntegerArray(6, 15),
+    functionHandle: "c7d74fa7"
+  },
+];
+
+export const MULTISIG_CONFIGS = [
+  {
+    address: "0xc6fc35Bc3D83e9fce4F52a6dbE62E8227A6ac83E"
+  },
+  {
+    address: "0xfD532461d2B080967A4827b066954A3e90b17d15"
+  },
+  {
+    address: "0xa7CcBA432d1D4861098F155341644E96A492224C"
+  },
+];
+
+//////////////
+/// Others ///
+//////////////
+
 export const BIGINT_ZERO = BigInt.fromI32(0);
 export const BIGINT_TEN_TO_EIGHTEENTH = BigInt.fromString("10").pow(18);
 
 export const BIGDECIMAL_ZERO = BIGINT_ZERO.toBigDecimal();
 export const BIGDECIMAL_TEN_TO_EIGHTEENTH = BIGINT_TEN_TO_EIGHTEENTH.toBigDecimal();
 
+export const ARBISCAN_API_KEY = "JK6X3YEB8ICQSETNTWSHJWUK5PC96CSFSY";
 export const PROTOCOL_SLUG = "savvy-defi";
 
 export const QUARTERHOUR_IN_SECONDS = 60 * 15;
+export const TOTAL_SVY_SUPPLY = new BigInt(10_000_000).times(BIGINT_TEN_TO_EIGHTEENTH);

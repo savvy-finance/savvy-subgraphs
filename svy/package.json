@@ -12,9 +12,12 @@
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "0.42.4",
-    "@graphprotocol/graph-ts": "0.29.1"
+    "@graphprotocol/graph-ts": "0.29.1",
+    "axios": "^1.6.0"
   },
-  "devDependencies": { "matchstick-as": "0.5.0" },
+  "devDependencies": {
+    "matchstick-as": "0.5.0"
+  },
   "resolutions": {
     "concat-stream": "https://github.com/hugomrdias/concat-stream#1.4.x"
   }

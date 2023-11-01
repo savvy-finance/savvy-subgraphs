@@ -1,4 +1,12 @@
 {
   "extends": "@graphprotocol/graph-ts/types/tsconfig.base.json",
-  "include": ["src"]
+  "include": ["src"],
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "commonjs",
+    "noLib": false,
+    "lib": ["ES2020"],
+    "allowJs": false,
+    "typeRoots": [ "types" ],
+  }
 }

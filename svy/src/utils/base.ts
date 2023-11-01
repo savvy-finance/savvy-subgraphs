@@ -41,7 +41,7 @@ export function hexToBigInt(hexString: string): BigInt {
  * @param end The last integer to be ended with
  * @returns The array of BigInts
  */
-export function createBigIntArray(start: number, end: number): BigInt[] {
+export function createBigIntArrayFromRange(start: number, end: number): BigInt[] {
   let arr: BigInt[] = [];
   for (let curr = start; curr <= end; ++curr) {
     arr.push(new BigInt(curr as i32));

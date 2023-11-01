@@ -11,7 +11,7 @@ import {
   tokenLockupPlansContract,
   tokenVestingPlansContract
 } from "../constants";
-import { createBigIntArray } from "../utils/base";
+import { createBigIntArrayFromRange } from "../utils/base";
 import { createProtocolSnapshot } from "./protocol-snapshot";
 
 export function getOrCreateProtocol(): Protocol {
@@ -79,27 +79,29 @@ export function getCirculatingSVY(block: ethereum.Block): BigInt {
    * Learn more: https://www.assemblyscript.org/status.html#on-closures
    */
 
-  const streamingHedgeysTokenIds = createBigIntArray(28, 29);
+  const streamingHedgeysTokenIds = createBigIntArrayFromRange(28, 29);
   for (let index = 0; index < streamingHedgeysTokenIds.length; index++) {
     totalLockedSVY = totalLockedSVY.plus(
-      streamingHedgeysContract.streamBalanceOf(streamingHedgeysTokenIds[index]).getRemainder()
-    );
-  };
-
-  const tokenLockupPlansPlanIds = createBigIntArray(5, 81);
-  for (let index = 0; index < tokenLockupPlansPlanIds.length; index++) {
-    totalLockedSVY = totalLockedSVY.plus(
-      tokenLockupPlansContract.planBalanceOf(
-        tokenLockupPlansPlanIds[index], timestamp, timestamp
+      streamingHedgeysContract.streamBalanceOf(
+        streamingHedgeysTokenIds[index]
       ).getRemainder()
     );
   };
 
-  const tokenVestingPlansPlanIds = createBigIntArray(6, 15);
-  for (let index = 0; index < tokenVestingPlansPlanIds.length; index++) {
+  const tokenLockupPlanIds = createBigIntArrayFromRange(5, 81);
+  for (let index = 0; index < tokenLockupPlanIds.length; index++) {
+    totalLockedSVY = totalLockedSVY.plus(
+      tokenLockupPlansContract.planBalanceOf(
+        tokenLockupPlanIds[index], timestamp, timestamp
+      ).getRemainder()
+    );
+  };
+
+  const tokenVestingPlanIds = createBigIntArrayFromRange(6, 15);
+  for (let index = 0; index < tokenVestingPlanIds.length; index++) {
     totalLockedSVY = totalLockedSVY.plus(
       tokenVestingPlansContract.planBalanceOf(
-        tokenVestingPlansPlanIds[index], timestamp, timestamp
+        tokenVestingPlanIds[index], timestamp, timestamp
       ).getRemainder()
     );
   };

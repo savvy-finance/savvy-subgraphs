@@ -1,6 +1,6 @@
 import { Address, BigInt, ethereum } from "@graphprotocol/graph-ts";
 import { Protocol } from "../../generated/schema";
-import { BIGINT_ZERO, HEDGEY_CONFIGS, MULTISIG_CONFIGS, PROTOCOL_SLUG, TOTAL_SVY_SUPPLY } from "../constants";
+import { BIGINT_ZERO, HEDGEY_CONFIGS, HOUR_IN_SECONDS, MULTISIG_CONFIGS, PROTOCOL_SLUG, TOTAL_SVY_SUPPLY } from "../constants";
 import { getArbiscanContractCall, getSVYBalance, hexToBigInt, padHexadecimal } from "../utils/base";
 import { createProtocolSnapshot } from "./protocol-snapshot";
 
@@ -11,6 +11,8 @@ export function getOrCreateProtocol(): Protocol {
     protocol.totalSVYHolders = 0;
     protocol.totalSVYStakers = 0;
     protocol.totalVeSVYHolders = 0;
+    protocol.circulatingSVY = BIGINT_ZERO;
+    protocol.lastCirculatingSVYUpdatedTimestamp = BIGINT_ZERO;
     protocol.save();
   }
   return protocol as Protocol;
@@ -91,4 +93,16 @@ export async function getCirculatingSVY(block: ethereum.Block): Promise<BigInt> 
   }, BIGINT_ZERO);
 
   return TOTAL_SVY_SUPPLY.minus(totalLockedSVY);
+}
+
+export async function updateCirculatingSVY(block: ethereum.Block): Promise<void> {
+  const protocol = getOrCreateProtocol();
+
+  const elapsedSeconds = block.timestamp.minus(protocol.lastCirculatingSVYUpdatedTimestamp).toI32();
+  if (elapsedSeconds > HOUR_IN_SECONDS / 2) {
+    protocol.circulatingSVY = await getCirculatingSVY(block);
+    protocol.lastCirculatingSVYUpdatedTimestamp = block.timestamp;
+    protocol.save();
+    createProtocolSnapshot(block, protocol);
+  }
 }

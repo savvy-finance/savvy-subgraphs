@@ -1,6 +1,6 @@
 import { ethereum } from "@graphprotocol/graph-ts";
 import { Protocol, ProtocolSnapshot } from "../../generated/schema";
-import { PROTOCOL_SLUG, QUARTERHOUR_IN_SECONDS } from "../constants";
+import { BIGINT_ZERO, PROTOCOL_SLUG, QUARTERHOUR_IN_SECONDS } from "../constants";
 import { getBeginOfThePeriodTimestamp } from "../utils/time";
 import { getOrCreateProtocol } from "./protocol";
 
@@ -21,6 +21,8 @@ export function getOrCreateProtocolSnapshot(
     protocolSnapshot.totalSVYHolders = 0;
     protocolSnapshot.totalSVYStakers = 0;
     protocolSnapshot.totalVeSVYHolders = 0;
+    protocolSnapshot.circulatingSVY = BIGINT_ZERO;
+    protocolSnapshot.lastCirculatingSVYUpdatedTimestamp = BIGINT_ZERO;
     protocolSnapshot.save();
   }
 
@@ -38,6 +40,8 @@ export function createProtocolSnapshot(
   snapshot.totalSVYHolders = protocol.totalSVYHolders;
   snapshot.totalSVYStakers = protocol.totalSVYStakers;
   snapshot.totalVeSVYHolders = protocol.totalVeSVYHolders;
+  snapshot.circulatingSVY = protocol.circulatingSVY;
+  snapshot.lastCirculatingSVYUpdatedTimestamp = protocol.lastCirculatingSVYUpdatedTimestamp;
   snapshot.save();
 
   return snapshot;

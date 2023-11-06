@@ -8,7 +8,8 @@
     "create-local": "graph create --node http://localhost:8020/ savvy-traderjoe-2",
     "remove-local": "graph remove --node http://localhost:8020/ savvy-traderjoe-2",
     "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 savvy-traderjoe-2",
-    "test": "graph test"
+    "test": "graph test",
+    "goldsky:deploy": "graph build && goldsky subgraph deploy"
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "^0.51.2",

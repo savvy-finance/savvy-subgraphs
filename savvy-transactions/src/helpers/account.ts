@@ -9,7 +9,7 @@ import {
   StrategyBalanceSnapshot,
 } from "../../generated/schema";
 import { SavvyFrontendInfoAggregator as SavvyFrontendInfoAggregatorContract } from "../../generated/SavvyPositionManagerUSD/SavvyFrontendInfoAggregator";
-import { addUniqueUser, getSavvyDeFiOrCreate } from "./savvyDeFi";
+// import { addUniqueUser, getSavvyDeFiOrCreate } from "./savvyDeFi";
 import { ADDRESS_TO_CONTRACTS_MAP } from "./config/arbitrumOne";
 
 export function getOrCreateAccount(address: string) : Account {
@@ -20,7 +20,7 @@ export function getOrCreateAccount(address: string) : Account {
     account.totalDebtUSD = BigInt.zero();
     // account.lastUpdatedTimestamp = timestamp;
     account.save();
-    addUniqueUser();
+    // addUniqueUser();
   }
   return account;
 }
@@ -136,7 +136,7 @@ export function copyStrategyBalanceSnapshotFromStrategyBalance(strategyBalance: 
   return strategyBalanceSnapshot;
 }
 export function syncUserPosition(accountAddress: Address, event: ethereum.Event): Account {
-  getSavvyDeFiOrCreate();
+  // getSavvyDeFiOrCreate();
   const account = getOrCreateAccount(accountAddress.toHexString());
   const savvyFrontendInfoAggregator = SavvyFrontendInfoAggregatorContract.bind(
     Address.fromString("0x97DCA4000B2b89AFD926f5987ad7b054B3e39dB2")

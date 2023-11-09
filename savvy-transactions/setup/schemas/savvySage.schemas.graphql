@@ -12,8 +12,8 @@ type SageSetFlowRateEvent implements Event @entity @transaction {
   " Event log index. For transactions that don't emit event, create arbitrary index starting from 0 "
   logIndex: Int!
 
-  " The protocol this transaction belongs to "
-  protocol: Protocol!
+  # " The protocol this transaction belongs to "
+  # protocol: Protocol!
 
   " Block number of this event "
   block: Block!

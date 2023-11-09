@@ -1,20 +1,24 @@
-import { Address, BigInt, Bytes, log, TypedMap } from "@graphprotocol/graph-ts";
+import { ethereum, Address, BigInt, Bytes, log, TypedMap } from "@graphprotocol/graph-ts";
 import {
   Account,
+  AccountSnapshot,
   AccountBalance,
+  AccountBalanceSnapshot,
   Strategy,
   StrategyBalance,
+  StrategyBalanceSnapshot,
 } from "../../generated/schema";
 import { SavvyFrontendInfoAggregator as SavvyFrontendInfoAggregatorContract } from "../../generated/SavvyPositionManagerUSD/SavvyFrontendInfoAggregator";
 import { addUniqueUser, getSavvyDeFiOrCreate } from "./savvyDeFi";
-import { ADDRESS_TO_CONTRACTS_MAP } from "./config/aribtrumGoerli";
+import { ADDRESS_TO_CONTRACTS_MAP } from "./config/arbitrumOne";
 
-export function getOrCreateAccount(address: string): Account {
+export function getOrCreateAccountAndSnapshot(address: string, timestamp : BigInt): Account {
   let account = Account.load(address);
   if (!account) {
     account = new Account(address);
     account.totalDepositedUSD = BigInt.zero();
     account.totalDebtUSD = BigInt.zero();
+    account.lastUpdatedTimestamp = timestamp;
     account.save();
     addUniqueUser();
   }
@@ -27,12 +31,15 @@ export function getAccountBalanceId(
 ): string {
   return `${account.id}-${syntheticType}`;
 }
-export function getOrCreateAccountBalance(
+export function getOrCreateAccountBalanceAndSnapshot(
   account: Account,
-  syntheticType: string
+  syntheticType: string,
+  timestamp : BigInt
 ): AccountBalance {
   const id = getAccountBalanceId(account, syntheticType);
   let accountBalance = AccountBalance.load(id);
+  let accountBalanceSnapshot = new AccountBalanceSnapshot(`${id}-${timestamp}`);
+  // accountBalanceSnapshot.
   if (!accountBalance) {
     accountBalance = new AccountBalance(id);
     accountBalance.account = account.id;
@@ -40,12 +47,13 @@ export function getOrCreateAccountBalance(
     accountBalance.debt = BigInt.zero();
     accountBalance.debtUSD = BigInt.zero();
     accountBalance.totalDepositedUSD = BigInt.zero();
+    accountBalance.lastUpdatedTimestamp = timestamp;
     accountBalance.save();
   }
   return accountBalance;
 }
 
-export function getOrCreateStrategy(
+export function getOrCreateStrategyAndSnapshot(
   strategyAddress: string,
   baseTokenAddress?: string
 ): Strategy {
@@ -69,7 +77,8 @@ export function getStrategyBalanceId(
 }
 export function getOrCreateStrategyBalance(
   accountBalance: AccountBalance,
-  strategy: Strategy
+  strategy: Strategy,
+  timestamp : BigInt
 ): StrategyBalance {
   const id = getStrategyBalanceId(accountBalance, strategy);
   let strategyBalance = StrategyBalance.load(id);
@@ -79,16 +88,17 @@ export function getOrCreateStrategyBalance(
     strategyBalance.strategy = strategy.id;
     strategyBalance.amountDeposited = BigInt.zero();
     strategyBalance.amountDepositedUSD = BigInt.zero();
+    strategyBalance.lastUpdatedTimestamp = timestamp;
     strategyBalance.save();
   }
   return strategyBalance;
 }
 
-export function syncUserPosition(accountAddress: Address): Account {
+export function syncUserPosition(accountAddress: Address, event: ethereum.Event): Account {
   getSavvyDeFiOrCreate();
-  const account = getOrCreateAccount(accountAddress.toHexString());
+  const account = getOrCreateAccountAndSnapshot(accountAddress.toHexString(), event.block.timestamp);
   const savvyFrontendInfoAggregator = SavvyFrontendInfoAggregatorContract.bind(
-    Address.fromString("0x3056aa8a7e85ba9eb36b6af8b98d3a28024b7d94")
+    Address.fromString("0x97DCA4000B2b89AFD926f5987ad7b054B3e39dB2")
   );
 
   if (!savvyFrontendInfoAggregator) {
@@ -97,6 +107,9 @@ export function syncUserPosition(accountAddress: Address): Account {
 
   const poolsPageInfoResult =
     savvyFrontendInfoAggregator.try_getPoolsPageInfo(accountAddress);
+  log.debug("Daiki-1 = {}", [
+    accountAddress.toHexString(),
+  ]);
   if (poolsPageInfoResult.reverted) {
     log.warning("Failed to load pools page for account={}", [
       accountAddress.toHexString(),
@@ -111,38 +124,67 @@ export function syncUserPosition(accountAddress: Address): Account {
     string,
     AccountBalance
   >();
+  log.debug("Daiki-11 = {}", [
+    accountAddress.toHexString(),
+  ]);
   for (let i = 0; i < poolsPageInfo.pools.length; i++) {
     const pool = poolsPageInfo.pools[i];
     const savvyPositionManagerAddress = pool.savvyPositionManager.toHexString();
     const contractDetails = ADDRESS_TO_CONTRACTS_MAP.get(
       savvyPositionManagerAddress
     );
+    log.debug("Daiki-111 = {}", [
+      accountAddress.toHexString(),
+    ]);
     if (!contractDetails) {
+      log.debug("Daiki-112 = {}, {}", [
+        savvyPositionManagerAddress,
+        accountAddress.toHexString(),
+      ]);
       continue;
     }
+    log.debug("Daiki-113 = {}", [
+      accountAddress.toHexString(),
+    ]);
     let syntheticType = contractDetails.get("syntheticType");
     if (!syntheticType) {
+      log.debug("Daiki-114 = {}", [
+        accountAddress.toHexString(),
+      ]);
       continue;
     }
+    log.debug("Daiki-115 = {}", [
+      accountAddress.toHexString(),
+    ]);
     syntheticType = syntheticType!;
 
+    log.debug("Daiki-12 = {}", [
+      accountAddress.toHexString(),
+    ]);
     let accountBalance: AccountBalance;
     if (!syntheticTypeToAccountBalanceMap.isSet(syntheticType)) {
-      accountBalance = getOrCreateAccountBalance(account, syntheticType);
+      accountBalance = getOrCreateAccountBalanceAndSnapshot(account, syntheticType, event.block.timestamp);
       accountBalance.totalDepositedUSD = BigInt.zero();
       syntheticTypeToAccountBalanceMap.set(syntheticType, accountBalance);
     } else {
       accountBalance = syntheticTypeToAccountBalanceMap.get(syntheticType)!;
     }
 
-    const strategy = getOrCreateStrategy(
+    log.debug("Daiki-13 = {}", [
+      accountAddress.toHexString(),
+    ]);
+    const strategy = getOrCreateStrategyAndSnapshot(
       pool.poolAddress.toHexString(),
       pool.baseTokenAddress.toHexString()
     );
     const strategyBalance = getOrCreateStrategyBalance(
       accountBalance,
-      strategy
+      strategy,
+      event.block.timestamp
     );
+    log.debug("Daiki-14 = {}", [
+      accountAddress.toHexString(),
+    ]);
     strategyBalance.amountDeposited = pool.userDepositedAmount;
     strategyBalance.amountDepositedUSD = pool.userDepositedValueUSD;
     accountBalance.totalDepositedUSD = accountBalance.totalDepositedUSD.plus(
@@ -150,6 +192,9 @@ export function syncUserPosition(accountAddress: Address): Account {
     );
     totalDepositedUSD = totalDepositedUSD.plus(pool.userDepositedValueUSD);
 
+    log.debug("Daiki-15 = {}", [
+      accountAddress.toHexString(),
+    ]);
     strategy.save();
     strategyBalance.save();
   }
@@ -177,6 +222,12 @@ export function syncUserPosition(accountAddress: Address): Account {
     totalDebtUSD = totalDebtUSD.plus(outstandingDebt.valueUSD);
   }
 
+  log.debug("Daiki-2 = {}", [
+    accountAddress.toHexString(),
+  ]);
+  log.debug("Daiki-3 = {}", [
+    accountAddress.toHexString(),
+  ]);
   account.totalDebtUSD = totalDebtUSD;
   account.totalDepositedUSD = totalDepositedUSD;
   account.save();

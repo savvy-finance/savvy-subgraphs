@@ -6,7 +6,7 @@ async function main() {
   const schemaFileNames = [
     "header",
     "blockchainPrimitives",
-    "todo",
+    // "todo",
     "savvyAccount",
     "savvyPositionManager",
     "savvySage",

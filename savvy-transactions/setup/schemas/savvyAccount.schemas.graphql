@@ -16,12 +16,12 @@ type Account @entity @regularPolling {
   lastUpdatedTimestamp: BigInt!
 }
 
-type AccountSnapshot @entity(immutable: true) {
+type AccountSnapshot @entity {
   " { The address of the account }-{ snapshot timestamp }"
   id: ID!
   
   "The time between snapshots in seconds"
-  period: Int!
+  period: BigInt!
   
   " The timestamp of the snapshot "
   timestamp: BigInt!
@@ -56,12 +56,12 @@ type AccountBalance @entity {
   lastUpdatedTimestamp: BigInt!
 }
 
-type AccountBalanceSnapshot @entity(immutable: true) {
+type AccountBalanceSnapshot @entity {
   " { Account Address }-{ Synthetic Type }-{ Snapshot timestamp } "
   id: ID!
     
   "The time between snapshots in seconds"
-  period: Int!
+  period: BigInt!
   
   " The timestamp of the snapshot "
   timestamp: BigInt!
@@ -102,7 +102,7 @@ type StrategyBalance @entity {
   lastUpdatedTimestamp: BigInt!
 }
 
-type StrategyBalanceSnapshot @entity(immutable: true) {
+type StrategyBalanceSnapshot @entity {
   " { Account Address }-{ Synthetic Type }-{ Strategy Address }-{ Snapshot Timestamp } "
   id: ID!
   
@@ -110,7 +110,7 @@ type StrategyBalanceSnapshot @entity(immutable: true) {
   accountBalance: AccountBalance!
   
   "The time between snapshots in seconds"
-  period: Int!
+  period: BigInt!
   
   " The timestamp of the snapshot "
   timestamp: BigInt!

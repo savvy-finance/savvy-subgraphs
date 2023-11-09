@@ -12,17 +12,29 @@ import { SavvyFrontendInfoAggregator as SavvyFrontendInfoAggregatorContract } fr
 import { addUniqueUser, getSavvyDeFiOrCreate } from "./savvyDeFi";
 import { ADDRESS_TO_CONTRACTS_MAP } from "./config/arbitrumOne";
 
-export function getOrCreateAccountAndSnapshot(address: string, timestamp : BigInt): Account {
+export function getOrCreateAccount(address: string) : Account {
   let account = Account.load(address);
   if (!account) {
     account = new Account(address);
     account.totalDepositedUSD = BigInt.zero();
     account.totalDebtUSD = BigInt.zero();
-    account.lastUpdatedTimestamp = timestamp;
+    // account.lastUpdatedTimestamp = timestamp;
     account.save();
     addUniqueUser();
   }
   return account;
+}
+export function copyAccountSnapshotFromAccount(account: Account, timestamp : BigInt) : AccountSnapshot {
+  let accountSnapshot = AccountSnapshot.load(`${account.id}-${timestamp}`);
+  if (!accountSnapshot) {
+    accountSnapshot = new AccountSnapshot(`${account.id}-${timestamp}`);
+  }
+  accountSnapshot.totalDepositedUSD = account.totalDepositedUSD;
+  accountSnapshot.totalDebtUSD = account.totalDepositedUSD;
+  accountSnapshot.timestamp = timestamp;
+  accountSnapshot.period = account.lastUpdatedTimestamp ? timestamp.minus(account.lastUpdatedTimestamp) : BigInt.fromI32(0);
+  accountSnapshot.save();
+  return accountSnapshot;
 }
 
 export function getAccountBalanceId(
@@ -31,15 +43,13 @@ export function getAccountBalanceId(
 ): string {
   return `${account.id}-${syntheticType}`;
 }
-export function getOrCreateAccountBalanceAndSnapshot(
+export function getOrCreateAccountBalance(
   account: Account,
-  syntheticType: string,
-  timestamp : BigInt
+  syntheticType: string
 ): AccountBalance {
   const id = getAccountBalanceId(account, syntheticType);
   let accountBalance = AccountBalance.load(id);
-  let accountBalanceSnapshot = new AccountBalanceSnapshot(`${id}-${timestamp}`);
-  // accountBalanceSnapshot.
+
   if (!accountBalance) {
     accountBalance = new AccountBalance(id);
     accountBalance.account = account.id;
@@ -47,13 +57,29 @@ export function getOrCreateAccountBalanceAndSnapshot(
     accountBalance.debt = BigInt.zero();
     accountBalance.debtUSD = BigInt.zero();
     accountBalance.totalDepositedUSD = BigInt.zero();
-    accountBalance.lastUpdatedTimestamp = timestamp;
-    accountBalance.save();
+    // accountBalance.lastUpdatedTimestamp = timestamp;
+    accountBalance.save();    
   }
   return accountBalance;
 }
 
-export function getOrCreateStrategyAndSnapshot(
+export function copyAccountBalanceSnapshotFromAccountBalance(accountBalance: AccountBalance, timestamp : BigInt) : AccountBalanceSnapshot {
+  let accountBalanceSnapshot = AccountBalanceSnapshot.load(`${accountBalance.id}-${timestamp}`);
+  if (!accountBalanceSnapshot) {
+    accountBalanceSnapshot = new AccountBalanceSnapshot(`${accountBalance.id}-${timestamp}`);
+  }
+  accountBalanceSnapshot.account = accountBalance.account;
+  accountBalanceSnapshot.syntheticType = accountBalance.syntheticType;
+  accountBalanceSnapshot.debt = accountBalance.debt;
+  accountBalanceSnapshot.debtUSD = accountBalance.debtUSD;
+  accountBalanceSnapshot.totalDepositedUSD = accountBalance.totalDepositedUSD;
+
+  accountBalanceSnapshot.timestamp = timestamp;
+  accountBalanceSnapshot.period = accountBalance.lastUpdatedTimestamp ? timestamp.minus(accountBalance.lastUpdatedTimestamp) : BigInt.fromI32(0);
+  accountBalanceSnapshot.save();
+  return accountBalanceSnapshot;
+}
+export function getOrCreateStrategy(
   strategyAddress: string,
   baseTokenAddress?: string
 ): Strategy {
@@ -94,9 +120,24 @@ export function getOrCreateStrategyBalance(
   return strategyBalance;
 }
 
+export function copyStrategyBalanceSnapshotFromStrategyBalance(strategyBalance: StrategyBalance, timestamp : BigInt) : StrategyBalanceSnapshot {
+  let strategyBalanceSnapshot = StrategyBalanceSnapshot.load(`${strategyBalance.id}-${timestamp}`);
+  if (!strategyBalanceSnapshot) {
+    strategyBalanceSnapshot = new StrategyBalanceSnapshot(`${strategyBalance.id}-${timestamp}`);
+  }
+  strategyBalanceSnapshot.accountBalance = strategyBalance.accountBalance;
+  strategyBalanceSnapshot.strategy = strategyBalance.strategy;
+  strategyBalanceSnapshot.amountDeposited = strategyBalance.amountDeposited;
+  strategyBalanceSnapshot.amountDepositedUSD = strategyBalance.amountDepositedUSD;
+
+  strategyBalanceSnapshot.timestamp = timestamp;
+  strategyBalanceSnapshot.period = strategyBalance.lastUpdatedTimestamp ? timestamp.minus(strategyBalance.lastUpdatedTimestamp) : BigInt.fromI32(0);
+  strategyBalanceSnapshot.save();
+  return strategyBalanceSnapshot;
+}
 export function syncUserPosition(accountAddress: Address, event: ethereum.Event): Account {
   getSavvyDeFiOrCreate();
-  const account = getOrCreateAccountAndSnapshot(accountAddress.toHexString(), event.block.timestamp);
+  const account = getOrCreateAccount(accountAddress.toHexString());
   const savvyFrontendInfoAggregator = SavvyFrontendInfoAggregatorContract.bind(
     Address.fromString("0x97DCA4000B2b89AFD926f5987ad7b054B3e39dB2")
   );
@@ -129,7 +170,7 @@ export function syncUserPosition(accountAddress: Address, event: ethereum.Event)
   ]);
   for (let i = 0; i < poolsPageInfo.pools.length; i++) {
     const pool = poolsPageInfo.pools[i];
-    const savvyPositionManagerAddress = pool.savvyPositionManager.toHexString();
+    const savvyPositionManagerAddress = pool.savvyPositionManager.toHexString().toLowerCase();
     const contractDetails = ADDRESS_TO_CONTRACTS_MAP.get(
       savvyPositionManagerAddress
     );
@@ -163,7 +204,7 @@ export function syncUserPosition(accountAddress: Address, event: ethereum.Event)
     ]);
     let accountBalance: AccountBalance;
     if (!syntheticTypeToAccountBalanceMap.isSet(syntheticType)) {
-      accountBalance = getOrCreateAccountBalanceAndSnapshot(account, syntheticType, event.block.timestamp);
+      accountBalance = getOrCreateAccountBalance(account, syntheticType);
       accountBalance.totalDepositedUSD = BigInt.zero();
       syntheticTypeToAccountBalanceMap.set(syntheticType, accountBalance);
     } else {
@@ -173,7 +214,7 @@ export function syncUserPosition(accountAddress: Address, event: ethereum.Event)
     log.debug("Daiki-13 = {}", [
       accountAddress.toHexString(),
     ]);
-    const strategy = getOrCreateStrategyAndSnapshot(
+    const strategy = getOrCreateStrategy(
       pool.poolAddress.toHexString(),
       pool.baseTokenAddress.toHexString()
     );
@@ -195,8 +236,16 @@ export function syncUserPosition(accountAddress: Address, event: ethereum.Event)
     log.debug("Daiki-15 = {}", [
       accountAddress.toHexString(),
     ]);
+
     strategy.save();
+    
+    copyStrategyBalanceSnapshotFromStrategyBalance(strategyBalance, event.block.timestamp);
+    strategyBalance.lastUpdatedTimestamp = event.block.timestamp;
     strategyBalance.save();
+
+    copyAccountBalanceSnapshotFromAccountBalance(accountBalance, event.block.timestamp);
+    accountBalance.lastUpdatedTimestamp = event.block.timestamp;
+    accountBalance.save();
   }
 
   for (let i = 0; i < poolsPageInfo.outstandingDebt.length; i++) {
@@ -216,8 +265,12 @@ export function syncUserPosition(accountAddress: Address, event: ethereum.Event)
     if (!accountBalance) {
       continue;
     }
+    
     accountBalance.debt = outstandingDebt.amount;
     accountBalance.debtUSD = outstandingDebt.valueUSD;
+    
+    copyAccountBalanceSnapshotFromAccountBalance(accountBalance, event.block.timestamp);
+    accountBalance.lastUpdatedTimestamp = event.block.timestamp;
     accountBalance.save();
     totalDebtUSD = totalDebtUSD.plus(outstandingDebt.valueUSD);
   }
@@ -230,6 +283,9 @@ export function syncUserPosition(accountAddress: Address, event: ethereum.Event)
   ]);
   account.totalDebtUSD = totalDebtUSD;
   account.totalDepositedUSD = totalDepositedUSD;
+
+  copyAccountSnapshotFromAccount(account, event.block.timestamp);
+  account.lastUpdatedTimestamp = event.block.timestamp;
   account.save();
   return account;
 }

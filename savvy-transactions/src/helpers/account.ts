@@ -114,7 +114,7 @@ export function getOrCreateStrategyBalance(
     strategyBalance.strategy = strategy.id;
     strategyBalance.amountDeposited = BigInt.zero();
     strategyBalance.amountDepositedUSD = BigInt.zero();
-    strategyBalance.lastUpdatedTimestamp = timestamp;
+    // strategyBalance.lastUpdatedTimestamp = timestamp;
     strategyBalance.save();
   }
   return strategyBalance;
@@ -143,6 +143,8 @@ export function syncUserPosition(accountAddress: Address, event: ethereum.Event)
   );
 
   if (!savvyFrontendInfoAggregator) {
+    account.lastUpdatedTimestamp = event.block.timestamp;
+    account.save();
     return account;
   }
 
@@ -155,6 +157,8 @@ export function syncUserPosition(accountAddress: Address, event: ethereum.Event)
     log.warning("Failed to load pools page for account={}", [
       accountAddress.toHexString(),
     ]);
+    account.lastUpdatedTimestamp = event.block.timestamp;
+    account.save();
     return account;
   }
   const poolsPageInfo = poolsPageInfoResult.value;

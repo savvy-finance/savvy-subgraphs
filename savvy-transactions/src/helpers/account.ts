@@ -141,10 +141,6 @@ export function syncUserPosition(accountAddress: Address, event: ethereum.Event)
     Address.fromString("0x97DCA4000B2b89AFD926f5987ad7b054B3e39dB2")
   );
 
-  log.debug("Daiki-0 = {}, {}", [
-    accountAddress.toHexString(),
-    savvyFrontendInfoAggregator._address.toHexString()
-  ]);
   if (!savvyFrontendInfoAggregator) {
     account.lastUpdatedTimestamp = account.lastUpdatedTimestamp ? account.lastUpdatedTimestamp : BigInt.zero();
     account.save();
@@ -153,9 +149,6 @@ export function syncUserPosition(accountAddress: Address, event: ethereum.Event)
 
   const poolsPageInfoResult =
     savvyFrontendInfoAggregator.try_getPoolsPageInfo(accountAddress);
-  log.debug("Daiki-1 = {}", [
-    accountAddress.toHexString(),
-  ]);
   if (poolsPageInfoResult.reverted) {
     log.warning("Failed to load pools page for account={}", [
       accountAddress.toHexString(),
@@ -172,43 +165,24 @@ export function syncUserPosition(accountAddress: Address, event: ethereum.Event)
     string,
     AccountBalance
   >();
-  log.debug("Daiki-11 = {}", [
-    accountAddress.toHexString(),
-  ]);
+
   for (let i = 0; i < poolsPageInfo.pools.length; i++) {
     const pool = poolsPageInfo.pools[i];
     const savvyPositionManagerAddress = pool.savvyPositionManager.toHexString().toLowerCase();
     const contractDetails = ADDRESS_TO_CONTRACTS_MAP.get(
       savvyPositionManagerAddress
     );
-    log.debug("Daiki-111 = {}", [
-      accountAddress.toHexString(),
-    ]);
+
     if (!contractDetails) {
-      log.debug("Daiki-112 = {}, {}", [
-        savvyPositionManagerAddress,
-        accountAddress.toHexString(),
-      ]);
       continue;
     }
-    log.debug("Daiki-113 = {}", [
-      accountAddress.toHexString(),
-    ]);
+
     let syntheticType = contractDetails.get("syntheticType");
     if (!syntheticType) {
-      log.debug("Daiki-114 = {}", [
-        accountAddress.toHexString(),
-      ]);
       continue;
     }
-    log.debug("Daiki-115 = {}", [
-      accountAddress.toHexString(),
-    ]);
     syntheticType = syntheticType!;
 
-    log.debug("Daiki-12 = {}", [
-      accountAddress.toHexString(),
-    ]);
     let accountBalance: AccountBalance;
     if (!syntheticTypeToAccountBalanceMap.isSet(syntheticType)) {
       accountBalance = getOrCreateAccountBalance(account, syntheticType);
@@ -218,9 +192,6 @@ export function syncUserPosition(accountAddress: Address, event: ethereum.Event)
       accountBalance = syntheticTypeToAccountBalanceMap.get(syntheticType)!;
     }
 
-    log.debug("Daiki-13 = {}", [
-      accountAddress.toHexString(),
-    ]);
     const strategy = getOrCreateStrategy(
       pool.poolAddress.toHexString(),
       pool.baseTokenAddress.toHexString()
@@ -230,19 +201,12 @@ export function syncUserPosition(accountAddress: Address, event: ethereum.Event)
       strategy,
       event.block.timestamp
     );
-    log.debug("Daiki-14 = {}", [
-      accountAddress.toHexString(),
-    ]);
     strategyBalance.amountDeposited = pool.userDepositedAmount;
     strategyBalance.amountDepositedUSD = pool.userDepositedValueUSD;
     accountBalance.totalDepositedUSD = accountBalance.totalDepositedUSD.plus(
       pool.userDepositedValueUSD
     );
     totalDepositedUSD = totalDepositedUSD.plus(pool.userDepositedValueUSD);
-
-    log.debug("Daiki-15 = {}", [
-      accountAddress.toHexString(),
-    ]);
 
     strategy.save();
     
@@ -282,12 +246,6 @@ export function syncUserPosition(accountAddress: Address, event: ethereum.Event)
     totalDebtUSD = totalDebtUSD.plus(outstandingDebt.valueUSD);
   }
 
-  log.debug("Daiki-2 = {}", [
-    accountAddress.toHexString(),
-  ]);
-  log.debug("Daiki-3 = {}", [
-    accountAddress.toHexString(),
-  ]);
   account.totalDebtUSD = totalDebtUSD;
   account.totalDepositedUSD = totalDepositedUSD;
 

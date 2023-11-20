@@ -1,0 +1,86 @@
+################
+## Savvy Swap ##
+################
+
+type SSDeposit implements Event @entity(immutable: true) {
+  " { Transaction hash }-{ Log index } "
+  id: ID!
+
+  " Transaction hash of the transaction that emitted this event "
+  transaction: Transaction!
+
+  " Event log index. For transactions that don't emit event, create arbitrary index starting from 0 "
+  logIndex: Int!
+
+  " Block number of this event "
+  block: Block!
+
+  " Timestamp of this event "
+  timestamp: BigInt!
+
+  sender: Bytes! # address
+  recipient: Bytes! # address
+  amount: BigInt!
+}
+
+type SSWithdraw implements Event @entity(immutable: true) {
+  " { Transaction hash }-{ Log index } "
+  id: ID!
+
+  " Transaction hash of the transaction that emitted this event "
+  transaction: Transaction!
+
+  " Event log index. For transactions that don't emit event, create arbitrary index starting from 0 "
+  logIndex: Int!
+
+  " Block number of this event "
+  block: Block!
+
+  " Timestamp of this event "
+  timestamp: BigInt!
+
+  sender: Bytes! # address
+  recipient: Bytes! # address
+  amount: BigInt!
+}
+
+type SSClaim implements Event @entity(immutable: true) {
+  " { Transaction hash }-{ Log index } "
+  id: ID!
+
+  " Transaction hash of the transaction that emitted this event "
+  transaction: Transaction!
+
+  " Event log index. For transactions that don't emit event, create arbitrary index starting from 0 "
+  logIndex: Int!
+
+  " Block number of this event "
+  block: Block!
+
+  " Timestamp of this event "
+  timestamp: BigInt!
+
+  sender: Bytes! # address
+  recipient: Bytes! # address
+  amount: BigInt!
+}
+
+type SSSwap implements Event @entity(immutable: true) {
+  " { Transaction hash }-{ Log index } "
+  id: ID!
+
+  " Transaction hash of the transaction that emitted this event "
+  transaction: Transaction!
+
+  " Event log index. For transactions that don't emit event, create arbitrary index starting from 0 "
+  logIndex: Int!
+
+  " Block number of this event "
+  block: Block!
+
+  " Timestamp of this event "
+  timestamp: BigInt!
+
+  sender: Bytes! # address
+  amount: BigInt!
+}

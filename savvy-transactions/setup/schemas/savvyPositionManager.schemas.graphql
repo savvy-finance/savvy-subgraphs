@@ -1,0 +1,92 @@
+##################################
+##### Savvy Position Manager #####
+##################################
+
+type SPMDeposit implements Event @entity(immutable: true) {
+  " { Transaction hash }-{ Log index } "
+  id: ID!
+
+  " Transaction hash of the transaction that emitted this event "
+  transaction: Transaction!
+
+  " Event log index. For transactions that don't emit event, create arbitrary index starting from 0 "
+  logIndex: Int!
+
+  " Block number of this event "
+  block: Block!
+
+  " Timestamp of this event "
+  timestamp: BigInt!
+
+  sender: Bytes! # address
+  yieldToken: Bytes! # address
+  amount: BigInt!
+  recipient: Bytes! # address
+}
+
+type SPMBorrow implements Event @entity(immutable: true) {
+  " { Transaction hash }-{ Log index } "
+  id: ID!
+
+  " Transaction hash of the transaction that emitted this event "
+  transaction: Transaction!
+
+  " Event log index. For transactions that don't emit event, create arbitrary index starting from 0 "
+  logIndex: Int!
+
+  " Block number of this event "
+  block: Block!
+
+  " Timestamp of this event "
+  timestamp: BigInt!
+
+  owner: Bytes! # address
+  amount: BigInt!
+  recipient: Bytes! # address
+}
+
+type SPMRepay implements Event @entity(immutable: true) {
+  " { Transaction hash }-{ Log index } "
+  id: ID!
+
+  " Transaction hash of the transaction that emitted this event "
+  transaction: Transaction!
+
+  " Event log index. For transactions that don't emit event, create arbitrary index starting from 0 "
+  logIndex: Int!
+
+  " Block number of this event "
+  block: Block!
+
+  " Timestamp of this event "
+  timestamp: BigInt!
+
+  repayer: Bytes! # address
+  repayWith: String! # "DebtToken, BaseToken, Collateral"
+  repayToken: Bytes! # address
+  repayTokenAmount: BigInt!
+  credit: BigInt!
+  recipient: Bytes! # address
+}
+
+type SPMWithdraw implements Event @entity(immutable: true) {
+  " { Transaction hash }-{ Log index } "
+  id: ID!
+
+  " Transaction hash of the transaction that emitted this event "
+  transaction: Transaction!
+
+  " Event log index. For transactions that don't emit event, create arbitrary index starting from 0 "
+  logIndex: Int!
+
+  " Block number of this event "
+  block: Block!
+
+  " Timestamp of this event "
+  timestamp: BigInt!
+
+  owner: Bytes! # address
+  yieldToken: Bytes! # address
+  shares: BigInt!
+  recipient: Bytes! # address
+}

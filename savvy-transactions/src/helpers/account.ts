@@ -19,6 +19,7 @@ export function getOrCreateAccount(address: string) : Account {
     account.totalDepositedUSD = BigInt.zero();
     account.totalDebtUSD = BigInt.zero();
     account.lastUpdatedTimestamp = BigInt.zero();
+    account.stakedSVY = BigInt.zero();
     account.save();
     // addUniqueUser();
   }

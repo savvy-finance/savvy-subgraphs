@@ -6,6 +6,9 @@ type Account @entity @regularPolling {
   " The address of the account "
   id: ID!
 
+  " staked SVY amount "
+  stakedSVY: BigInt!
+  
   " Total deposited in Savvy in USD "
   totalDepositedUSD: BigInt!
 

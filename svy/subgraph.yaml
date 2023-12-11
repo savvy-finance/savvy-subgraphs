@@ -22,9 +22,17 @@ dataSources:
           file: ./abis/SavvyProtocolToken.json
         - name: SavvyFrontendInfoAggregator
           file: ./abis/SavvyFrontendInfoAggregator.json
+        - name: StreamingHedgeys
+          file: ./abis/StreamingHedgeys.json
+        - name: TokenLockupPlans
+          file: ./abis/TokenLockupPlans.json
+        - name: TokenVestingPlans
+          file: ./abis/TokenVestingPlans.json
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
+      blockHandlers:
+        - handler: handleBlock
       file: ./src/handlers/svy.ts
   - kind: ethereum
     name: veSVY

@@ -123,6 +123,12 @@ type Protocol @entity {
 
   " The total active veSVY holders "
   totalVeSVYHolders: Int!
+
+  " The total circulating SVY "
+  circulatingSVY: BigInt!
+
+  " The last timestamp circulating SVY was updated "
+  lastCirculatingSVYUpdatedTimestamp: BigInt!
   
   "Protocol snapshots"
   snapshots: [ProtocolSnapshot!]! @derivedFrom(field: "protocol")
@@ -149,4 +155,10 @@ type ProtocolSnapshot @entity {
 
   " The total active veSVY holders "
   totalVeSVYHolders: Int!
+
+  " The total circulating SVY "
+  circulatingSVY: BigInt!
+
+  " The last timestamp circulating SVY was updated "
+  lastCirculatingSVYUpdatedTimestamp: BigInt!
 }

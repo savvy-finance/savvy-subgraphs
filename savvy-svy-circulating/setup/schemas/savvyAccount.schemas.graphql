@@ -1,0 +1,34 @@
+#########################
+##### Savvy Account #####
+#########################
+
+type Account @entity @regularPolling {
+  " The address of the account "
+  id: ID!
+
+  " user owned SVY amount "
+  svyAmount: BigInt!
+
+  " staked SVY amount "
+  stakedSVY: BigInt!
+
+  "The timestamp of the last update"
+  lastUpdatedTimestamp: BigInt!
+}
+
+type AccountSnapshot @entity {
+  " { The address of the account }-{ snapshot timestamp }"
+  id: ID!
+
+  "The time between snapshots in seconds"
+  period: BigInt!
+
+  " The timestamp of the snapshot "
+  timestamp: BigInt!
+
+  " user owned SVY amount "
+  svyAmount: BigInt!
+
+  " staked SVY amount "
+  stakedSVY: BigInt!
+}

@@ -1,0 +1,23 @@
+{
+  "network": "arbitrum-one",
+  "dataSources": [
+    {
+      "name": "SavvySVY",
+      "abi": "SavvySvy",
+      "address": "0x43aB8f7d2A8Dd4102cCEA6b438F6d747b1B9F034",
+      "startBlock": 96791462
+    },
+    {
+      "name": "SavvyVeSVY",
+      "abi": "SavvyVeSvy",
+      "address": "0x9aEEe4656F67034B06D99294062feBA1015430ad",
+      "startBlock": 96792324
+    },
+    {
+      "name": "SavvyBooster",
+      "abi": "SavvyBooster",
+      "address": "0xbf837f2C7894cfF859a01d078d7AAa8c47221a2F",
+      "startBlock": 96798714
+    }
+  ]
+}

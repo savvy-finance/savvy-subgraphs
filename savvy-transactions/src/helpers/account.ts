@@ -32,6 +32,7 @@ export function copyAccountSnapshotFromAccount(account: Account, timestamp : Big
   }
   accountSnapshot.totalDepositedUSD = account.totalDepositedUSD;
   accountSnapshot.totalDebtUSD = account.totalDepositedUSD;
+  accountSnapshot.stakedSVY = account.stakedSVY;
   accountSnapshot.timestamp = timestamp;
   accountSnapshot.period = account.lastUpdatedTimestamp.equals(BigInt.zero()) ? timestamp.minus(account.lastUpdatedTimestamp) : BigInt.zero();
   accountSnapshot.save();

@@ -164,6 +164,9 @@ type AccountSnapshot @entity {
   " The timestamp of the snapshot "
   timestamp: BigInt!
 
+  " staked SVY amount "
+  stakedSVY: BigInt!
+  
   " Total deposited in Savvy in USD "
   totalDepositedUSD: BigInt!
 

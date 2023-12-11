@@ -1,6 +1,17 @@
-import { ethereum } from "@graphprotocol/graph-ts";
+import { Address, BigInt, ethereum } from "@graphprotocol/graph-ts";
 import { Protocol } from "../../generated/schema";
-import { PROTOCOL_SLUG } from "../constants";
+import {
+  BIGINT_ZERO,
+  HOUR_IN_SECONDS,
+  MULTISIG_ADDRESSES,
+  PROTOCOL_SLUG,
+  SVYContract,
+  TOTAL_SVY_SUPPLY,
+  streamingHedgeysContract,
+  tokenLockupPlansContract,
+  tokenVestingPlansContract
+} from "../constants";
+import { createBigIntArrayFromRange } from "../utils/base";
 import { createProtocolSnapshot } from "./protocol-snapshot";
 
 export function getOrCreateProtocol(): Protocol {
@@ -10,6 +21,8 @@ export function getOrCreateProtocol(): Protocol {
     protocol.totalSVYHolders = 0;
     protocol.totalSVYStakers = 0;
     protocol.totalVeSVYHolders = 0;
+    protocol.circulatingSVY = BIGINT_ZERO;
+    protocol.lastCirculatingSVYUpdatedTimestamp = BIGINT_ZERO;
     protocol.save();
   }
   return protocol as Protocol;
@@ -55,4 +68,63 @@ export function decrementVeSVYHolder(block: ethereum.Block): void {
   protocol.totalVeSVYHolders -= 1;
   protocol.save();
   createProtocolSnapshot(block, protocol);
+}
+
+export function getCirculatingSVY(block: ethereum.Block): BigInt {
+  const timestamp = block.timestamp;
+  let totalLockedSVY = BIGINT_ZERO;
+
+  /**
+   * DEV: Closures (functions with a captured environment) are not yet supported.
+   * Learn more: https://www.assemblyscript.org/status.html#on-closures
+   */
+
+  const streamingHedgeysTokenIds = createBigIntArrayFromRange(28, 29);
+  for (let index = 0; index < streamingHedgeysTokenIds.length; index++) {
+    totalLockedSVY = totalLockedSVY.plus(
+      streamingHedgeysContract.streamBalanceOf(
+        streamingHedgeysTokenIds[index]
+      ).getRemainder()
+    );
+  };
+
+  const tokenLockupPlanIds = createBigIntArrayFromRange(5, 81);
+  for (let index = 0; index < tokenLockupPlanIds.length; index++) {
+    totalLockedSVY = totalLockedSVY.plus(
+      tokenLockupPlansContract.planBalanceOf(
+        tokenLockupPlanIds[index], timestamp, timestamp
+      ).getRemainder()
+    );
+  };
+
+  const tokenVestingPlanIds = createBigIntArrayFromRange(6, 15);
+  for (let index = 0; index < tokenVestingPlanIds.length; index++) {
+    totalLockedSVY = totalLockedSVY.plus(
+      tokenVestingPlansContract.planBalanceOf(
+        tokenVestingPlanIds[index], timestamp, timestamp
+      ).getRemainder()
+    );
+  };
+
+  for (let index = 0; index < MULTISIG_ADDRESSES.length; index++) {
+    totalLockedSVY = totalLockedSVY.plus(
+      SVYContract.balanceOf(
+        Address.fromString(MULTISIG_ADDRESSES[index])
+      )
+    );
+  };
+
+  return TOTAL_SVY_SUPPLY.minus(totalLockedSVY);
+}
+
+export function updateCirculatingSVY(block: ethereum.Block): void {
+  const protocol = getOrCreateProtocol();
+
+  const elapsedSeconds = block.timestamp.minus(protocol.lastCirculatingSVYUpdatedTimestamp).toI32();
+  if (elapsedSeconds > HOUR_IN_SECONDS / 2) {
+    protocol.circulatingSVY = getCirculatingSVY(block);
+    protocol.lastCirculatingSVYUpdatedTimestamp = block.timestamp;
+    protocol.save();
+    createProtocolSnapshot(block, protocol);
+  }
 }

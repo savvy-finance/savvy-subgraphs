@@ -1,8 +1,0 @@
-{
-  "arbitrum-one": {
-    "SavvyPositionManager": {
-      "address": "0x3204d81C73F8100766C1691A67078b16Ec7c142c",
-      "startBlock": 100300012
-    }
-  }
-}

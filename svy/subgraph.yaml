@@ -35,7 +35,7 @@ dataSources:
         - handler: handleBlock
       file: ./src/handlers/svy.ts
   - kind: ethereum
-    name: veSVY
+    name: SavvyVeSVY
     network: arbitrum-one
     source:
       address: "0x9aEEe4656F67034B06D99294062feBA1015430ad"

@@ -1,5 +1,5 @@
 {
-  "name": "daiki-savvy-transactions",
+  "name": "daiki-svy-circulating",
   "license": "UNLICENSED",
   "scripts": {
     "build": "./build.sh",
@@ -9,10 +9,10 @@
     "build:codegen": "graph codegen",
     "buildSchemaAndCodegen": "npm run build:schema && npm run build:codegen",
     "codegen": "graph codegen",
-    "deploy": "graph deploy --node https://api.studio.thegraph.com/deploy/ daiki-savvy-transactions",
-    "create-local": "graph create --node http://localhost:8020/ daiki-savvy-transactions",
-    "remove-local": "graph remove --node http://localhost:8020/ daiki-savvy-transactions",
-    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 daiki-savvy-transactions",
+    "deploy": "graph deploy --node https://api.studio.thegraph.com/deploy/ daiki-svy-circulating",
+    "create-local": "graph create --node http://localhost:8020/ daiki-svy-circulating",
+    "remove-local": "graph remove --node http://localhost:8020/ daiki-svy-circulating",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 daiki-svy-circulating",
     "test": "graph test"
   },
   "dependencies": {

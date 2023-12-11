@@ -1,7 +1,6 @@
 import chalk from "chalk";
 import { createSVYDataSource } from "./data-sources/SavvySVY";
 import { createVeSVYDataSource } from "./data-sources/SavvyVeSVY";
-import { createSavvyBoosterDataSource } from "./data-sources/SavvyBooster";
 import writeYamlFile from "write-yaml-file";
 import {
   DataSourceConfig,
@@ -14,9 +13,8 @@ const abiToFunctionMap: Record<
   string,
   (network: string, config: DataSourceConfig) => Manifest
 > = {
-  SavvySvy: createSVYDataSource,
-  SavvyVeSvy: createVeSVYDataSource,
-  SavvyBooster: createSavvyBoosterDataSource,
+  SavvyProtocolToken: createSVYDataSource,
+  SavvyVeSVY: createVeSVYDataSource,
 };
 
 function initializeManifest(manifestPathToRoot) {

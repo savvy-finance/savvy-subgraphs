@@ -10,18 +10,22 @@ export function createVeSVYDataSource(
     network: network,
     source: {
       address: config.address,
-      abi: "VeSVY",
+      abi: "SavvyVeSVY",
       startBlock: config.startBlock,
     },
     mapping: {
       kind: "ethereum/events",
       apiVersion: "0.0.7",
       language: "wasm/assemblyscript",
-      entities: [],
+      entities: ["Account", "SVYSource", "Protocol"],
       abis: [
         {
-          name: "VeSVY",
+          name: "SavvyVeSVY",
           file: `${MANIFEST_PATH_TO_ROOT}abis/SavvyVeSvy.json`,
+        },
+        {
+          name: "SavvyFrontendInfoAggregator",
+          file: `${MANIFEST_PATH_TO_ROOT}abis/SavvyFrontendInfoAggregator.json`,
         },
       ],
       eventHandlers: [

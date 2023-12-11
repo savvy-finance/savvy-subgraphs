@@ -22,3 +22,40 @@ type SvyTransferred implements Event @entity(immutable: true) {
   to: Bytes! # address
   amount: BigInt!
 }
+
+type SVYSource @entity {
+  " The address of the source "
+  id: ID!
+
+  " The name of the source (if known) "
+  name: String
+
+  " The total amount of SVY tokens this source has distributed "
+  totalSVYDistributed: BigInt!
+
+  " The last block number this account was updated "
+  lastUpdatedBN: BigInt!
+
+  " The last timestamp this account was updated "
+  lastUpdatedTimestamp: BigInt!
+
+  "SVYSource snapshots"
+  snapshots: [SVYSourceSnapshot!]! @derivedFrom(field: "svySource")
+}
+
+type SVYSourceSnapshot @entity {
+  "(The address of the svySource)-(timstamp)"
+  id: ID!
+
+  "The svySource this snapshot belongs to"
+  svySource: SVYSource!
+
+  "The time between snapshots in seconds"
+  period: Int!
+
+  " The timestamp of the snapshot "
+  timestamp: BigInt!
+
+  " The total amount of SVY tokens this source has distributed "
+  totalSVYDistributed: BigInt!
+}

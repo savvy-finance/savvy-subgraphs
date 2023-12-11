@@ -1,25 +1,22 @@
-import { Staked, Unstaked, Claimed } from "../../generated/SavvyVeSVY/VeSVY";
 import {
-  createStakedEvent,
-  createUnstakedEvent,
-  createClaimedEvent,
-} from "../helpers/savvyVeSvy";
-import { getOrCreateAccount } from "../helpers/account";
+  Claimed as ClaimedEvent,
+  Staked as StakedEvent,
+  Unstaked as UnstakedEvent,
+} from "../../generated/SavvyVeSVY/SavvyVeSVY";
+import { updateStakedSVYBalance, updateVeSVYBalance } from "../helpers/account";
 
-export function handleStaked(event: Staked): void {
-  createStakedEvent(event);
-  let account = getOrCreateAccount(event.params.user.toHexString());
-  account.stakedSVY = account.stakedSVY.plus(event.params.amount);
-  account.save();
+export function handleStaked(event: StakedEvent): void {
+  updateStakedSVYBalance(event.params.user, event.params.amount, event.block);
 }
 
-export function handleUnstaked(event: Unstaked): void {
-  createUnstakedEvent(event);
-  let account = getOrCreateAccount(event.params.user.toHexString());
-  account.stakedSVY = account.stakedSVY.plus(event.params.amount);
-  account.save();
+export function handleClaimed(event: ClaimedEvent): void {
+  updateVeSVYBalance(event.params.user, event.block, null);
 }
 
-export function handleClaimed(event: Claimed): void {
-  createClaimedEvent(event);
+export function handleUnstaked(event: UnstakedEvent): void {
+  updateStakedSVYBalance(
+    event.params.user,
+    event.params.amount.neg(),
+    event.block
+  );
 }

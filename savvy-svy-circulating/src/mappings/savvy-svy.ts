@@ -1,14 +1,14 @@
-import { Transfer } from "../../generated/SavvySVY/SVY";
-import { createTransferEvent } from "../helpers/savvySvy";
-import { getOrCreateAccount } from "../helpers/account";
+import { ethereum } from "@graphprotocol/graph-ts";
+import { Transfer as TransferEvent } from "../../generated/SavvyProtocolToken/SavvyProtocolToken";
+import { receiveSVY, sendSVY } from "../helpers/account";
+import { updateCirculatingSVY } from "../helpers/protocol";
 
-export function handleTransferred(event: Transfer): void {
-  createTransferEvent(event);
-  let accountFrom = getOrCreateAccount(event.params.from.toHexString());
-  accountFrom.svyAmount = accountFrom.svyAmount.minus(event.params.value);
-  accountFrom.save();
+export function handleTransfer(event: TransferEvent): void {
+  const svyAmount = event.params.value;
+  sendSVY(event.params.from, svyAmount, event.block);
+  receiveSVY(event.params.to, svyAmount, event.block);
+}
 
-  let accountTo = getOrCreateAccount(event.params.to.toHexString());
-  accountTo.svyAmount = accountTo.svyAmount.plus(event.params.value);
-  accountTo.save();
+export function handleBlock(block: ethereum.Block): void {
+  updateCirculatingSVY(block);
 }

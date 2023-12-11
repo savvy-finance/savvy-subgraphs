@@ -133,39 +133,135 @@ interface Contract {
   id: ID!
 }
 
-#########################
-##### Savvy Account #####
-#########################
-
-type Account @entity @regularPolling {
-  " The address of the account "
+type Protocol @entity {
+  " Overall protocol metrics "
   id: ID!
 
-  " user owned SVY amount "
-  svyAmount: BigInt!
+  " The total active holders "
+  totalSVYHolders: Int!
 
-  " staked SVY amount "
-  stakedSVY: BigInt!
+  " The total active stakers "
+  totalSVYStakers: Int!
 
-  "The timestamp of the last update"
-  lastUpdatedTimestamp: BigInt!
+  " The total active veSVY holders "
+  totalVeSVYHolders: Int!
+
+  " The total circulating SVY "
+  circulatingSVY: BigInt!
+
+  " The last timestamp circulating SVY was updated "
+  lastCirculatingSVYUpdatedTimestamp: BigInt!
+
+  "Protocol snapshots"
+  snapshots: [ProtocolSnapshot!]! @derivedFrom(field: "protocol")
 }
 
-type AccountSnapshot @entity {
-  " { The address of the account }-{ snapshot timestamp }"
+type ProtocolSnapshot @entity {
+  "(Overall protocol metrics)-(timstamp)"
   id: ID!
 
+  "The protocol this snapshot belongs to"
+  protocol: Protocol!
+
   "The time between snapshots in seconds"
-  period: BigInt!
+  period: Int!
 
   " The timestamp of the snapshot "
   timestamp: BigInt!
 
-  " user owned SVY amount "
-  svyAmount: BigInt!
+  " The total active holders "
+  totalSVYHolders: Int!
 
-  " staked SVY amount "
+  " The total active stakers "
+  totalSVYStakers: Int!
+
+  " The total active veSVY holders "
+  totalVeSVYHolders: Int!
+
+  " The total circulating SVY "
+  circulatingSVY: BigInt!
+
+  " The last timestamp circulating SVY was updated "
+  lastCirculatingSVYUpdatedTimestamp: BigInt!
+}
+
+#########################
+##### Savvy Account #####
+#########################
+type Account @entity {
+  " The wallet address of the holder "
+  id: ID!
+
+  " The name of the holder (if the holder is known) "
+  name: String
+
+  " The balance of SVY tokens held by this account "
+  svyBalance: BigInt!
+
+  " The USD value of this account's SVY balance "
+  svyBalanceUSD: BigDecimal!
+
+  " The amount of staked SVY "
   stakedSVY: BigInt!
+
+  " The balance of veSVY tokens held by this account "
+  veSVYBalance: BigInt!
+
+  " The amount of earning SVY per second "
+  svyEarnRatePerSec: BigInt!
+
+  " The amount of earning VeSVY per second "
+  veSVYEarnRatePerSec: BigInt!
+
+  " The amount of maximum earnable VeSVY "
+  maxVeSvyEarnable: BigInt!
+
+  " The last block number this account was updated "
+  lastUpdatedBN: BigInt!
+
+  " The last timestamp this account was updated "
+  lastUpdatedTimestamp: BigInt!
+
+  "Account snapshots"
+  snapshots: [AccountSnapshot!]! @derivedFrom(field: "account")
+}
+
+type AccountSnapshot @entity {
+  "(The address of the account)-(timstamp)"
+  id: ID!
+
+  "The account this snapshot belongs to"
+  account: Account!
+
+  "The time between snapshots in seconds"
+  period: Int!
+
+  " The timestamp of the snapshot "
+  timestamp: BigInt!
+
+  " The name of the account "
+  name: String
+
+  " The balance of SVY tokens held by snapshot account "
+  svyBalance: BigInt!
+
+  " The USD value of snapshot account's SVY balance "
+  svyBalanceUSD: BigDecimal!
+
+  " The amount of staked SVY "
+  stakedSVY: BigInt!
+
+  " The balance of veSVY tokens held by snapshot account "
+  veSVYBalance: BigInt!
+
+  " The amount of earning SVY per second "
+  svyEarnRatePerSec: BigInt!
+
+  " The amount of earning VeSVY per second "
+  veSVYEarnRatePerSec: BigInt!
+
+  " The amount of maximum earnable VeSVY "
+  maxVeSvyEarnable: BigInt!
 }
 
 ################
@@ -191,6 +287,43 @@ type SvyTransferred implements Event @entity(immutable: true) {
   from: Bytes! # address
   to: Bytes! # address
   amount: BigInt!
+}
+
+type SVYSource @entity {
+  " The address of the source "
+  id: ID!
+
+  " The name of the source (if known) "
+  name: String
+
+  " The total amount of SVY tokens this source has distributed "
+  totalSVYDistributed: BigInt!
+
+  " The last block number this account was updated "
+  lastUpdatedBN: BigInt!
+
+  " The last timestamp this account was updated "
+  lastUpdatedTimestamp: BigInt!
+
+  "SVYSource snapshots"
+  snapshots: [SVYSourceSnapshot!]! @derivedFrom(field: "svySource")
+}
+
+type SVYSourceSnapshot @entity {
+  "(The address of the svySource)-(timstamp)"
+  id: ID!
+
+  "The svySource this snapshot belongs to"
+  svySource: SVYSource!
+
+  "The time between snapshots in seconds"
+  period: Int!
+
+  " The timestamp of the snapshot "
+  timestamp: BigInt!
+
+  " The total amount of SVY tokens this source has distributed "
+  totalSVYDistributed: BigInt!
 }
 
 ################
@@ -256,68 +389,4 @@ type VeSClaimed implements Event @entity(immutable: true) {
 
   user: Bytes! # address
   amount: BigInt!
-}
-
-################
-## Savvy Booster ##
-################
-
-type SBDeposit implements Event @entity(immutable: true) {
-  " { Transaction hash }-{ Log index } "
-  id: ID!
-
-  " Transaction hash of the transaction that emitted this event "
-  transaction: Transaction!
-
-  " Event log index. For transactions that don't emit event, create arbitrary index starting from 0 "
-  logIndex: Int!
-
-  " Block number of this event "
-  block: Block!
-
-  " Timestamp of this event "
-  timestamp: BigInt!
-
-  amount: BigInt!
-  poolId: BigInt! # address
-}
-
-type SBWithdraw implements Event @entity(immutable: true) {
-  " { Transaction hash }-{ Log index } "
-  id: ID!
-
-  " Transaction hash of the transaction that emitted this event "
-  transaction: Transaction!
-
-  " Event log index. For transactions that don't emit event, create arbitrary index starting from 0 "
-  logIndex: Int!
-
-  " Block number of this event "
-  block: Block!
-
-  " Timestamp of this event "
-  timestamp: BigInt!
-
-  amount: BigInt!
-}
-
-type SBClaim implements Event @entity(immutable: true) {
-  " { Transaction hash }-{ Log index } "
-  id: ID!
-
-  " Transaction hash of the transaction that emitted this event "
-  transaction: Transaction!
-
-  " Event log index. For transactions that don't emit event, create arbitrary index starting from 0 "
-  logIndex: Int!
-
-  " Block number of this event "
-  block: Block!
-
-  " Timestamp of this event "
-  timestamp: BigInt!
-
-  user: Bytes! # address
-  rewardAmount: BigInt!
-  pendingAmount: BigInt!
 }

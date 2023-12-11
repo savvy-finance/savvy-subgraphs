@@ -1,51 +1,174 @@
+import { Address, BigInt, ethereum } from "@graphprotocol/graph-ts";
+import { Account } from "../../generated/schema";
 import {
-  ethereum,
-  Address,
-  BigInt,
-  Bytes,
-  log,
-  TypedMap,
-} from "@graphprotocol/graph-ts";
-import { Account, AccountSnapshot } from "../../generated/schema";
+  BIGDECIMAL_ZERO,
+  BIGINT_ZERO,
+  SFIAContract,
+  ZERO_ADDRESS,
+  veSVYContract,
+} from "../constants";
+import { getFriendlyName } from "../utils/contracts";
+import { getSVYBalanceInUSD } from "../utils/tokens";
+import { createAccountSnapshot } from "./account-snapshot";
+import {
+  decrementSVYHolder,
+  decrementSVYStaker,
+  decrementVeSVYHolder,
+  incrementSVYHolder,
+  incrementSVYStaker,
+  incrementVeSVYHolder,
+} from "./protocol";
+import { increaseTotalSVYDistributed } from "./svySource";
 
-export function getOrCreateAccount(address: string): Account {
-  let account = Account.load(address);
-  if (!account) {
-    account = new Account(address);
-    account.lastUpdatedTimestamp = BigInt.zero();
-    account.stakedSVY = BigInt.zero();
-    account.svyAmount = BigInt.zero();
+export function getOrCreateAccount(address: Address): Account {
+  const id = address.toHexString();
+  let account = Account.load(id);
+  if (account === null) {
+    account = new Account(id);
+    account.name = getFriendlyName(address);
+    account.svyBalance = BIGINT_ZERO;
+    account.svyBalanceUSD = BIGDECIMAL_ZERO;
+    account.veSVYBalance = BIGINT_ZERO;
+    account.stakedSVY = BIGINT_ZERO;
+    account.svyEarnRatePerSec = BIGINT_ZERO;
+    account.veSVYEarnRatePerSec = BIGINT_ZERO;
+    account.maxVeSvyEarnable = BIGINT_ZERO;
+    account.lastUpdatedBN = BIGINT_ZERO;
+    account.lastUpdatedTimestamp = BIGINT_ZERO;
     account.save();
   }
+  return account as Account;
+}
+
+export function receiveSVY(
+  accountAddress: Address,
+  svyReceived: BigInt,
+  block: ethereum.Block
+): void {
+  if (accountAddress.toHexString() === ZERO_ADDRESS) {
+    return;
+  }
+
+  // Account
+  const account = getOrCreateAccount(accountAddress);
+  const oldSVYBalance = account.svyBalance;
+  account.svyBalance = account.svyBalance.plus(svyReceived);
+  account.svyBalanceUSD = getSVYBalanceInUSD(account.svyBalance);
+  refreshEarnRate(accountAddress, account);
+  account.lastUpdatedBN = block.number;
+  account.lastUpdatedTimestamp = block.timestamp;
+  account.save();
+
+  // Protocol
+  if (oldSVYBalance.isZero() && account.svyBalance.gt(BIGINT_ZERO)) {
+    incrementSVYHolder(block);
+  }
+
+  // AccountSnapshot
+  createAccountSnapshot(accountAddress, block, account);
+}
+
+export function sendSVY(
+  accountAddress: Address,
+  svySent: BigInt,
+  block: ethereum.Block
+): void {
+  if (accountAddress.toHexString() === ZERO_ADDRESS) {
+    return;
+  }
+
+  // Account
+  const account = getOrCreateAccount(accountAddress);
+  const oldSVYBalance = account.svyBalance;
+  account.svyBalance = account.svyBalance.minus(svySent);
+  account.svyBalanceUSD = getSVYBalanceInUSD(account.svyBalance);
+  refreshEarnRate(accountAddress, account);
+  account.lastUpdatedBN = block.number;
+  account.lastUpdatedTimestamp = block.timestamp;
+  account.save();
+
+  // Protocol
+  if (account.svyBalance.isZero() && oldSVYBalance.gt(BIGINT_ZERO)) {
+    decrementSVYHolder(block);
+  }
+
+  // SVYSource
+  increaseTotalSVYDistributed(accountAddress, svySent, block);
+
+  // AccountSnapshot
+  createAccountSnapshot(accountAddress, block, account);
+}
+
+export function updateStakedSVYBalance(
+  accountAddress: Address,
+  amount: BigInt,
+  block: ethereum.Block
+): Account | null {
+  if (accountAddress.toHexString() === ZERO_ADDRESS) {
+    return null;
+  }
+
+  // Account
+  const account = getOrCreateAccount(accountAddress);
+  const oldStakedSVYBalance = account.stakedSVY;
+  account.stakedSVY = account.stakedSVY.plus(amount);
+  account.lastUpdatedBN = block.number;
+  account.lastUpdatedTimestamp = block.timestamp;
+  account.save();
+
+  // Protocol
+  if (account.stakedSVY.isZero() && oldStakedSVYBalance.gt(BIGINT_ZERO)) {
+    decrementSVYStaker(block);
+  } else if (
+    oldStakedSVYBalance.isZero() &&
+    account.stakedSVY.gt(BIGINT_ZERO)
+  ) {
+    incrementSVYStaker(block);
+  }
+
+  // AccountSnapshot is created by updateVeSVYBalance
+  return updateVeSVYBalance(accountAddress, block, account);
+}
+
+export function updateVeSVYBalance(
+  accountAddress: Address,
+  block: ethereum.Block,
+  account: Account | null
+): Account | null {
+  if (accountAddress.toHexString() === ZERO_ADDRESS) {
+    return null;
+  }
+
+  // Account
+  if (!account) {
+    account = getOrCreateAccount(accountAddress);
+  }
+  const oldVeSVYBalance = account.veSVYBalance;
+  account.veSVYBalance = veSVYContract.balanceOf(accountAddress);
+  account.lastUpdatedBN = block.number;
+  account.lastUpdatedTimestamp = block.timestamp;
+  account.save();
+
+  // Protocol
+  if (account.veSVYBalance.isZero() && oldVeSVYBalance.gt(BIGINT_ZERO)) {
+    decrementVeSVYHolder(block);
+  } else if (oldVeSVYBalance.isZero() && account.veSVYBalance.gt(BIGINT_ZERO)) {
+    incrementVeSVYHolder(block);
+  }
+
+  // AccountSnapshot
+  createAccountSnapshot(accountAddress, block, account);
+
   return account;
 }
-export function copyAccountSnapshotFromAccount(
-  account: Account,
-  timestamp: BigInt
-): AccountSnapshot {
-  let accountSnapshot = AccountSnapshot.load(`${account.id}-${timestamp}`);
-  if (!accountSnapshot) {
-    accountSnapshot = new AccountSnapshot(`${account.id}-${timestamp}`);
+
+function refreshEarnRate(accountAddress: Address, account: Account): Account {
+  const mySVYPageInfo = SFIAContract.try_getMySVYPageInfo(accountAddress);
+  if (!mySVYPageInfo.reverted) {
+    account.svyEarnRatePerSec = mySVYPageInfo.value.svyEarnRatePerSec;
+    account.veSVYEarnRatePerSec = mySVYPageInfo.value.veSVYEarnRatePerSec;
+    account.maxVeSvyEarnable = mySVYPageInfo.value.maxVeSvyEarnable;
+    account.save();
   }
-  accountSnapshot.stakedSVY = account.stakedSVY;
-  accountSnapshot.svyAmount = account.svyAmount;
-  accountSnapshot.timestamp = timestamp;
-  accountSnapshot.period = account.lastUpdatedTimestamp.equals(BigInt.zero())
-    ? timestamp.minus(account.lastUpdatedTimestamp)
-    : BigInt.zero();
-  accountSnapshot.save();
-  return accountSnapshot;
-}
-
-export function syncUserPosition(
-  accountAddress: Address,
-  event: ethereum.Event
-): Account {
-  // getSavvyDeFiOrCreate();
-  const account = getOrCreateAccount(accountAddress.toHexString());
-
-  copyAccountSnapshotFromAccount(account, event.block.timestamp);
-  account.lastUpdatedTimestamp = event.block.timestamp;
-  account.save();
   return account;
 }

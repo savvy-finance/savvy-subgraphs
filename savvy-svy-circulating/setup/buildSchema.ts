@@ -7,10 +7,10 @@ async function main() {
     "header",
     "blockchainPrimitives",
     // "todo",
+    "savvyProtocol",
     "savvyAccount",
     "savvySvy",
     "savvyVeSvy",
-    "savvyBooster",
   ];
 
   const schemas = schemaFileNames.map((schemaFileName) => {

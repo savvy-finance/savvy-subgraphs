@@ -1,0 +1,51 @@
+type Protocol @entity {
+  " Overall protocol metrics "
+  id: ID!
+
+  " The total active holders "
+  totalSVYHolders: Int!
+
+  " The total active stakers "
+  totalSVYStakers: Int!
+
+  " The total active veSVY holders "
+  totalVeSVYHolders: Int!
+
+  " The total circulating SVY "
+  circulatingSVY: BigInt!
+
+  " The last timestamp circulating SVY was updated "
+  lastCirculatingSVYUpdatedTimestamp: BigInt!
+
+  "Protocol snapshots"
+  snapshots: [ProtocolSnapshot!]! @derivedFrom(field: "protocol")
+}
+
+type ProtocolSnapshot @entity {
+  "(Overall protocol metrics)-(timstamp)"
+  id: ID!
+
+  "The protocol this snapshot belongs to"
+  protocol: Protocol!
+
+  "The time between snapshots in seconds"
+  period: Int!
+
+  " The timestamp of the snapshot "
+  timestamp: BigInt!
+
+  " The total active holders "
+  totalSVYHolders: Int!
+
+  " The total active stakers "
+  totalSVYStakers: Int!
+
+  " The total active veSVY holders "
+  totalVeSVYHolders: Int!
+
+  " The total circulating SVY "
+  circulatingSVY: BigInt!
+
+  " The last timestamp circulating SVY was updated "
+  lastCirculatingSVYUpdatedTimestamp: BigInt!
+}

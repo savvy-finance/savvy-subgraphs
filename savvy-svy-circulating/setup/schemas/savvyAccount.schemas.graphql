@@ -1,34 +1,78 @@
 #########################
 ##### Savvy Account #####
 #########################
-
-type Account @entity @regularPolling {
-  " The address of the account "
+type Account @entity {
+  " The wallet address of the holder "
   id: ID!
 
-  " user owned SVY amount "
-  svyAmount: BigInt!
+  " The name of the holder (if the holder is known) "
+  name: String
 
-  " staked SVY amount "
+  " The balance of SVY tokens held by this account "
+  svyBalance: BigInt!
+
+  " The USD value of this account's SVY balance "
+  svyBalanceUSD: BigDecimal!
+
+  " The amount of staked SVY "
   stakedSVY: BigInt!
 
-  "The timestamp of the last update"
+  " The balance of veSVY tokens held by this account "
+  veSVYBalance: BigInt!
+
+  " The amount of earning SVY per second "
+  svyEarnRatePerSec: BigInt!
+
+  " The amount of earning VeSVY per second "
+  veSVYEarnRatePerSec: BigInt!
+
+  " The amount of maximum earnable VeSVY "
+  maxVeSvyEarnable: BigInt!
+
+  " The last block number this account was updated "
+  lastUpdatedBN: BigInt!
+
+  " The last timestamp this account was updated "
   lastUpdatedTimestamp: BigInt!
+
+  "Account snapshots"
+  snapshots: [AccountSnapshot!]! @derivedFrom(field: "account")
 }
 
 type AccountSnapshot @entity {
-  " { The address of the account }-{ snapshot timestamp }"
+  "(The address of the account)-(timstamp)"
   id: ID!
 
+  "The account this snapshot belongs to"
+  account: Account!
+
   "The time between snapshots in seconds"
-  period: BigInt!
+  period: Int!
 
   " The timestamp of the snapshot "
   timestamp: BigInt!
 
-  " user owned SVY amount "
-  svyAmount: BigInt!
+  " The name of the account "
+  name: String
 
-  " staked SVY amount "
+  " The balance of SVY tokens held by snapshot account "
+  svyBalance: BigInt!
+
+  " The USD value of snapshot account's SVY balance "
+  svyBalanceUSD: BigDecimal!
+
+  " The amount of staked SVY "
   stakedSVY: BigInt!
+
+  " The balance of veSVY tokens held by snapshot account "
+  veSVYBalance: BigInt!
+
+  " The amount of earning SVY per second "
+  svyEarnRatePerSec: BigInt!
+
+  " The amount of earning VeSVY per second "
+  veSVYEarnRatePerSec: BigInt!
+
+  " The amount of maximum earnable VeSVY "
+  maxVeSvyEarnable: BigInt!
 }

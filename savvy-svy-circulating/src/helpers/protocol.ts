@@ -36,11 +36,11 @@ export function getCirculatingSVY(block: ethereum.Block): BigInt {
 
   const streamingHedgeysTokenIds = createBigIntArrayFromRange(28, 29);
   for (let index = 0; index < streamingHedgeysTokenIds.length; index++) {
-    totalLockedSVY = totalLockedSVY.plus(
-      streamingHedgeysContract
-        .streamBalanceOf(streamingHedgeysTokenIds[index])
-        .getRemainder()
+    const result = streamingHedgeysContract.try_streamBalanceOf(
+      streamingHedgeysTokenIds[index]
     );
+    if (result.reverted) continue;
+    totalLockedSVY = totalLockedSVY.plus(result.value.getRemainder());
   }
 
   const tokenLockupPlanIds = createBigIntArrayFromRange(8, 77);

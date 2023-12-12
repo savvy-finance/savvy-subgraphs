@@ -10,7 +10,7 @@ export function padHexadecimal(hexString: string): string {
   const zerosCount = 64 - hexString.length;
 
   // Create a string of zeros
-  const zeroPadding = '0'.repeat(zerosCount);
+  const zeroPadding = "0".repeat(zerosCount);
 
   // Concatenate the zero padding with the hex
   const paddedHexadecimal = zeroPadding + hexString;
@@ -41,10 +41,13 @@ export function hexToBigInt(hexString: string): BigInt {
  * @param end The last integer to be ended with
  * @returns The array of BigInts
  */
-export function createBigIntArrayFromRange(start: number, end: number): BigInt[] {
+export function createBigIntArrayFromRange(
+  start: number,
+  end: number
+): BigInt[] {
   let arr: BigInt[] = [];
   for (let curr = start; curr <= end; ++curr) {
-    arr.push(new BigInt(curr as i32));
+    arr.push(BigInt.fromI32(curr as i32));
   }
   return arr;
 }

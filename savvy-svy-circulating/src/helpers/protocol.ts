@@ -1,4 +1,4 @@
-import { Address, BigInt, ethereum } from "@graphprotocol/graph-ts";
+import { Address, BigInt, ethereum, log } from "@graphprotocol/graph-ts";
 import { Protocol } from "../../generated/schema";
 import {
   BIGINT_ZERO,
@@ -43,22 +43,26 @@ export function getCirculatingSVY(block: ethereum.Block): BigInt {
     );
   }
 
-  const tokenLockupPlanIds = createBigIntArrayFromRange(5, 81);
+  const tokenLockupPlanIds = createBigIntArrayFromRange(8, 77);
   for (let index = 0; index < tokenLockupPlanIds.length; index++) {
-    totalLockedSVY = totalLockedSVY.plus(
-      tokenLockupPlansContract
-        .planBalanceOf(tokenLockupPlanIds[index], timestamp, timestamp)
-        .getRemainder()
+    const result = tokenLockupPlansContract.try_planBalanceOf(
+      tokenLockupPlanIds[index],
+      timestamp,
+      timestamp
     );
+    if (result.reverted) continue;
+    totalLockedSVY = totalLockedSVY.plus(result.value.getRemainder());
   }
 
   const tokenVestingPlanIds = createBigIntArrayFromRange(6, 15);
   for (let index = 0; index < tokenVestingPlanIds.length; index++) {
-    totalLockedSVY = totalLockedSVY.plus(
-      tokenVestingPlansContract
-        .planBalanceOf(tokenVestingPlanIds[index], timestamp, timestamp)
-        .getRemainder()
+    const result = tokenVestingPlansContract.try_planBalanceOf(
+      tokenLockupPlanIds[index],
+      timestamp,
+      timestamp
     );
+    if (result.reverted) continue;
+    totalLockedSVY = totalLockedSVY.plus(result.value.getRemainder());
   }
 
   for (let index = 0; index < MULTISIG_ADDRESSES.length; index++) {

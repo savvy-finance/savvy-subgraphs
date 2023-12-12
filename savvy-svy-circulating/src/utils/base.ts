@@ -32,7 +32,7 @@ export function hexToBigInt(hexString: string): BigInt {
   // Use parseInt with base 16 to convert the hexadecimal string to decimal
   const decimalValue = parseInt(hexString, 16);
 
-  return new BigInt(decimalValue);
+  return BigInt.fromI32(decimalValue as i32);
 }
 
 /**

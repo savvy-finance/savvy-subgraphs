@@ -53,6 +53,6 @@ export const PROTOCOL_SLUG = "savvy-defi";
 
 export const HOUR_IN_SECONDS = 60 * 60;
 export const QUARTERHOUR_IN_SECONDS = 60 * 15;
-export const TOTAL_SVY_SUPPLY = new BigInt(10_000_000).times(
+export const TOTAL_SVY_SUPPLY = BigInt.fromI32(10_000_000).times(
   BIGINT_TEN_TO_EIGHTEENTH
 );

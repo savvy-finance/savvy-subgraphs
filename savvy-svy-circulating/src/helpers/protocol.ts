@@ -43,7 +43,7 @@ export function getCirculatingSVY(block: ethereum.Block): BigInt {
     totalLockedSVY = totalLockedSVY.plus(result.value.getRemainder());
   }
 
-  const tokenLockupPlanIds = createBigIntArrayFromRange(8, 77);
+  const tokenLockupPlanIds = createBigIntArrayFromRange(5, 81);
   for (let index = 0; index < tokenLockupPlanIds.length; index++) {
     const result = tokenLockupPlansContract.try_planBalanceOf(
       tokenLockupPlanIds[index],

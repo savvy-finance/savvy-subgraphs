@@ -1,14 +1,14 @@
 specVersion: 0.0.5
 schema:
-  file: ./schema.graphql
+  file: ../../schema.graphql
 dataSources:
   - kind: ethereum/contract
-    name: SavvyPositionManagerBTC
-    network: arbitrum-one
+    name: SavvyPositionManagerUSD
+    network: arbitrum-goerli
     source:
-      address: '0x3204d81C73F8100766C1691A67078b16Ec7c142c'
+      address: '0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c'
       abi: SavvyPositionManager
-      startBlock: 100300012
+      startBlock: 15681170
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -16,36 +16,34 @@ dataSources:
       entities: []
       abis:
         - name: SavvyPositionManager
-          file: ./abis/SavvyPositionManager.json
+          file: ../../abis/SavvyPositionManager.json
         - name: SavvyFrontendInfoAggregator
-          file: ./abis/SavvyFrontendInfoAggregator.json
-        - name: YieldStrategyManager
-          file: ./abis/YieldStrategyManager.json
+          file: ../../abis/SavvyFrontendInfoAggregator.json
       eventHandlers:
         - event: DepositYieldToken(indexed address,indexed address,uint256,address)
-          handler: handleDepositYieldToken
+          handler: handleDepositYieldTokenEvent
         - event: WithdrawYieldToken(indexed address,indexed address,uint256,address)
-          handler: handleWithdrawYieldToken
+          handler: handleWithdrawYieldTokenEvent
         - event: Borrow(indexed address,uint256,address)
-          handler: handleBorrow
+          handler: handleBorrowEvent
         - event: RepayWithDebtToken(indexed address,uint256,address)
-          handler: handleRepayWithDebtToken
+          handler: handleRepayWithDebtTokenEvent
         - event: >-
             RepayWithBaseToken(indexed address,indexed
             address,uint256,address,uint256)
-          handler: handleRepayWithBaseToken
+          handler: handleRepayWithBaseTokenEvent
         - event: >-
             RepayWithCollateral(indexed address,indexed address,indexed
             address,uint256,uint256)
-          handler: handleRepayWithCollateral
-      file: ./src/mappings/savvy-position-manager.ts
+          handler: handleRepayWithCollateralEvent
+      file: ../../src/mappings/savvyPositionManager.ts
   - kind: ethereum/contract
     name: SavvyPositionManagerETH
-    network: arbitrum-one
+    network: arbitrum-goerli
     source:
-      address: '0x5c4eb1909fB21e39Fc45ee753420AeDeBA07F3EF'
+      address: '0x088cac9aadcad94a59a1cbe8953a133ff438dc49'
       abi: SavvyPositionManager
-      startBlock: 100302141
+      startBlock: 15681170
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -53,36 +51,34 @@ dataSources:
       entities: []
       abis:
         - name: SavvyPositionManager
-          file: ./abis/SavvyPositionManager.json
+          file: ../../abis/SavvyPositionManager.json
         - name: SavvyFrontendInfoAggregator
-          file: ./abis/SavvyFrontendInfoAggregator.json
-        - name: YieldStrategyManager
-          file: ./abis/YieldStrategyManager.json
+          file: ../../abis/SavvyFrontendInfoAggregator.json
       eventHandlers:
         - event: DepositYieldToken(indexed address,indexed address,uint256,address)
-          handler: handleDepositYieldToken
+          handler: handleDepositYieldTokenEvent
         - event: WithdrawYieldToken(indexed address,indexed address,uint256,address)
-          handler: handleWithdrawYieldToken
+          handler: handleWithdrawYieldTokenEvent
         - event: Borrow(indexed address,uint256,address)
-          handler: handleBorrow
+          handler: handleBorrowEvent
         - event: RepayWithDebtToken(indexed address,uint256,address)
-          handler: handleRepayWithDebtToken
+          handler: handleRepayWithDebtTokenEvent
         - event: >-
             RepayWithBaseToken(indexed address,indexed
             address,uint256,address,uint256)
-          handler: handleRepayWithBaseToken
+          handler: handleRepayWithBaseTokenEvent
         - event: >-
             RepayWithCollateral(indexed address,indexed address,indexed
             address,uint256,uint256)
-          handler: handleRepayWithCollateral
-      file: ./src/mappings/savvy-position-manager.ts
+          handler: handleRepayWithCollateralEvent
+      file: ../../src/mappings/savvyPositionManager.ts
   - kind: ethereum/contract
-    name: SavvyPositionManagerUSD
-    network: arbitrum-one
+    name: SavvyPositionManagerBTC
+    network: arbitrum-goerli
     source:
-      address: '0x36358A1597DB299033b16fda567010D53c0A4EdA'
+      address: '0x9e75782a9698cf5fb414d1e2865dfe6a9275ea4a'
       abi: SavvyPositionManager
-      startBlock: 96806558
+      startBlock: 15681170
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -90,36 +86,34 @@ dataSources:
       entities: []
       abis:
         - name: SavvyPositionManager
-          file: ./abis/SavvyPositionManager.json
+          file: ../../abis/SavvyPositionManager.json
         - name: SavvyFrontendInfoAggregator
-          file: ./abis/SavvyFrontendInfoAggregator.json
-        - name: YieldStrategyManager
-          file: ./abis/YieldStrategyManager.json
+          file: ../../abis/SavvyFrontendInfoAggregator.json
       eventHandlers:
         - event: DepositYieldToken(indexed address,indexed address,uint256,address)
-          handler: handleDepositYieldToken
+          handler: handleDepositYieldTokenEvent
         - event: WithdrawYieldToken(indexed address,indexed address,uint256,address)
-          handler: handleWithdrawYieldToken
+          handler: handleWithdrawYieldTokenEvent
         - event: Borrow(indexed address,uint256,address)
-          handler: handleBorrow
+          handler: handleBorrowEvent
         - event: RepayWithDebtToken(indexed address,uint256,address)
-          handler: handleRepayWithDebtToken
+          handler: handleRepayWithDebtTokenEvent
         - event: >-
             RepayWithBaseToken(indexed address,indexed
             address,uint256,address,uint256)
-          handler: handleRepayWithBaseToken
+          handler: handleRepayWithBaseTokenEvent
         - event: >-
             RepayWithCollateral(indexed address,indexed address,indexed
             address,uint256,uint256)
-          handler: handleRepayWithCollateral
-      file: ./src/mappings/savvy-position-manager.ts
+          handler: handleRepayWithCollateralEvent
+      file: ../../src/mappings/savvyPositionManager.ts
   - kind: ethereum/contract
     name: SavvySwapBTC.b
-    network: arbitrum-one
+    network: arbitrum-goerli
     source:
-      address: '0x43be188901F529c11337f28bC1F753a878B2F691'
+      address: '0x99428d8F3DaA5031B97de95A0360470dBc10c014'
       abi: SavvySwap
-      startBlock: 100300241
+      startBlock: 15681170
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -127,26 +121,26 @@ dataSources:
       entities: []
       abis:
         - name: SavvySwap
-          file: ./abis/SavvySwap.json
+          file: ../../abis/SavvySwap.json
         - name: SavvyFrontendInfoAggregator
-          file: ./abis/SavvyFrontendInfoAggregator.json
+          file: ../../abis/SavvyFrontendInfoAggregator.json
       eventHandlers:
         - event: Deposit(indexed address,indexed address,uint256)
-          handler: handleDeposit
+          handler: handleDepositEvent
         - event: Withdraw(indexed address,indexed address,uint256)
-          handler: handleWithdraw
+          handler: handleWithdrawEvent
         - event: Claim(indexed address,indexed address,uint256)
-          handler: handleClaim
+          handler: handleClaimEvent
         - event: Swap(indexed address,uint256)
-          handler: handleSwap
-      file: ./src/mappings/savvy-swap.ts
+          handler: handleSwapEvent
+      file: ../../src/mappings/savvySwap.ts
   - kind: ethereum/contract
     name: SavvySwapDAI
-    network: arbitrum-one
+    network: arbitrum-goerli
     source:
-      address: '0x03fA5a7fA80E5EA464559d21B8843E15b7969c07'
+      address: '0xa499D56B095675c2E3A010ACC806e898a42824Eb'
       abi: SavvySwap
-      startBlock: 96807092
+      startBlock: 15681170
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -154,26 +148,26 @@ dataSources:
       entities: []
       abis:
         - name: SavvySwap
-          file: ./abis/SavvySwap.json
+          file: ../../abis/SavvySwap.json
         - name: SavvyFrontendInfoAggregator
-          file: ./abis/SavvyFrontendInfoAggregator.json
+          file: ../../abis/SavvyFrontendInfoAggregator.json
       eventHandlers:
         - event: Deposit(indexed address,indexed address,uint256)
-          handler: handleDeposit
+          handler: handleDepositEvent
         - event: Withdraw(indexed address,indexed address,uint256)
-          handler: handleWithdraw
+          handler: handleWithdrawEvent
         - event: Claim(indexed address,indexed address,uint256)
-          handler: handleClaim
+          handler: handleClaimEvent
         - event: Swap(indexed address,uint256)
-          handler: handleSwap
-      file: ./src/mappings/savvy-swap.ts
+          handler: handleSwapEvent
+      file: ../../src/mappings/savvySwap.ts
   - kind: ethereum/contract
     name: SavvySwapUSDC
-    network: arbitrum-one
+    network: arbitrum-goerli
     source:
-      address: '0xD9565AB01AA30D7Aa2b982b8b1c740480C1C8497'
+      address: '0x79063c0aEB1a72666d47F5233Da446CE9674c482'
       abi: SavvySwap
-      startBlock: 96806902
+      startBlock: 15681170
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -181,26 +175,26 @@ dataSources:
       entities: []
       abis:
         - name: SavvySwap
-          file: ./abis/SavvySwap.json
+          file: ../../abis/SavvySwap.json
         - name: SavvyFrontendInfoAggregator
-          file: ./abis/SavvyFrontendInfoAggregator.json
+          file: ../../abis/SavvyFrontendInfoAggregator.json
       eventHandlers:
         - event: Deposit(indexed address,indexed address,uint256)
-          handler: handleDeposit
+          handler: handleDepositEvent
         - event: Withdraw(indexed address,indexed address,uint256)
-          handler: handleWithdraw
+          handler: handleWithdrawEvent
         - event: Claim(indexed address,indexed address,uint256)
-          handler: handleClaim
+          handler: handleClaimEvent
         - event: Swap(indexed address,uint256)
-          handler: handleSwap
-      file: ./src/mappings/savvy-swap.ts
+          handler: handleSwapEvent
+      file: ../../src/mappings/savvySwap.ts
   - kind: ethereum/contract
     name: SavvySwapUSDT
-    network: arbitrum-one
+    network: arbitrum-goerli
     source:
-      address: '0x0E56d518E5d3F5e6cFCfD46095B6B4024541027b'
+      address: '0xb236236A7e6D231dC0A905B82A81A5F3b2399303'
       abi: SavvySwap
-      startBlock: 96807028
+      startBlock: 15681170
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -208,26 +202,26 @@ dataSources:
       entities: []
       abis:
         - name: SavvySwap
-          file: ./abis/SavvySwap.json
+          file: ../../abis/SavvySwap.json
         - name: SavvyFrontendInfoAggregator
-          file: ./abis/SavvyFrontendInfoAggregator.json
+          file: ../../abis/SavvyFrontendInfoAggregator.json
       eventHandlers:
         - event: Deposit(indexed address,indexed address,uint256)
-          handler: handleDeposit
+          handler: handleDepositEvent
         - event: Withdraw(indexed address,indexed address,uint256)
-          handler: handleWithdraw
+          handler: handleWithdrawEvent
         - event: Claim(indexed address,indexed address,uint256)
-          handler: handleClaim
+          handler: handleClaimEvent
         - event: Swap(indexed address,uint256)
-          handler: handleSwap
-      file: ./src/mappings/savvy-swap.ts
+          handler: handleSwapEvent
+      file: ../../src/mappings/savvySwap.ts
   - kind: ethereum/contract
     name: SavvySwapWBTC
-    network: arbitrum-one
+    network: arbitrum-goerli
     source:
-      address: '0x9A3A3ba687Fcb8AFE6367Eff3A5F5A11F51626DA'
+      address: '0xBFc24059846967729fED32588bFFB54e0CEe2bf6'
       abi: SavvySwap
-      startBlock: 100300151
+      startBlock: 15681170
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -235,26 +229,26 @@ dataSources:
       entities: []
       abis:
         - name: SavvySwap
-          file: ./abis/SavvySwap.json
+          file: ../../abis/SavvySwap.json
         - name: SavvyFrontendInfoAggregator
-          file: ./abis/SavvyFrontendInfoAggregator.json
+          file: ../../abis/SavvyFrontendInfoAggregator.json
       eventHandlers:
         - event: Deposit(indexed address,indexed address,uint256)
-          handler: handleDeposit
+          handler: handleDepositEvent
         - event: Withdraw(indexed address,indexed address,uint256)
-          handler: handleWithdraw
+          handler: handleWithdrawEvent
         - event: Claim(indexed address,indexed address,uint256)
-          handler: handleClaim
+          handler: handleClaimEvent
         - event: Swap(indexed address,uint256)
-          handler: handleSwap
-      file: ./src/mappings/savvy-swap.ts
+          handler: handleSwapEvent
+      file: ../../src/mappings/savvySwap.ts
   - kind: ethereum/contract
     name: SavvySwapWETH
-    network: arbitrum-one
+    network: arbitrum-goerli
     source:
-      address: '0xb5231e17596bEAf436A25B018bd63e5b42e14135'
+      address: '0x2d54b0345e6b374306BF1cea3160944eA33a9F73'
       abi: SavvySwap
-      startBlock: 100302283
+      startBlock: 15681170
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -262,66 +256,79 @@ dataSources:
       entities: []
       abis:
         - name: SavvySwap
-          file: ./abis/SavvySwap.json
+          file: ../../abis/SavvySwap.json
         - name: SavvyFrontendInfoAggregator
-          file: ./abis/SavvyFrontendInfoAggregator.json
+          file: ../../abis/SavvyFrontendInfoAggregator.json
       eventHandlers:
         - event: Deposit(indexed address,indexed address,uint256)
-          handler: handleDeposit
+          handler: handleDepositEvent
         - event: Withdraw(indexed address,indexed address,uint256)
-          handler: handleWithdraw
+          handler: handleWithdrawEvent
         - event: Claim(indexed address,indexed address,uint256)
-          handler: handleClaim
+          handler: handleClaimEvent
         - event: Swap(indexed address,uint256)
-          handler: handleSwap
-      file: ./src/mappings/savvy-swap.ts
+          handler: handleSwapEvent
+      file: ../../src/mappings/savvySwap.ts
   - kind: ethereum/contract
-    name: SavvyVeSVY
-    network: arbitrum-one
+    name: SavvySageBTC
+    network: arbitrum-goerli
     source:
-      address: '0x9aEEe4656F67034B06D99294062feBA1015430ad'
-      abi: VeSVY
-      startBlock: 96792324
+      address: '0xFf818a4f179a1F75511A6e7813279622E4732032'
+      abi: SavvySage
+      startBlock: 15681170
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities: []
       abis:
-        - name: VeSVY
-          file: ./abis/SavvyVeSvy.json
+        - name: SavvySage
+          file: ../../abis/SavvySage.json
         - name: SavvyFrontendInfoAggregator
-          file: ./abis/SavvyFrontendInfoAggregator.json
+          file: ../../abis/SavvyFrontendInfoAggregator.json
       eventHandlers:
-        - event: Staked(indexed address,indexed address,indexed uint256)
-          handler: handleStaked
-        - event: Unstaked(indexed address,indexed uint256)
-          handler: handleUnstaked
-        - event: Claimed(indexed address,indexed uint256)
-          handler: handleClaimed
-      file: ./src/mappings/savvy-ve-svy.ts
+        - event: SetFlowRate(address,uint256)
+          handler: handleSetFlowRateEvent
+      file: ../../src/mappings/savvySage.ts
   - kind: ethereum/contract
-    name: SavvyBooster
-    network: arbitrum-one
+    name: SavvySageETH
+    network: arbitrum-goerli
     source:
-      address: '0xbf837f2C7894cfF859a01d078d7AAa8c47221a2F'
-      abi: SavvyBooster
-      startBlock: 96798714
+      address: '0xaCB422ae5C8b896BeA8182Ea29B2e2a1a5939c3B'
+      abi: SavvySage
+      startBlock: 15681170
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities: []
       abis:
-        - name: SavvyBooster
-          file: ./abis/SavvyBooster.json
+        - name: SavvySage
+          file: ../../abis/SavvySage.json
         - name: SavvyFrontendInfoAggregator
-          file: ./abis/SavvyFrontendInfoAggregator.json
+          file: ../../abis/SavvyFrontendInfoAggregator.json
       eventHandlers:
-        - event: Deposit(uint256,uint256)
-          handler: handleDeposit
-        - event: Withdraw(uint256)
-          handler: handleWithdraw
-        - event: Claim(indexed address,uint256,uint256)
-          handler: handleClaim
-      file: ./src/mappings/savvy-booster.ts
+        - event: SetFlowRate(address,uint256)
+          handler: handleSetFlowRateEvent
+      file: ../../src/mappings/savvySage.ts
+  - kind: ethereum/contract
+    name: SavvySageUSD
+    network: arbitrum-goerli
+    source:
+      address: '0x460360fBD44D805a057287A2093f24C0cc9F8092'
+      abi: SavvySage
+      startBlock: 15681170
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities: []
+      abis:
+        - name: SavvySage
+          file: ../../abis/SavvySage.json
+        - name: SavvyFrontendInfoAggregator
+          file: ../../abis/SavvyFrontendInfoAggregator.json
+      eventHandlers:
+        - event: SetFlowRate(address,uint256)
+          handler: handleSetFlowRateEvent
+      file: ../../src/mappings/savvySage.ts

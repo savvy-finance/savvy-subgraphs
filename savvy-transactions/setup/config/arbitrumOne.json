@@ -1,0 +1,71 @@
+{
+  "network": "arbitrum-one",
+  "dataSources": [
+    {
+      "name": "SavvyPositionManagerBTC",
+      "abi": "SavvyPositionManager",
+      "address": "0x3204d81C73F8100766C1691A67078b16Ec7c142c",
+      "startBlock": 100300012
+    },
+    {
+      "name": "SavvyPositionManagerETH",
+      "abi": "SavvyPositionManager",
+      "address": "0x5c4eb1909fB21e39Fc45ee753420AeDeBA07F3EF",
+      "startBlock": 100302141
+    },
+    {
+      "name": "SavvyPositionManagerUSD",
+      "abi": "SavvyPositionManager",
+      "address": "0x36358A1597DB299033b16fda567010D53c0A4EdA",
+      "startBlock": 96806558
+    },
+    {
+      "name": "SavvySwapBTC.b",
+      "abi": "SavvySwap",
+      "address": "0x43be188901F529c11337f28bC1F753a878B2F691",
+      "startBlock": 100300241
+    },
+    {
+      "name": "SavvySwapDAI",
+      "abi": "SavvySwap",
+      "address": "0x03fA5a7fA80E5EA464559d21B8843E15b7969c07",
+      "startBlock": 96807092
+    },
+    {
+      "name": "SavvySwapUSDC",
+      "abi": "SavvySwap",
+      "address": "0xD9565AB01AA30D7Aa2b982b8b1c740480C1C8497",
+      "startBlock": 96806902
+    },
+    {
+      "name": "SavvySwapUSDT",
+      "abi": "SavvySwap",
+      "address": "0x0E56d518E5d3F5e6cFCfD46095B6B4024541027b",
+      "startBlock": 96807028
+    },
+    {
+      "name": "SavvySwapWBTC",
+      "abi": "SavvySwap",
+      "address": "0x9A3A3ba687Fcb8AFE6367Eff3A5F5A11F51626DA",
+      "startBlock": 100300151
+    },
+    {
+      "name": "SavvySwapWETH",
+      "abi": "SavvySwap",
+      "address": "0xb5231e17596bEAf436A25B018bd63e5b42e14135",
+      "startBlock": 100302283
+    },
+    {
+      "name": "SavvyVeSVY",
+      "abi": "SavvyVeSvy",
+      "address": "0x9aEEe4656F67034B06D99294062feBA1015430ad",
+      "startBlock": 96792324
+    },
+    {
+      "name": "SavvyBooster",
+      "abi": "SavvyBooster",
+      "address": "0xbf837f2C7894cfF859a01d078d7AAa8c47221a2F",
+      "startBlock": 96798714
+    }
+  ]
+}

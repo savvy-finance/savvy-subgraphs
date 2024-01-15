@@ -2,8 +2,13 @@
   "name": "daiki-savvy-transactions",
   "license": "UNLICENSED",
   "scripts": {
+    "build": "./build.sh",
+    "build:subgraph": "graph build",
+    "build:schema": "ts-node --files setup/buildSchema.ts",
+    "build:manifest": "ts-node --files setup/buildManifest.ts",
+    "build:codegen": "graph codegen",
+    "buildSchemaAndCodegen": "npm run build:schema && npm run build:codegen",
     "codegen": "graph codegen",
-    "build": "graph build",
     "deploy": "graph deploy --node https://api.studio.thegraph.com/deploy/ daiki-savvy-transactions",
     "create-local": "graph create --node http://localhost:8020/ daiki-savvy-transactions",
     "remove-local": "graph remove --node http://localhost:8020/ daiki-savvy-transactions",
@@ -11,8 +16,15 @@
     "test": "graph test"
   },
   "dependencies": {
-    "@graphprotocol/graph-cli": "0.58.0",
+    "@graphprotocol/graph-cli": "0.48.0",
     "@graphprotocol/graph-ts": "0.30.0"
   },
-  "devDependencies": { "matchstick-as": "0.5.0" }
+  "devDependencies": {
+    "matchstick-as": "0.5.0",
+    "prettier": "^2.8.8",
+    "chalk": "^4.1.2",
+    "ts-node": "^10.9.1",
+    "write-yaml-file": "^5.0.0",
+    "@types/node": "^20.2.5"
+  }
 }

@@ -1,0 +1,140 @@
+#########################
+##### Savvy Account #####
+#########################
+
+type Account @entity @regularPolling {
+  " The address of the account "
+  id: ID!
+
+  " staked SVY amount "
+  stakedSVY: BigInt!
+  
+  " Total deposited in Savvy in USD "
+  totalDepositedUSD: BigInt!
+
+  " Total outstanding debt from Savvy in USD "
+  totalDebtUSD: BigInt!
+  
+  "The timestamp of the last update"
+  lastUpdatedTimestamp: BigInt!
+}
+
+type AccountSnapshot @entity {
+  " { The address of the account }-{ snapshot timestamp }"
+  id: ID!
+  
+  "The time between snapshots in seconds"
+  period: BigInt!
+  
+  " The timestamp of the snapshot "
+  timestamp: BigInt!
+
+  " staked SVY amount "
+  stakedSVY: BigInt!
+  
+  " Total deposited in Savvy in USD "
+  totalDepositedUSD: BigInt!
+
+  " Total outstanding debt from Savvy in USD "
+  totalDebtUSD: BigInt!
+}
+
+type AccountBalance @entity {
+  " { Account Address }-{ Synthetic Type } "
+  id: ID!
+
+  " The account that this balance belongs to "
+  account: Account!
+
+  " The synthetic type this balance is referring to (e.g. USD, ETH, BTC ) "
+  syntheticType: String!
+
+  " The outstanding debt in amount of SPM Synthetic (e.g. svUSD)"
+  debt: BigInt!
+
+  " The outstanding debt in USD "
+  debtUSD: BigInt!
+
+  " The total amount deposited in SPM in USD "
+  totalDepositedUSD: BigInt!
+  
+  "The timestamp of the last update"
+  lastUpdatedTimestamp: BigInt!
+}
+
+type AccountBalanceSnapshot @entity {
+  " { Account Address }-{ Synthetic Type }-{ Snapshot timestamp } "
+  id: ID!
+    
+  "The time between snapshots in seconds"
+  period: BigInt!
+  
+  " The timestamp of the snapshot "
+  timestamp: BigInt!
+
+  " The account that this balance belongs to "
+  account: Account!
+
+  " The synthetic type this balance is referring to (e.g. USD, ETH, BTC ) "
+  syntheticType: String!
+
+  " The outstanding debt in amount of SPM Synthetic (e.g. svUSD)"
+  debt: BigInt!
+
+  " The outstanding debt in USD "
+  debtUSD: BigInt!
+
+  " The total amount deposited in SPM in USD "
+  totalDepositedUSD: BigInt!
+}
+
+type StrategyBalance @entity {
+  " { Account Address }-{ Synthetic Type }-{ Strategy Address } "
+  id: ID!
+
+  " The account balance that this strategy balance belongs to "
+  accountBalance: AccountBalance!
+
+  " The yield strategy that this balance represents "
+  strategy: Strategy!
+
+  " The amount deposited in this strategy "
+  amountDeposited: BigInt!
+
+  " The amount deposited in this strategy in USD "
+  amountDepositedUSD: BigInt!
+
+  "The timestamp of the last update"
+  lastUpdatedTimestamp: BigInt!
+}
+
+type StrategyBalanceSnapshot @entity {
+  " { Account Address }-{ Synthetic Type }-{ Strategy Address }-{ Snapshot Timestamp } "
+  id: ID!
+  
+  " The account balance that this strategy balance belongs to "
+  accountBalance: AccountBalance!
+  
+  "The time between snapshots in seconds"
+  period: BigInt!
+  
+  " The timestamp of the snapshot "
+  timestamp: BigInt!
+
+  " The yield strategy that this balance represents "
+  strategy: Strategy!
+
+  " The amount deposited in this strategy "
+  amountDeposited: BigInt!
+
+  " The amount deposited in this strategy in USD "
+  amountDepositedUSD: BigInt!
+}
+
+type Strategy implements Contract @entity {
+  " Strategy(Yield Token) Address "
+  id: ID!
+
+  " Base token address "
+  baseTokenAddress: Bytes
+}
